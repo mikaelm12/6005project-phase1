@@ -4,8 +4,9 @@ public interface BallInterface {
     
    /**
     * Sets the velocity of the ball object
+    * @param the vrlocity of the ball
     */
-    public void setVelocity(int velocity);
+    public void setVelocity(double velocity);
     
     
     /**
@@ -28,7 +29,7 @@ public interface BallInterface {
      * Returns the radius of the ball
      * @return A double representing the radius of the ball
      */
-    public double geetRadius();
+    public double getRadius();
     
     
     
@@ -44,9 +45,9 @@ public interface BallInterface {
     /**
      * Sets the gravity of the ball to the gravity 
      * of it's board
-     * @return
+     * @param the gravity of the board
      */
-    public double setGravity();
+    public void setGravity(double gravity);
     
     /**
      * Gets the gravity of the ball 
