@@ -44,11 +44,10 @@ public interface BoardInterface {
     //TODO: replace with method that returns array of walls that 
     //enclose the board 
     /**
-     * Gets the coordinates of the four lines that enclose the board
-     * each in the form [x1,y1,x2,y2]
+     * Gets the size of the board in the form of an array [x,y]
      * @return array containing coordinates of walls that enclose the board
      */
-    public double[] getBoardBorders();
+    public double[] getBoardSize();
     
     
 
