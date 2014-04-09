@@ -89,7 +89,10 @@ public class Board implements BoardInterface {
     @Override
     public String toString(){
         board[previous[1]][previous[0]] = " ";
-      //  previous = ball.getPosition();
+        previous = balls.get(0).getPosition();
+        for (int each : previous){
+        System.out.println(each);
+        }
         board[previous[1]][previous[0]] = "*";
         String string = "";
         for (int i = 0; i < x; i++){

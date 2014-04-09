@@ -54,13 +54,12 @@ public class Main {
                     wallToCollide = wall;
                 }
             }
-            if (timeToClosestCollision == 0){
+            if (timeToClosestCollision == 10){
                 ball.update(wallToCollide, ball.getVelocity());
             }
             if ((current-start) % 50 == 0){
-                System.out.println("here");
-                double newx = ball.x + ball.getVelocity().x()*50;
-                double newy = ball.y + ball.getVelocity().y()*50;
+                double newx = ball.x + ball.getVelocity().x()*.050;
+                double newy = ball.y + ball.getVelocity().y()*.050;
                 ball.setPosition(newx, newy);
                 System.out.println(board.toString());
             }
