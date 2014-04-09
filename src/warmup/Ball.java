@@ -83,10 +83,10 @@ public class Ball implements BallInterface{
     }
 
     @Override
-    public void update(Wall wall, Vect veloVector) {
+    public Vect update(Wall wall, Vect veloVector) {
        
-         
-        this.velocityVector = physics.Geometry.reflectWall(wall.getLine(), this.velocityVector, wall.getCoR());
+       return physics.Geometry.reflectWall(wall.getLine(), this.velocityVector, wall.getCoR());  
+        //this.velocityVector = physics.Geometry.reflectWall(wall.getLine(), this.velocityVector, wall.getCoR());
         
     }
 

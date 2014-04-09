@@ -7,11 +7,13 @@ public class Wall implements WallInterface {
     private final LineSegment wall;
     private double CoR;
     private final boolean solid;
+    public final String name;
     
-    public Wall(double x0 , double y0, double x1, double y1, double CoR, boolean solid){
+    public Wall(double x0 , double y0, double x1, double y1, double CoR, boolean solid, String name){
         this.wall = new LineSegment(x0, y0, x1, y1);
         this.CoR = CoR;
         this.solid = solid;
+        this.name = name;
     }
     
     

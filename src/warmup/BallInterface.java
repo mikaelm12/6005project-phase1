@@ -72,8 +72,9 @@ public interface BallInterface {
      * Updates the velocity vector of the ball
      * @param wall
      * @param veloVector
+     * @return 
      */
-    public void update(Wall wall, Vect veloVector);
+    public Vect update(Wall wall, Vect veloVector);
     
     
 
