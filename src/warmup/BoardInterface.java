@@ -40,7 +40,6 @@ public interface BoardInterface {
      */
     public void setBallPosition(double x, double y);
     
-
     //TODO: replace with method that returns array of walls that 
     //enclose the board 
     /**
