@@ -47,7 +47,5 @@ public interface BoardInterface {
      * @return array containing coordinates of walls that enclose the board
      */
     public double[] getBoardSize();
-    
-    
 
 }

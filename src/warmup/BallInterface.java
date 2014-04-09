@@ -6,10 +6,12 @@ public interface BallInterface {
     
    /**
     * Sets the velocity of the ball object
+
     * @param magnitude of the velocity
     * @param direction of the velocity
     */
-    public void setVelocity(double magnitude, double direction);
+    public void setVelocity(Vect veloVector);
+
     
     
     /**
@@ -34,6 +36,12 @@ public interface BallInterface {
     public double getRadius();
     
     
+   /**
+    * Sets the new position of the ball
+    * @param xLoc
+    * @param yLoc
+    */
+    public void setPosition(double xLoc, double yLoc);
     
     /**
      * Returns the current position of the ball in the board
@@ -41,19 +49,36 @@ public interface BallInterface {
      * @return An array of length 2 representing where the ball is in
      * in it's current board
      */
-    public double[] getPosition();
+    public int[] getPosition();
     
     
     /**
-     * Sets the gravity of the ball to the gravity to a specific value
+
+     * Sets the gravity of the ball to the gravity 
+     * of it's board
+     * @param the gravity of the board
      */
-    public void setGravity();
+    public void setGravity(double gravity);
+
     
     /**
      * Gets the gravity of the ball according to its current board
      * @return A double representing the gravity of the ball
      */
     public double getGravity();
+    
+    
+    /**
+     * Updates the velocity vector of the ball
+     * @param wall
+     * @param veloVector
+     */
+    public void update(Wall wall, Vect veloVector);
+    
+    
+
+    
+        
     
 
 }
