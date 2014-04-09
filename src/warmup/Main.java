@@ -24,13 +24,13 @@ public class Main {
         int xc = 10;
         int yc = 10;
         Vect vel = new Vect(3.0, 4.0);
-        Board board = new Board(x, y);
-        Ball ball = new Ball(xc, yc, .25, vel);
-        System.out.println(board.toString);
+       // Board board = new Board(x, y);
+       // Ball ball = new Ball(xc, yc, .25, vel);
+       // System.out.println(board.toString);
         while (true){
             long current = System.currentTimeMillis();
             if ((current-start) % 50 == 0){
-                System.out.println(board.toString);
+        //        System.out.println(board.toString);
             }
         }
     }
