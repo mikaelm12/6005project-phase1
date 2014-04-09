@@ -23,8 +23,8 @@ public class Main {
         int xc = 10;
         int yc = 10;
         Vect vel = new Vect(3.0, 5.0);
-        Board board = new Board(x, y);
-        Ball ball = new Ball(xc, yc, .25, vel);
+//        Board board = new Board(x, y);
+//        Ball ball = new Ball(xc, yc, .25, vel);
         
     }
     
