@@ -24,10 +24,10 @@ public class Board implements BoardInterface {
      * @param y height of board
      */
     public Board(int x,int y){
-        wallLeft = new Wall(0,0,0,y-1,1,true);
-        wallRight = new Wall(x-1,0,x-1,y-1,1,true);
-        wallTop = new Wall(0,0,x-1,0,1,true);
-        wallBottom = new Wall(0,y-1,x-1,y-1,1,true);
+        wallLeft = new Wall(0,0,0,y-1,1,true, "left");
+        wallRight = new Wall(x-1,0,x-1,y-1,1,true, "right");
+        wallTop = new Wall(0,0,x-1,0,1,true, "top");
+        wallBottom = new Wall(0,y-1,x-1,y-1,1,true, "bottom");
         this.x = x;
         this.y = y;
         this.gravity = 0;
@@ -90,22 +90,19 @@ public class Board implements BoardInterface {
     public String toString(){
         board[previous[1]][previous[0]] = " ";
         previous = balls.get(0).getPosition();
-        for (int each : previous){
-        System.out.println(each);
-        }
         board[previous[1]][previous[0]] = "*";
         String string = "";
         for (int i = 0; i < x; i++){
             for (int j = 0; j < y; j++){
                 string += board[j][i];
             }
-            string += "\n";
+            string += ".\n";
         }
         return string;
     }
     
     public Wall[] getWalls(){
-        Wall[] walls = {wallLeft, wallRight, wallTop, wallBottom};
+        Wall[] walls = {wallLeft, wallTop, wallRight, wallBottom};
         return walls;
     }
     
