@@ -2,6 +2,8 @@ package warmup;
 
 import java.util.List;
 
+import physics.LineSegment;
+
 /**
  * Represents the outer walls of a pingball board
  * @author AlexR
@@ -33,4 +35,9 @@ public interface WallInterface {
      * @return coordinates
      */
     public double[] getCoordinates();
+    
+    /**
+     * Gets the line segment that represents this wall
+     */
+    public LineSegment getLine();
 }

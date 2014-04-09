@@ -37,4 +37,10 @@ public class Wall implements WallInterface {
         return coords;
     }
 
+
+    @Override
+    public LineSegment getLine() {
+        return this.wall;
+    }
+
 }

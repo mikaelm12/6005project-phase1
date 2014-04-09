@@ -18,14 +18,20 @@ public class Main {
          * Get initial time
          * for every so many seconds, print a state of the board
          */
+        long start = System.currentTimeMillis();
         int x = 20;
         int y = 20;
         int xc = 10;
         int yc = 10;
-        Vect vel = new Vect(3.0, 5.0);
-//        Board board = new Board(x, y);
-//        Ball ball = new Ball(xc, yc, .25, vel);
-        
+        Vect vel = new Vect(3.0, 4.0);
+        Board board = new Board(x, y);
+        Ball ball = new Ball(xc, yc, .25, vel);
+        System.out.println(board.toString);
+        while (true){
+            long current = System.currentTimeMillis();
+            if ((current-start) % 50 == 0){
+                System.out.println(board.toString);
+            }
+        }
     }
-    
 }
