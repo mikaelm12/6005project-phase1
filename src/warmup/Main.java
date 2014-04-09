@@ -44,19 +44,9 @@ public class Main {
            
             previous = current;
             Wall wallToCollide = null;
-//            Wall[] walls = board.getWalls();
-//            for (Wall wall: walls){
-//                double timeToWall = Geometry.timeUntilWallCollision(wall.getLine(), ball.getCircle(), ball.getVelocity());
-//                if (timeToClosestCollision > timeToWall){
-//                    timeToClosestCollision = timeToWall;
-//                    wallToCollide = wall;
-//                }
-//            }
-//            if (timeToClosestCollision == 10){
-//                ball.update(wallToCollide, ball.getVelocity());
-//            }
+
             if ((current-start) % 50 == 0){
-                double timeToClosestCollision = 100;
+                double timeToClosestCollision = 1000;
                 Wall[] walls = board.getWalls();                
                 for (Wall wall: walls){
                     double timeToWall = Geometry.timeUntilWallCollision(wall.getLine(), ball.getCircle(), ball.getVelocity());
@@ -65,8 +55,8 @@ public class Main {
                         wallToCollide = wall;
                     }
                 }
-                if ((ball.x + ball.getVelocity().x()*.050) >= 19 || (ball.y + ball.getVelocity().y()*.050) >= 19){
-                    System.out.println("bouncing against " + wallToCollide.name);
+                if ((ball.x + ball.getVelocity().x()*.50) >= 19 || (ball.y + ball.getVelocity().y()*.50) >= 19||(ball.x + ball.getVelocity().x()*.50) <= 0 || (ball.y + ball.getVelocity().y()*.50) <= 0){
+                    //System.out.println("bouncing against " + wallToCollide.name);
                     Vect newvel = ball.update(wallToCollide, ball.getVelocity());
                     ball.setVelocity(newvel);
                     System.out.println(ball.getVelocity());
