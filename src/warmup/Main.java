@@ -34,7 +34,7 @@ public class Main {
         int yc = 10;
         Vect vel = new Vect(3.0, 4.0);
         Board board = new Board(x, y);
-        Ball ball = new Ball(xc, yc, .25, vel, board);
+        Ball ball = new Ball(xc, yc, .25, vel);
         board.addBall(ball);
         System.out.println("hello");
         System.out.println(board.toString());
@@ -55,17 +55,19 @@ public class Main {
                         wallToCollide = wall;
                     }
                 }
-                if ((ball.x + ball.getVelocity().x()*.50) >= 19 || (ball.y + ball.getVelocity().y()*.50) >= 19||(ball.x + ball.getVelocity().x()*.50) <= 0 || (ball.y + ball.getVelocity().y()*.50) <= 0){
+                if ((ball.getPosition()[0] + ball.getVelocity().x()*.50) >= 19 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) >= 19||
+                        (ball.getPosition()[0] + ball.getVelocity().x()*.50) <= 0 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) <= 0){
                     //System.out.println("bouncing against " + wallToCollide.name);
                     Vect newvel = ball.update(wallToCollide, ball.getVelocity());
                     ball.setVelocity(newvel);
                     System.out.println(ball.getVelocity());
                 }
-                double newx = ball.x + ball.getVelocity().x()*.050;
-                double newy = ball.y + ball.getVelocity().y()*.050;
-                System.out.println(newx);
-                System.out.println(newy);
+                double newx = ball.getPosition()[0] + ball.getVelocity().x()*.050;
+                double newy = ball.getPosition()[1] + ball.getVelocity().y()*.050;
+                System.out.println("old position: ("+ball.getPosition()[0]+","+ball.getPosition()[1]+")");
+                System.out.println("new position: ("+newx+","+newy+")");
                 ball.setPosition(newx, newy);
+                System.out.println("updated position: ("+ball.getCircle().getCenter().x()+","+ball.getPosition()[1]+")");
                 System.out.println(board.toString());
             }
             

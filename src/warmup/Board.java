@@ -16,7 +16,7 @@ public class Board implements BoardInterface {
     private final double mu2;
     private List<Ball> balls;
     private String[][] board;
-    private int[] previous;
+    private double[] previous;
 
     /**
      * 
@@ -45,7 +45,7 @@ public class Board implements BoardInterface {
             board[i][19] = ".";
         }
         board[10][10] = "*";
-        previous = new int[2];
+        previous = new double[2];
         previous[0] = 10;
         previous[1] = 10;
     }
@@ -88,9 +88,9 @@ public class Board implements BoardInterface {
 
     @Override
     public String toString(){
-        board[previous[1]][previous[0]] = " ";
+        board[(int)previous[1]][(int)previous[0]] = " ";
         previous = balls.get(0).getPosition();
-        board[previous[1]][previous[0]] = "*";
+        board[(int)previous[1]][(int)previous[0]] = "*";
         String string = "";
         for (int i = 0; i < x; i++){
             for (int j = 0; j < y; j++){

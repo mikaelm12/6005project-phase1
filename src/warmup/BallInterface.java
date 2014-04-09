@@ -1,5 +1,6 @@
 package warmup;
 
+import physics.Circle;
 import physics.Vect;
 
 public interface BallInterface {
@@ -20,13 +21,6 @@ public interface BallInterface {
     */
     public Vect getVelocity();
     
-    
-    /**
-     * Gets the current angle of the ball object
-     * 
-     * @return A double representing the angle of the ball object
-     */
-    public double getAngle();
     
     
     /**
@@ -49,23 +43,14 @@ public interface BallInterface {
      * @return An array of length 2 representing where the ball is in
      * in it's current board
      */
-    public int[] getPosition();
+    public double[] getPosition();
     
     
     /**
-
-     * Sets the gravity of the ball to the gravity 
-     * of it's board
-     * @param the gravity of the board
+     * Gets the circle object representing the ball
+     * @return a circle object
      */
-    public void setGravity(double gravity);
-
-    
-    /**
-     * Gets the gravity of the ball according to its current board
-     * @return A double representing the gravity of the ball
-     */
-    public double getGravity();
+    public Circle getCircle();
     
     
     /**
@@ -76,10 +61,4 @@ public interface BallInterface {
      */
     public Vect update(Wall wall, Vect veloVector);
     
-    
-
-    
-        
-    
-
 }
