@@ -5,20 +5,27 @@ import physics.Vect;
 
 public class Ball implements BallInterface{
     
+    Circle ball;
     double angle;
     Vect velocityVector;
+    Board board;
     double radius;
     double gravity;
-    int x;
-    int y;
+    double x;
+    double y;
+    long previous;
     
 
-    public Ball(Circle circle){
+    public Ball(double cx, double cy, double r, Vect vel, Board board){
         
-        this.x = (int)circle.getCenter().x();
-        this.y = (int)circle.getCenter().y();
+        this.ball = new Circle(cx, cy, r);
+        this.x = cx;
+        this.y = cy;
+        this.velocityVector = vel;
+        this.board = board;
+        previous = System.currentTimeMillis();
         
-    };
+    }
     
     @Override
     public void setVelocity(Vect veloVector) {
@@ -45,7 +52,7 @@ public class Ball implements BallInterface{
     }
     
     @Override
-    public void setPosition(int xLoc, int yLoc) {
+    public void setPosition(double xLoc, double yLoc) {
         this.x = xLoc;
         this.y = yLoc;
         
@@ -53,9 +60,9 @@ public class Ball implements BallInterface{
     
     @Override
     public int[] getPosition() {
-        int[] posArray = new int[10];
-        posArray[0] = this.x; 
-        posArray[1] = this.y;
+        int[] posArray = new int[2];
+        posArray[0] = (int) this.x; 
+        posArray[1] = (int) this.y;
        return posArray;
     }
 
@@ -69,6 +76,10 @@ public class Ball implements BallInterface{
     public double getGravity() {
       
         return this.gravity;
+    }
+    
+    public Circle getCircle(){
+        return this.ball;
     }
 
     @Override

@@ -41,7 +41,7 @@ public interface BallInterface {
     * @param xLoc
     * @param yLoc
     */
-    public void setPosition(int xLoc, int yLoc);
+    public void setPosition(double xLoc, double yLoc);
     
     /**
      * Returns the current position of the ball in the board
