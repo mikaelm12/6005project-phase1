@@ -36,6 +36,12 @@ public interface BallInterface {
     public double getRadius();
     
     
+   /**
+    * Sets the new position of the ball
+    * @param xLoc
+    * @param yLoc
+    */
+    public void setPosition(int xLoc, int yLoc);
     
     /**
      * Returns the current position of the ball in the board
@@ -43,7 +49,7 @@ public interface BallInterface {
      * @return An array of length 2 representing where the ball is in
      * in it's current board
      */
-    public double[] getPosition();
+    public int[] getPosition();
     
     
     /**
@@ -63,7 +69,7 @@ public interface BallInterface {
     
     
     /**
-     * 
+     * Updates the velocity vector of the ball
      * @param wall
      * @param veloVector
      */
