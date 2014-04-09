@@ -1,4 +1,4 @@
-package warmup;
+ package warmup;
 
 import physics.LineSegment;
 
@@ -35,6 +35,12 @@ public class Wall implements WallInterface {
     public double[] getCoordinates() {
         double[] coords = {this.wall.p1().x(), this.wall.p1().y(), this.wall.p2().x(), this.wall.p2().y()};
         return coords;
+    }
+
+
+    @Override
+    public LineSegment getLine() {
+        return this.wall;
     }
 
 }
