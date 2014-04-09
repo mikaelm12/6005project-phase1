@@ -18,8 +18,9 @@ public interface WallInterface {
     
     /**
      * Get the Coefficient of reflection of the wall
+     * @return 
      */
-    public void getCoR();
+    public double getCoR();
     
     /**
      * Defines if the wall is solid and visible or invisible (shared with other boards)
