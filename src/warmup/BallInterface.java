@@ -10,7 +10,7 @@ public interface BallInterface {
     * @param magnitude of the velocity
     * @param direction of the velocity
     */
-    public void setVelocity(double magnitude, double direction);
+    public void setVelocity(Vect veloVector);
 
     
     
@@ -60,6 +60,19 @@ public interface BallInterface {
      * @return A double representing the gravity of the ball
      */
     public double getGravity();
+    
+    
+    /**
+     * 
+     * @param wall
+     * @param veloVector
+     */
+    public void update(Wall wall, Vect veloVector);
+    
+    
+
+    
+        
     
 
 }
