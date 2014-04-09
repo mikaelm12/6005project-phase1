@@ -1,6 +1,6 @@
 package warmup;
 
-public interface Board {
+public interface BoardInterface {
     
     //TODO 
     //include methods for gadgets on the board
@@ -8,22 +8,22 @@ public interface Board {
     //some methods are not fully defined because corresponding classes have not been defined
     
     /**
-     * 
+     * Gets the gravity value of this board
      * @return the gravity of the board
      */
     public double getBoardGravity();
     
     /**
-     * 
+     * Gets the value of friction (mu) of this board
      * @return friction1 of the board
      */
-    public double getFriction1();
+    public double getMu();
     
     /**
-     * 
+     * Gets the value of friction (mu2) of this board
      * @return friction2 of the board
      */
-    public double getFriction2();
+    public double getMu2();
     
     //TODO: method should take in a ball instance since board could contain >1 ball
     /**

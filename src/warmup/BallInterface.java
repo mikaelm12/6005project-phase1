@@ -1,19 +1,22 @@
 package warmup;
 
+import physics.Vect;
+
 public interface BallInterface {
     
    /**
     * Sets the velocity of the ball object
+    * @param magnitude of the velocity
+    * @param direction of the velocity
     */
-    public void setVelocity(int velocity);
+    public void setVelocity(double magnitude, double direction);
     
     
     /**
     * Gets the current velocity of the ball object
-    * @return a double representing the velocity of the ball 
-    *         object
+    * @return the vector velocity of the ball
     */
-    public double getVelocity();
+    public Vect getVelocity();
     
     
     /**
@@ -28,7 +31,7 @@ public interface BallInterface {
      * Returns the radius of the ball
      * @return A double representing the radius of the ball
      */
-    public double geetRadius();
+    public double getRadius();
     
     
     
@@ -42,14 +45,12 @@ public interface BallInterface {
     
     
     /**
-     * Sets the gravity of the ball to the gravity 
-     * of it's board
-     * @return
+     * Sets the gravity of the ball to the gravity to a specific value
      */
-    public double setGravity();
+    public void setGravity();
     
     /**
-     * Gets the gravity of the ball 
+     * Gets the gravity of the ball according to its current board
      * @return A double representing the gravity of the ball
      */
     public double getGravity();
