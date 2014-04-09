@@ -23,7 +23,9 @@ public class Ball implements BallInterface{
         this.y = cy;
         this.velocityVector = vel;
         this.board = board;
+        this.radius = r;
         previous = System.currentTimeMillis();
+        
         
     }
     
@@ -55,6 +57,8 @@ public class Ball implements BallInterface{
     public void setPosition(double xLoc, double yLoc) {
         this.x = xLoc;
         this.y = yLoc;
+        this.ball = new Circle(xLoc, yLoc, this.radius);
+        
         
     }
     

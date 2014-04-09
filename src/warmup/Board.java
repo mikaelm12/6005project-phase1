@@ -33,7 +33,7 @@ public class Board implements BoardInterface {
         this.gravity = 0;
         this.mu = 0;
         this.mu2 = 0;
-        this.board = new String[y][x];
+        this.board = new String[y+1][x+1];
         balls = new ArrayList<Ball>();
         for (int i = 0; i < x; i++){
             for (int j = 0; j < y; j++){
