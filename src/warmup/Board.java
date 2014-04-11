@@ -14,7 +14,7 @@ public class Board implements BoardInterface {
     private final double gravity;
     private final double mu;
     private final double mu2;
-    private List<Ball> balls;
+    public List<Ball> balls;
     private String[][] board;
     private double[] previous;
 
