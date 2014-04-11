@@ -5,10 +5,11 @@ import java.util.List;
 
 public class Board implements BoardInterface {
     
-    private final Wall wallLeft;
-    private final Wall wallRight;
-    private final Wall wallTop;
-    private final Wall wallBottom;
+    private final String name;
+    private Wall wallLeft;
+    private Wall wallRight;
+    private Wall wallTop;
+    private Wall wallBottom;
     private final double x;
     private final double y;
     private final double gravity;
@@ -23,11 +24,12 @@ public class Board implements BoardInterface {
      * @param x width of board
      * @param y height of board
      */
-    public Board(int x,int y){
+    public Board(int x,int y, String name){
         wallLeft = new Wall(0,0,0,y-1,1,true, "left");
         wallRight = new Wall(x-1,0,x-1,y-1,1,true, "right");
         wallTop = new Wall(0,0,x-1,0,1,true, "top");
         wallBottom = new Wall(0,y-1,x-1,y-1,1,true, "bottom");
+        this.name = name;
         this.x = x;
         this.y = y;
         this.gravity = 0;
@@ -52,20 +54,17 @@ public class Board implements BoardInterface {
     
     @Override
     public double getBoardGravity() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.gravity;
     }
 
     @Override
     public double getMu() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.mu;
     }
 
     @Override
     public double getMu2() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.mu2;
     }
 
     @Override
@@ -110,4 +109,20 @@ public class Board implements BoardInterface {
         balls.add(ball);
     }
     // TODO get walls method, so ball can iterate and collide
+
+    @Override
+    public void setWall(String position, Wall wall) {
+        if (position == "Top"){ this.wallTop = wall;}
+        else if (position == "Right"){ this.wallRight = wall;}
+        else if (position == "Left"){ this.wallLeft = wall;}
+        else {this.wallBottom = wall;}
+    }
+
+    @Override
+    public Wall getWall(String position) {
+        if (position == "Top"){ return this.wallTop;}
+        else if (position == "Right"){ return this.wallRight;}
+        else if (position == "Left"){ return this.wallLeft;}
+        else {return this.wallBottom;}
+    }
 }

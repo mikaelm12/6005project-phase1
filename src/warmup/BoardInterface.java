@@ -47,5 +47,20 @@ public interface BoardInterface {
      * @return array containing coordinates of walls that enclose the board
      */
     public double[] getBoardSize();
+    
+    /**
+     * Sets a specific wall as one of the boundaries of the board
+     * @param position where the wall is to be set
+     * @param wall to be set
+     */
+    public void setWall(String position, Wall wall);
+    
+    
+    /**
+     * Get the wall object at the specified position
+     * @param position of wall wanted
+     * @return
+     */
+    public Wall getWall(String position);
 
 }
