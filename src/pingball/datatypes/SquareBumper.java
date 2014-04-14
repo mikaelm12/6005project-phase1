@@ -1,8 +1,10 @@
 package pingball.datatypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
@@ -15,6 +17,7 @@ public class SquareBumper implements Gadget{
     private final LineSegment right;
     private final LineSegment bottom;
     private final LineSegment left;
+    private final List<LineSegment> edges;
     private final String name;
     private List<Gadget> gadgetsToFire; 
     
@@ -34,6 +37,8 @@ public class SquareBumper implements Gadget{
         this.bottom = new LineSegment(x,y+1,x+1,y+1);
         this.left = new LineSegment(x,y,x,y+1);
         this.gadgetsToFire = new ArrayList<Gadget>();
+        this.edges = new ArrayList<LineSegment>();
+        edges.addAll(Arrays.asList(left,top,right,bottom));
         
         checkRep();
     }
@@ -43,7 +48,9 @@ public class SquareBumper implements Gadget{
      */
     @Override
     public void trigger(){
-
+        for (Gadget gadget : gadgetsToFire) {
+            gadget.action();
+        }
     }
     
     /**
@@ -59,7 +66,7 @@ public class SquareBumper implements Gadget{
      */
     @Override
     public double getCoR(){
-        return 0;
+        return new Double(this.coR).doubleValue();
     }
     
     
@@ -69,7 +76,14 @@ public class SquareBumper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return 0;
+        double closestTimeToCollision = 10000; //default value since double has to be initialized
+        for (LineSegment edge : edges) {
+            double timeToEdge = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
+            if(timeToEdge < closestTimeToCollision){
+                closestTimeToCollision = timeToEdge;
+            }
+        }
+        return closestTimeToCollision;
     }
     
     /**

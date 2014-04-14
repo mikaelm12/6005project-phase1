@@ -35,7 +35,9 @@ public class CircularBumper implements Gadget{
      */
     @Override
     public void trigger(){
-
+        for (Gadget gadget : gadgetsToFire) {
+            gadget.action();
+        }
     }
     
     /**

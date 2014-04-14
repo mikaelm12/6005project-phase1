@@ -17,8 +17,12 @@ public class RightFlipper implements Gadget{
     private List<Gadget> gadgetsToFire;
     
     //Rep invariant
-    
+    //if orientation == 0, then lineSegment is at right of bounding box
+    //if orientation == 90, then lineSegment is at bottom of bounding box
+    //if orientation == 180, then lineSegment is at left of bounding box
+    //if orientation == 270, then lineSegment is at top of bounding box
     //Abstraction Function
+    //lineSegment represents flipper that rotates
     
     public RightFlipper(String name, double x, double y,int orientation){
         this.name = name;
@@ -28,11 +32,18 @@ public class RightFlipper implements Gadget{
         
         this.gadgetsToFire = new ArrayList<Gadget>();
         
-        this.flipper =  new LineSegment(x+2,y,x+2,y+2);
         
-        //TODO: handle orientation
         if(orientation == 0){
-            
+            this.flipper = new LineSegment(x+2,y,x+2,y+2);
+        }
+        else if(orientation == 90){
+            this.flipper = new LineSegment(x,y+2,x+2,y+2);
+        }
+        else if(orientation == 180){
+            this.flipper = new LineSegment(x,y,x,y+2);
+        }
+        else{ //orientation == 270
+            this.flipper = new LineSegment(x,y,x+2,y);
         }
         
         checkRep();
@@ -43,7 +54,9 @@ public class RightFlipper implements Gadget{
      */
     @Override
     public void trigger(){
-
+        for (Gadget gadget : gadgetsToFire) {
+            gadget.action();
+        }
     }
     
     /**
