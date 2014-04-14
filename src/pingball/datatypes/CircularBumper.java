@@ -1,6 +1,7 @@
 package pingball.datatypes;
 
 import physics.Circle;
+import physics.Vect;
 
 
 public class CircularBumper implements Gadget{
@@ -19,7 +20,7 @@ public class CircularBumper implements Gadget{
         this.name = name;
         this.diameter = 1.0;
         this.coR = 1.0;
-        this.circle = new Circle(x,y,diameter); //TODO: do some math????
+        this.circle = new Circle(x+0.5,y+0.5,diameter);
         
         checkRep();
     }
@@ -50,14 +51,6 @@ public class CircularBumper implements Gadget{
     }
     
     /**
-     * @return a String representation of the CircularBumper
-     */
-    @Override
-    public String toString(){
-        return null;
-    }
-    
-    /**
      * computes time until the ball collides with the circular Bumper
      * @param ball ball to collide with
      * @return time until ball collides with circularBumper
@@ -65,6 +58,24 @@ public class CircularBumper implements Gadget{
     @Override
     public double timeUntilCollision(Ball ball) {
         return 0;
+    }
+    
+    /**
+     * reflects the ball off gadget
+     * @param ball to be reflected
+     * @return the new velocity vector of the ball
+     */
+    @Override
+    public Vect reflectOffGadget(Ball ball){
+        return null;
+    }
+    
+    /**
+     * @return a String representation of the CircularBumper
+     */
+    @Override
+    public String toString(){
+        return null;
     }
     
     private void checkRep(){

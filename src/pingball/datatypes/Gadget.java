@@ -1,5 +1,7 @@
 package pingball.datatypes;
 
+import physics.Vect;
+
 
 public interface Gadget {
     
@@ -7,7 +9,7 @@ public interface Gadget {
      * event that happens at the gadget such as when the ball collides with it
      * @return a Trigger object
      */
-    public Trigger trigger();
+    public Trigger trigger(); //TODO: trigger should take in gadget that consumes trigger objects
     
     /**
      * response that the gadget makes to a trigger happening somewhere on the board
@@ -26,6 +28,13 @@ public interface Gadget {
      * @return time until ball collides with gadget
      */
     public double timeUntilCollision(Ball ball);
+    
+    /**
+     * reflects the ball off gadget
+     * @param ball to be reflected
+     * @return the new velocity vector of the ball
+     */
+    public Vect reflectOffGadget(Ball ball);
     
     /**
      * 

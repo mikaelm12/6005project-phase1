@@ -1,6 +1,7 @@
 package pingball.datatypes;
 
 import physics.LineSegment;
+import physics.Vect;
 
 
 public class RightFlipper implements Gadget{
@@ -56,14 +57,6 @@ public class RightFlipper implements Gadget{
     }
     
     /**
-     * @return String representation of the flipper
-     */
-    @Override
-    public String toString(){
-        return null;
-    }
-    
-    /**
      * computes time until ball collides with flipper
      * @param ball to collide with
      * @return time until ball collides with flipper
@@ -71,6 +64,24 @@ public class RightFlipper implements Gadget{
     @Override
     public double timeUntilCollision(Ball ball) {
         return 0;
+    }
+    
+    /**
+     * reflects the ball off gadget
+     * @param ball to be reflected
+     * @return the new velocity vector of the ball
+     */
+    @Override
+    public Vect reflectOffGadget(Ball ball){
+        return null;
+    }
+    
+    /**
+     * @return String representation of the flipper
+     */
+    @Override
+    public String toString(){
+        return null;
     }
     
     private void checkRep(){

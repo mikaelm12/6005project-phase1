@@ -1,6 +1,7 @@
 package pingball.datatypes;
 
 import physics.LineSegment;
+import physics.Vect;
 
 
 public class TriangularBumper implements Gadget{
@@ -15,7 +16,7 @@ public class TriangularBumper implements Gadget{
     
     //Rep invariant:
     //orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270
-    //name!=null && name.length>0
+    //name!=null && name.length>05
     //Abstraction Function:
     //lineSegments represent sides of a triangle
     
@@ -77,13 +78,6 @@ public class TriangularBumper implements Gadget{
     }
     
     /**
-     * @return a String representation of TriangularBumper in the orientation specified
-     */
-    @Override
-    public String toString(){
-        return null;
-    }
-    /**
      * computes time until ball collides with bumper
      * @param ball to collide with
      * @return time until ball collides with bumper
@@ -91,6 +85,24 @@ public class TriangularBumper implements Gadget{
     @Override
     public double timeUntilCollision(Ball ball) {
         return 0;
+    }
+    
+    /**
+     * reflects the ball off gadget
+     * @param ball to be reflected
+     * @return the new velocity vector of the ball
+     */
+    @Override
+    public Vect reflectOffGadget(Ball ball){
+        return null;
+    }
+    
+    /**
+     * @return a String representation of TriangularBumper in the orientation specified
+     */
+    @Override
+    public String toString(){
+        return null;
     }
     
     private void checkRep(){

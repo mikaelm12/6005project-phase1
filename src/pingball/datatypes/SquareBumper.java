@@ -1,6 +1,7 @@
 package pingball.datatypes;
 
 import physics.LineSegment;
+import physics.Vect;
 
 
 public class SquareBumper implements Gadget{
@@ -14,7 +15,7 @@ public class SquareBumper implements Gadget{
     private final String name;
     
     //Rep invariant:
-    //edgeLength = 1.0
+    //edgeLength = 1.0,name!=null && name.length>0
     //Abstraction Function:
     //the four lineSegments represent a square
     
@@ -57,13 +58,6 @@ public class SquareBumper implements Gadget{
         return 0;
     }
     
-    /**
-     * @return string representation of the SquareBumper
-     */
-    @Override
-    public String toString(){
-        return null;
-    }
     
     /**
      * @param ball to collide
@@ -72,6 +66,24 @@ public class SquareBumper implements Gadget{
     @Override
     public double timeUntilCollision(Ball ball) {
         return 0;
+    }
+    
+    /**
+     * reflects the ball off gadget
+     * @param ball to be reflected
+     * @return the new velocity vector of the ball
+     */
+    @Override
+    public Vect reflectOffGadget(Ball ball){
+        return null;
+    }
+    
+    /**
+     * @return string representation of the SquareBumper
+     */
+    @Override
+    public String toString(){
+        return null;
     }
     
     /**
