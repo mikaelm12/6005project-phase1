@@ -35,11 +35,4 @@ public interface WorldInterface {
      */
     public void joinHorizontal(Board boardLeft, Board boardRight);
     
-    /**
-     * Moves a ball from one board to another
-     * @param ball to be moved
-     * @param from board that sends the ball
-     * @param to Board that receives the ball
-     */
-    public void moveBall(Ball ball, Board from, Board to);
 }
