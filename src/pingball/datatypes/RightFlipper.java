@@ -1,0 +1,79 @@
+package pingball.datatypes;
+
+import physics.LineSegment;
+
+
+public class RightFlipper implements Gadget{
+    
+    private final double boxLength;
+    private final double coR;
+    private int orientation;
+    private final String name;
+    private final LineSegment flipper;
+    
+    //Rep invariant
+    
+    //Abstraction Function
+    
+    public RightFlipper(String name, double x, double y,int orientation){
+        this.name = name;
+        this.boxLength = 2.0;
+        this.coR = 0.95;
+        this.orientation = orientation;
+        this.flipper =  new LineSegment(x+2,y,x+2,y+2);
+        
+        //TODO: handle orientation
+        if(orientation == 0){
+            
+        }
+        
+        checkRep();
+    }
+    
+    /**
+     * generates trigger when the ball hits it
+     * @return a Trigger object
+     */
+    @Override
+    public Trigger trigger() {
+        return null;
+    }
+    
+    /**
+     * rotates 90degrees when triggered
+     */
+    @Override
+    public void action(Trigger trigger) {
+        
+    }
+    
+    /**
+     * @return the coefficient of Reflection
+     */
+    @Override
+    public double getCoR() {
+        return 0;
+    }
+    
+    /**
+     * @return String representation of the flipper
+     */
+    @Override
+    public String toString(){
+        return null;
+    }
+    
+    /**
+     * computes time until ball collides with flipper
+     * @param ball to collide with
+     * @return time until ball collides with flipper
+     */
+    @Override
+    public double timeUntilCollision(Ball ball) {
+        return 0;
+    }
+    
+    private void checkRep(){
+        
+    }
+}
