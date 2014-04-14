@@ -12,8 +12,8 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import physics.Vect;
+import pingball.datatypes.Board;
 import warmup.Ball;
-import warmup.Board;
 
 
 public class PingballServer {
@@ -47,9 +47,9 @@ public class PingballServer {
             int xc = 10;
             int yc = 10;
             Vect vel = new Vect(3.0, 4.0);
-            Board board = new Board(x, y, "Name");
+            Board board = new Board("Name");
             Ball ball = new Ball(xc, yc, .25, vel);
-            board.addBall(ball);
+//            board.addBall(ball);
             System.out.println("hello");
             System.out.println(board.toString());
             new PingballClientThread(socket, board, world).start();

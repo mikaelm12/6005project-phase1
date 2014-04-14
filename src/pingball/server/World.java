@@ -3,8 +3,8 @@ package pingball.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import warmup.Ball;
-import warmup.Board;
+import pingball.datatypes.Board;
+
 
 /**
  * Represents a world of boards connected through a network
@@ -40,32 +40,32 @@ public class World implements WorldInterface {
 
     @Override
     public synchronized void removeBoard(Board board) {
-//        if (board.getNeighborLeft != null){
-//            board.getNeighborLeft.unNeighbor(board);
-//        }
-//        if (board.getNeighborRight != null){
-//            board.getNeighborRight.unNeighbor(board);
-//        }
-//        if (board.getNeighborTop != null){
-//            board.getNeighborTop.unNeighbor(board);
-//        }
-//        if (board.getNeighborBottom != null){
-//            board.getNeighborBottom.unNeighbor(board);
-//        }
+        if (board.getNeighborLeft() != null){
+            board.getNeighborLeft().unNeighbor(board);
+        }
+        if (board.getNeighborRight() != null){
+            board.getNeighborRight().unNeighbor(board);
+        }
+        if (board.getNeighborTop() != null){
+            board.getNeighborTop().unNeighbor(board);
+        }
+        if (board.getNeighborBottom() != null){
+            board.getNeighborBottom().unNeighbor(board);
+        }
         boards.remove(board);
     }
 
     @Override
     public synchronized void joinVertical(Board boardTop, Board boardBottom) {
-//        boardTop.setNeighborBottom(boardBottom);
-//        boardBottom.setNeighborTop(boardTop);
+        boardTop.setNeighborBottom(boardBottom);
+        boardBottom.setNeighborTop(boardTop);
 
     }
 
     @Override
     public synchronized void joinHorizontal(Board boardLeft, Board boardRight) {
-//        boardLeft.setNeighborRight(boardRight);
-//        boardRight.setNeighborLeft(boardLeft);
+        boardLeft.setNeighborRight(boardRight);
+        boardRight.setNeighborLeft(boardLeft);
 
     }
 
