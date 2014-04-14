@@ -1,5 +1,8 @@
 package pingball.datatypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import physics.LineSegment;
 import physics.Vect;
 
@@ -13,6 +16,7 @@ public class Absorber implements Gadget{
     private final LineSegment bottom;
     private final LineSegment left;
     private final String name;
+    private List<Gadget> gadgetsToFire;
     
     //Rep invariant:
     //width>0, height>0, name!=null && name.length>0
@@ -24,28 +28,28 @@ public class Absorber implements Gadget{
         this.width = width;
         this.height = height;
         this.coR = 0;    
-        this.top = new LineSegment(x,y,x+1,y);
-        this.right = new LineSegment(x+1,y,x+1,y+1);
-        this.bottom = new LineSegment(x,y+1,x+1,y+1);
-        this.left = new LineSegment(x,y,x,y+1);
+        this.top = new LineSegment(x,y,x+width,y);
+        this.right = new LineSegment(x+width,y,x+width,y+height);
+        this.bottom = new LineSegment(x,y+height,x+width,y+height);
+        this.left = new LineSegment(x,y,x,y+height);
+        this.gadgetsToFire = new ArrayList<Gadget>();
         
         checkRep();
     }
     
     /**
-     * generates a trigger when a ball hits it
-     * @return a Trigger object
+     * triggers the actions of gadgets in gadgetsToFire
      */
     @Override
-    public Trigger trigger() {
-        return null;
+    public void trigger(){
+
     }
     
     /**
      * shoots out a stored ball when triggered
      */
     @Override
-    public void action(Trigger trigger) {
+    public void action() {
         
     }
     
@@ -75,6 +79,22 @@ public class Absorber implements Gadget{
     @Override
     public Vect reflectOffGadget(Ball ball){
         return null;
+    }
+    
+    /**
+     * @return list of gadgets that are fired when this gadget is triggered
+     */
+    public List<Gadget> getGadgetsToFire(){
+        return null;
+    }
+    
+    /**
+     * adds gadget to gadgets to be fired when this gadget is triggered
+     * @param gadget gadget to be added to the list of gadgets that are fired when this
+     *          gadget is triggered
+     */
+    public void addGadgetToFire(Gadget gadget){
+        
     }
     
     /**

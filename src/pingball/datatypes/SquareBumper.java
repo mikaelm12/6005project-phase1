@@ -1,5 +1,8 @@
 package pingball.datatypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import physics.LineSegment;
 import physics.Vect;
 
@@ -13,6 +16,7 @@ public class SquareBumper implements Gadget{
     private final LineSegment bottom;
     private final LineSegment left;
     private final String name;
+    private List<Gadget> gadgetsToFire; 
     
     //Rep invariant:
     //edgeLength = 1.0,name!=null && name.length>0
@@ -29,24 +33,24 @@ public class SquareBumper implements Gadget{
         this.right = new LineSegment(x+1,y,x+1,y+1);
         this.bottom = new LineSegment(x,y+1,x+1,y+1);
         this.left = new LineSegment(x,y,x,y+1);
+        this.gadgetsToFire = new ArrayList<Gadget>();
         
         checkRep();
     }
     
     /**
-     * generates a trigger when the ball hits it
-     * @return a Trigger object
+     * triggers the actions of gadgets in gadgetsToFire
      */
     @Override
-    public Trigger trigger(){
-        return null;
+    public void trigger(){
+
     }
     
     /**
      * no action i.e does not respond to any trigger
      */
     @Override
-    public void action(Trigger trigger){
+    public void action(){
         
     }
     
@@ -76,6 +80,22 @@ public class SquareBumper implements Gadget{
     @Override
     public Vect reflectOffGadget(Ball ball){
         return null;
+    }
+    
+    /**
+     * @return list of gadgets that are fired when this gadget is triggered
+     */
+    public List<Gadget> getGadgetsToFire(){
+        return null;
+    }
+    
+    /**
+     * adds gadget to gadgets to be fired when this gadget is triggered
+     * @param gadget gadget to be added to the list of gadgets that are fired when this
+     *          gadget is triggered
+     */
+    public void addGadgetToFire(Gadget gadget){
+        
     }
     
     /**

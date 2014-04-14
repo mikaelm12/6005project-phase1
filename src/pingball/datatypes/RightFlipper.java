@@ -1,5 +1,8 @@
 package pingball.datatypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import physics.LineSegment;
 import physics.Vect;
 
@@ -11,6 +14,7 @@ public class RightFlipper implements Gadget{
     private int orientation;
     private final String name;
     private final LineSegment flipper;
+    private List<Gadget> gadgetsToFire;
     
     //Rep invariant
     
@@ -21,6 +25,9 @@ public class RightFlipper implements Gadget{
         this.boxLength = 2.0;
         this.coR = 0.95;
         this.orientation = orientation;
+        
+        this.gadgetsToFire = new ArrayList<Gadget>();
+        
         this.flipper =  new LineSegment(x+2,y,x+2,y+2);
         
         //TODO: handle orientation
@@ -32,19 +39,18 @@ public class RightFlipper implements Gadget{
     }
     
     /**
-     * generates trigger when the ball hits it
-     * @return a Trigger object
+     * triggers the actions of gadgets in gadgetsToFire
      */
     @Override
-    public Trigger trigger() {
-        return null;
+    public void trigger(){
+
     }
     
     /**
      * rotates 90degrees when triggered
      */
     @Override
-    public void action(Trigger trigger) {
+    public void action() {
         
     }
     
@@ -74,6 +80,30 @@ public class RightFlipper implements Gadget{
     @Override
     public Vect reflectOffGadget(Ball ball){
         return null;
+    }
+    
+    /**
+     * 
+     * @return current orientation of the flipper
+     */
+    public int getOrientation(){
+       return 0; 
+    }
+    
+    /**
+     * @return list of gadgets that are fired when this gadget is triggered
+     */
+    public List<Gadget> getGadgetsToFire(){
+        return null;
+    }
+    
+    /**
+     * adds gadget to gadgets to be fired when this gadget is triggered
+     * @param gadget gadget to be added to the list of gadgets that are fired when this
+     *          gadget is triggered
+     */
+    public void addGadgetToFire(Gadget gadget){
+        
     }
     
     /**

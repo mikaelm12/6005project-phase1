@@ -1,5 +1,8 @@
 package pingball.datatypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import physics.LineSegment;
 import physics.Vect;
 
@@ -9,6 +12,7 @@ public class OuterWall implements Gadget{
     private final double coR;
     private boolean solid;
     private final String name;
+    private List<Gadget> gadgetsToFire;
     
     //Rep invariant:
     
@@ -19,24 +23,24 @@ public class OuterWall implements Gadget{
         this.coR = 1.0;
         this.solid = solid;
         this.name = name;
+        this.gadgetsToFire = new ArrayList<Gadget>();
         
         checkRep();
     }
     
     /**
-     * doesn't generate any triggers
-     * @return null because OuterWall does not generate any trigger
+     * triggers the actions of gadgets in gadgetsToFire
      */
     @Override
-    public Trigger trigger() {
-        return null;
+    public void trigger(){
+
     }
     
     /**
      * no action i.e does not respond to any trigger
      */
     @Override
-    public void action(Trigger trigger) {
+    public void action() {
         
     }
     
@@ -66,6 +70,22 @@ public class OuterWall implements Gadget{
     @Override
     public Vect reflectOffGadget(Ball ball){
         return null;
+    }
+    
+    /**
+     * @return list of gadgets that are fired when this gadget is triggered
+     */
+    public List<Gadget> getGadgetsToFire(){
+        return null;
+    }
+    
+    /**
+     * adds gadget to gadgets to be fired when this gadget is triggered
+     * @param gadget gadget to be added to the list of gadgets that are fired when this
+     *          gadget is triggered
+     */
+    public void addGadgetToFire(Gadget gadget){
+        
     }
     
     /**
