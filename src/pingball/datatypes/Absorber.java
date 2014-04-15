@@ -3,10 +3,11 @@ package pingball.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-
-public class Absorber implements Gadget{
+import static org.junit.Assert.*
+;public class Absorber implements Gadget{
     
     private final int width;
     private final int height;
@@ -17,11 +18,12 @@ public class Absorber implements Gadget{
     private final LineSegment left;
     private final String name;
     private List<Gadget> gadgetsToFire;
+    private final LineSegment[] edges = new LineSegment[4];
     
     //Rep invariant:
     //width>0, height>0, name!=null && name.length>0
     //Abstraction Function:
-    //represents an absorber with width width and height height
+    //represents an absorber with width, width, and height, height
     
     public Absorber(String name,double x,double y, int width, int height){
         this.name = name;
@@ -33,7 +35,11 @@ public class Absorber implements Gadget{
         this.bottom = new LineSegment(x,y+height,x+width,y+height);
         this.left = new LineSegment(x,y,x,y+height);
         this.gadgetsToFire = new ArrayList<Gadget>();
-        
+        edges[0] = left;
+        edges[1] = top;
+        edges[2] = right;
+        edges[3] = bottom;
+
         checkRep();
     }
     
@@ -42,7 +48,9 @@ public class Absorber implements Gadget{
      */
     @Override
     public void trigger(){
-
+        for (Gadget gadget : gadgetsToFire) {
+            gadget.action();
+        }
     }
     
     /**
@@ -50,7 +58,9 @@ public class Absorber implements Gadget{
      */
     @Override
     public void action() {
+        //TODO: shoot stored ball
         
+        checkRep();
     }
     
     /**
@@ -58,7 +68,7 @@ public class Absorber implements Gadget{
      */
     @Override
     public double getCoR() {
-        return 0;
+        return new Double(coR).doubleValue();
     }
     
     /**
@@ -68,7 +78,14 @@ public class Absorber implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return 0;
+        double timeToClosestCollision = 10000;
+        for (LineSegment edge : edges) {
+            double timeToEdgeCollision = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
+            if(timeToEdgeCollision < timeToClosestCollision){
+                timeToClosestCollision = timeToEdgeCollision;
+            }
+        }
+        return timeToClosestCollision;
     }
     
     /**
@@ -105,7 +122,11 @@ public class Absorber implements Gadget{
         return null;
     }
     
+    /**
+     * check representation
+     */
     private void checkRep(){
-        
+        assertTrue(name.length() > 0);
+        assertTrue(width > 0 && height > 0);
     }
 }

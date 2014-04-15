@@ -11,7 +11,7 @@ public interface Gadget {
      * event that happens at the gadget such as when the ball collides with it
      * triggers the action of other gadgets that may include itself
      */
-    public void trigger(); //TODO: consider making method private 
+    public void trigger(); //TODO: consider making method private within gadgets
     
     /**
      * response that the gadget makes to a trigger happening somewhere on the board

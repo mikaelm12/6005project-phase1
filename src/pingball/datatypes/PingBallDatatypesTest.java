@@ -20,13 +20,13 @@ public class PingBallDatatypesTest {
         square.addGadgetToFire(rightFlipper);
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 90);
-        assertTrue(rightFlipper.getOrientation() == 90);
+        assertTrue(leftFlipper.getState().equals("final"));
+        assertTrue(rightFlipper.getState().equals("final"));
         
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 0);
-        assertTrue(rightFlipper.getOrientation() == 0);
+        assertTrue(leftFlipper.getState().equals("initial"));
+        assertTrue(rightFlipper.getState().equals("initial"));
         
     }
     
@@ -38,13 +38,13 @@ public class PingBallDatatypesTest {
         square.addGadgetToFire(rightFlipper);
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 180);
-        assertTrue(rightFlipper.getOrientation() == 180);
+        assertTrue(leftFlipper.getState().equals("final"));
+        assertTrue(rightFlipper.getState().equals("final"));
         
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 90);
-        assertTrue(rightFlipper.getOrientation() == 90);
+        assertTrue(leftFlipper.getState().equals("initial"));
+        assertTrue(rightFlipper.getState().equals("initial"));
     }
     
     @Test public void testTimeUntilCollision(){
@@ -77,19 +77,19 @@ public class PingBallDatatypesTest {
         assertTrue(ball3.getVelocity().y() == 0);
         
         //TODO: test reflection off flippers after figuring out how to account for linear velocity
-        LeftFlipper leftFlipper = new LeftFlipper("leftFlipper",3,3,0);
-        Ball ball4 = new Ball(3.2,4,new Vect(-1,0)); //moving in -x direction
-        Vect ball4Vect = leftFlipper.reflectOffGadget(ball4);
-        ball4.setVelocity(ball4Vect);
-        assertTrue(ball4.getVelocity().x() == 1.0);
-        assertTrue(ball4.getVelocity().y() == 0);
-        
-        RightFlipper rightFlipper = new RightFlipper("leftFlipper",3,3,0);
-        Ball ball5 = new Ball(2.8,4,new Vect(1,0)); //moving in -x direction
-        Vect ball5Vect = rightFlipper.reflectOffGadget(ball4);
-        ball5.setVelocity(ball5Vect);
-        assertTrue(ball5.getVelocity().x() == 1.0);
-        assertTrue(ball5.getVelocity().y() == 0);
+//        LeftFlipper leftFlipper = new LeftFlipper("leftFlipper",3,3,0);
+//        Ball ball4 = new Ball(3.2,4,new Vect(-1,0)); //moving in -x direction
+//        Vect ball4Vect = leftFlipper.reflectOffGadget(ball4);
+//        ball4.setVelocity(ball4Vect);
+//        assertTrue(ball4.getVelocity().x() == 1.0);
+//        assertTrue(ball4.getVelocity().y() == 0);
+//        
+//        RightFlipper rightFlipper = new RightFlipper("leftFlipper",3,3,0);
+//        Ball ball5 = new Ball(2.8,4,new Vect(1,0)); //moving in -x direction
+//        Vect ball5Vect = rightFlipper.reflectOffGadget(ball4);
+//        ball5.setVelocity(ball5Vect);
+//        assertTrue(ball5.getVelocity().x() == 1.0);
+//        assertTrue(ball5.getVelocity().y() == 0);
         
     }
     

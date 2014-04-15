@@ -3,8 +3,11 @@ package pingball.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
+
+import static org.junit.Assert.*;
 
 
 public class TriangularBumper implements Gadget{
@@ -17,10 +20,11 @@ public class TriangularBumper implements Gadget{
     private final LineSegment hypotenuse;
     private final String name;
     private List<Gadget> gadgetsToFire;
+    private final LineSegment[] edges = new LineSegment[3];
     
     //Rep invariant:
     //orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270
-    //name!=null && name.length>05
+    //name!=null && name.length>0
     //Abstraction Function:
     //lineSegments represent sides of a triangle
     
@@ -53,6 +57,10 @@ public class TriangularBumper implements Gadget{
             this.hypotenuse = new LineSegment(x,y,x+1,y+1);   
         }
         
+        edges[0] = sideA;
+        edges[1] = sideB;
+        edges[2] = hypotenuse;
+        
         checkRep();
         
         
@@ -63,7 +71,9 @@ public class TriangularBumper implements Gadget{
      */
     @Override
     public void trigger(){
-
+        for (Gadget gadget : gadgetsToFire) {
+            gadget.action();
+        }
     }
     
     /**
@@ -78,7 +88,7 @@ public class TriangularBumper implements Gadget{
      */
     @Override
     public double getCoR() {
-        return 0;
+        return new Double(coR).doubleValue();
     }
     
     /**
@@ -88,7 +98,14 @@ public class TriangularBumper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return 0;
+        double timeToClosestCollision = 10000;
+        for (LineSegment edge : edges) {
+            double timeToEdgeCollision = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
+            if(timeToEdgeCollision < timeToClosestCollision){
+                timeToClosestCollision = timeToEdgeCollision;
+            }
+        }
+        return timeToClosestCollision;
     }
     
     /**
@@ -125,8 +142,16 @@ public class TriangularBumper implements Gadget{
         return null;
     }
     
+    /**
+     * check representation
+     */
     private void checkRep(){
-        
+        assertTrue(name.length() > 0);
+        assertTrue(orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270);
+        for (LineSegment edge : edges) {
+            assertTrue(edge.p1().x() >= 0 && edge.p1().x() <= 20);
+            assertTrue(edge.p2().y() >= 0 && edge.p2().y() <= 20);  
+        }
     }
 
 }

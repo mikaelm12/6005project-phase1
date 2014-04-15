@@ -1,9 +1,13 @@
 package pingball.datatypes;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import physics.Circle;
+import physics.Geometry;
+import physics.LineSegment;
 import physics.Vect;
 
 
@@ -16,7 +20,8 @@ public class CircularBumper implements Gadget{
     private List<Gadget> gadgetsToFire;
     
     //Rep invariant:
-    //diameter=1.0, name!=null && name.length>0
+    //name!=null && name.length>0
+    //bumper is within board
     //Abstraction Function:
     //circle represents circularBumper
     
@@ -35,7 +40,9 @@ public class CircularBumper implements Gadget{
      */
     @Override
     public void trigger(){
-
+        for (Gadget gadget : gadgetsToFire) {
+            gadget.action();
+        }
     }
     
     /**
@@ -51,7 +58,7 @@ public class CircularBumper implements Gadget{
      */
     @Override
     public double getCoR() {
-        return 0;
+        return new Double(coR).doubleValue();
     }
     
     /**
@@ -61,7 +68,7 @@ public class CircularBumper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return 0;
+        return Geometry.timeUntilCircleCollision(this.circle, ball.getCircle(), ball.getVelocity());
     }
     
     /**
@@ -98,8 +105,13 @@ public class CircularBumper implements Gadget{
         return null;
     }
     
+    /**
+     * check rep of the datatype
+     */
     private void checkRep(){
-        
+        assertTrue(name.length() > 0);
+        assertTrue(this.circle.getCenter().x() >= 0.5 && this.circle.getCenter().y() >= 0.5);
+        assertTrue(this.circle.getCenter().x() <= 19.5 && this.circle.getCenter().y() <= 19.5);
     }
 
 }
