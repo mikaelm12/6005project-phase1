@@ -126,6 +126,14 @@ public class LeftFlipper implements Gadget{
     }
     
     /**
+     * 
+     * @return current state of flipper
+     */
+    public String getState(){
+        return new String(state);
+    }
+    
+    /**
      * @return String representation of the flipper
      */
     @Override

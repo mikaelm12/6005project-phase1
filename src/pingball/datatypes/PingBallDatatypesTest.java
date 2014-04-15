@@ -20,13 +20,13 @@ public class PingBallDatatypesTest {
         square.addGadgetToFire(rightFlipper);
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 90);
-        assertTrue(rightFlipper.getOrientation() == 90);
+        assertTrue(leftFlipper.getState().equals("final"));
+        assertTrue(rightFlipper.getState().equals("final"));
         
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 0);
-        assertTrue(rightFlipper.getOrientation() == 0);
+        assertTrue(leftFlipper.getState().equals("initial"));
+        assertTrue(rightFlipper.getState().equals("initial"));
         
     }
     
@@ -38,13 +38,13 @@ public class PingBallDatatypesTest {
         square.addGadgetToFire(rightFlipper);
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 180);
-        assertTrue(rightFlipper.getOrientation() == 180);
+        assertTrue(leftFlipper.getState().equals("final"));
+        assertTrue(rightFlipper.getState().equals("final"));
         
         square.trigger();
         
-        assertTrue(leftFlipper.getOrientation() == 90);
-        assertTrue(rightFlipper.getOrientation() == 90);
+        assertTrue(leftFlipper.getState().equals("initial"));
+        assertTrue(rightFlipper.getState().equals("initial"));
     }
     
     @Test public void testTimeUntilCollision(){
@@ -90,8 +90,6 @@ public class PingBallDatatypesTest {
 //        ball5.setVelocity(ball5Vect);
 //        assertTrue(ball5.getVelocity().x() == 1.0);
 //        assertTrue(ball5.getVelocity().y() == 0);
-        
-        
         
     }
     
