@@ -3,8 +3,10 @@ package pingball.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
+import static org.junit.Assert.*;
 
 public class OuterWall implements Gadget{
     
@@ -15,7 +17,8 @@ public class OuterWall implements Gadget{
     private List<Gadget> gadgetsToFire;
     
     //Rep invariant:
-    
+    //name.length>0
+    //wall located on boundaries of board
     //Abstraction function:
     
     public OuterWall(String name, double x0 , double y0, double x1, double y1, boolean solid){
@@ -51,7 +54,7 @@ public class OuterWall implements Gadget{
      */
     @Override
     public double getCoR() {
-        return 0;
+        return new Double(coR).doubleValue();
     }
     
     /**
@@ -61,7 +64,7 @@ public class OuterWall implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return 0;
+        return Geometry.timeUntilWallCollision(wall, ball.getCircle(), ball.getVelocity());
     }
     
     /**
@@ -98,8 +101,15 @@ public class OuterWall implements Gadget{
         return null;
     }
     
+    /**
+     * check representation
+     */
     private void checkRep(){
-        
+        assertTrue(name.length() > 0);
+        assertTrue(wall.p1().x() == 0 || wall.p1().x() == 20);
+        assertTrue(wall.p1().y() == 0 || wall.p1().y() == 20);
+        assertTrue(wall.p2().x() == 0 || wall.p2().x() == 20);
+        assertTrue(wall.p2().y() == 0 || wall.p2().y() == 20);
     }
     
     

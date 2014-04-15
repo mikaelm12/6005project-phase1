@@ -8,6 +8,8 @@ import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
+import static org.junit.Assert.*;
+
 
 public class SquareBumper implements Gadget{
     
@@ -17,12 +19,13 @@ public class SquareBumper implements Gadget{
     private final LineSegment right;
     private final LineSegment bottom;
     private final LineSegment left;
-    private final List<LineSegment> edges;
+    private final LineSegment[] edges = new LineSegment[4];
     private final String name;
     private List<Gadget> gadgetsToFire; 
     
     //Rep invariant:
-    //edgeLength = 1.0,name!=null && name.length>0
+    //name!=null && name.length>0
+    //edge points within boundaries of baord
     //Abstraction Function:
     //the four lineSegments represent a square
     
@@ -37,8 +40,10 @@ public class SquareBumper implements Gadget{
         this.bottom = new LineSegment(x,y+1,x+1,y+1);
         this.left = new LineSegment(x,y,x,y+1);
         this.gadgetsToFire = new ArrayList<Gadget>();
-        this.edges = new ArrayList<LineSegment>();
-        edges.addAll(Arrays.asList(left,top,right,bottom));
+        edges[0] = left;
+        edges[1] = left;
+        edges[2] = right;
+        edges[3] = bottom;
         
         checkRep();
     }
@@ -124,7 +129,12 @@ public class SquareBumper implements Gadget{
      * checks rep invariant
      */
     private void checkRep(){
-        assert(this.edgeLength == 1.0);
+        assertTrue(name.length() > 0);
+        for (LineSegment edge : edges) {
+            assertTrue(edge.p1().x() >=0 && edge.p1().y() >= 0);
+            assertTrue(edge.p1().x() <=20 && edge.p1().y() <=20);
+        }
+        
     }
 
 }

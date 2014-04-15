@@ -3,9 +3,10 @@ package pingball.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-
+import static org.junit.Assert.*;
 
 public class LeftFlipper implements Gadget{
     
@@ -15,12 +16,14 @@ public class LeftFlipper implements Gadget{
     private final LineSegment flipper;
     private final String name;
     private List<Gadget> gadgetsToFire;
+    private String state = "initial"; //not triggered yet
     
     //Rep invariant:
-    //if orientation == 0, then lineSegment is at left of bounding box
-    //if orientation == 90, then lineSegment is at bottom of bounding box
-    //if orientation == 180, then lineSegment is at right of bounding box
-    //if orientation == 270, then lineSegment is at top of bounding box
+    //box within board
+    //if orientation == 0, then lineSegment is at left of bounding box initially
+    //if orientation == 90, then lineSegment is at bottom of bounding box initially
+    //if orientation == 180, then lineSegment is at right of bounding box initially
+    //if orientation == 270, then lineSegment is at top of bounding box initially
     //Abstraction Function
     //lineSegment represents flipper that rotates
     
@@ -36,13 +39,13 @@ public class LeftFlipper implements Gadget{
             this.flipper = new LineSegment(x,y,x,y+2);
         }
         else if(orientation == 90){
-            this.flipper = new LineSegment(x,y+2,x+2,y+2);
+            this.flipper = new LineSegment(x,y,x+2,y);
         }
         else if(orientation == 180){
             this.flipper = new LineSegment(x+2,y,x+2,y+2);
         }
         else{ //orientation == 270
-            this.flipper = new LineSegment(x,y,x+2,y);
+            this.flipper = new LineSegment(x,y+2,x+2,y+2);
         }
         
         checkRep();
@@ -63,7 +66,9 @@ public class LeftFlipper implements Gadget{
      */
     @Override
     public void action() {
+        //TODO: perform rotation when triggered
         
+        checkRep();
     }
     
     /**
@@ -71,7 +76,7 @@ public class LeftFlipper implements Gadget{
      */
     @Override
     public double getCoR() {
-        return 0;
+        return new Double(coR).doubleValue();
     }
     
     /**
@@ -81,7 +86,7 @@ public class LeftFlipper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return 0;
+        return Geometry.timeUntilWallCollision(flipper, ball.getCircle(), ball.getVelocity());
     }
     
     /**
@@ -128,8 +133,12 @@ public class LeftFlipper implements Gadget{
         return null;
     }
     
+    /**
+     * check representation
+     */
     private void checkRep(){
-        
+        assertTrue(name.length() > 0);
+        assertTrue(state.equals("initial") || state.equals("final"));
     }
 
 }

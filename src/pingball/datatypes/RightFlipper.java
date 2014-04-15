@@ -1,8 +1,11 @@
 package pingball.datatypes;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
@@ -15,12 +18,13 @@ public class RightFlipper implements Gadget{
     private final String name;
     private final LineSegment flipper;
     private List<Gadget> gadgetsToFire;
+    private String state = "initial";//not triggered yet
     
     //Rep invariant
-    //if orientation == 0, then lineSegment is at right of bounding box
-    //if orientation == 90, then lineSegment is at bottom of bounding box
-    //if orientation == 180, then lineSegment is at left of bounding box
-    //if orientation == 270, then lineSegment is at top of bounding box
+    //if orientation == 0, then lineSegment is at right of bounding box initially
+    //if orientation == 90, then lineSegment is at bottom of bounding box initially
+    //if orientation == 180, then lineSegment is at left of bounding box initially
+    //if orientation == 270, then lineSegment is at top of bounding box initially
     //Abstraction Function
     //lineSegment represents flipper that rotates
     
@@ -64,7 +68,9 @@ public class RightFlipper implements Gadget{
      */
     @Override
     public void action() {
+        //TODO: rotate 90degrees
         
+        checkRep();
     }
     
     /**
@@ -72,7 +78,7 @@ public class RightFlipper implements Gadget{
      */
     @Override
     public double getCoR() {
-        return 0;
+        return new Double(coR).doubleValue();
     }
     
     /**
@@ -82,7 +88,7 @@ public class RightFlipper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return 0;
+        return Geometry.timeUntilWallCollision(flipper, ball.getCircle(), ball.getVelocity());
     }
     
     /**
@@ -127,7 +133,11 @@ public class RightFlipper implements Gadget{
         return null;
     }
     
+    /**
+     * check representation
+     */
     private void checkRep(){
-        
+        assertTrue(name.length() > 0);
+        assertTrue(state.equals("initial") || state.equals("final"));
     }
 }
