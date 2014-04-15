@@ -1,6 +1,10 @@
 package pingball.datatypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import physics.LineSegment;
+import physics.Vect;
 
 
 public class TriangularBumper implements Gadget{
@@ -12,10 +16,11 @@ public class TriangularBumper implements Gadget{
     private final LineSegment sideB;
     private final LineSegment hypotenuse;
     private final String name;
+    private List<Gadget> gadgetsToFire;
     
     //Rep invariant:
     //orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270
-    //name!=null && name.length>0
+    //name!=null && name.length>05
     //Abstraction Function:
     //lineSegments represent sides of a triangle
     
@@ -25,6 +30,7 @@ public class TriangularBumper implements Gadget{
         this.sideLength = 1.0;
         this.coR = 1.0;
         this.orientation = orientation;
+        this.gadgetsToFire = new ArrayList<Gadget>();
         
         if(orientation == 0){
             this.sideA = new LineSegment(x,y,x+1,y);
@@ -53,19 +59,20 @@ public class TriangularBumper implements Gadget{
     }
     
     /**
-     * generates a trigger when the ball hits it
-     * @return a Trigger object
+     * triggers the actions of gadgets in gadgetsToFire
      */
     @Override
-    public Trigger trigger() {
-        return null;
+    public void trigger(){
+        for (Gadget gadget : gadgetsToFire) {
+            gadget.action();
+        }
     }
     
     /**
      * no action i.e does not respond to any trigger
      */
     @Override
-    public void action(Trigger trigger) {   
+    public void action() {   
     }
     
     /**
@@ -77,13 +84,6 @@ public class TriangularBumper implements Gadget{
     }
     
     /**
-     * @return a String representation of TriangularBumper in the orientation specified
-     */
-    @Override
-    public String toString(){
-        return null;
-    }
-    /**
      * computes time until ball collides with bumper
      * @param ball to collide with
      * @return time until ball collides with bumper
@@ -91,6 +91,40 @@ public class TriangularBumper implements Gadget{
     @Override
     public double timeUntilCollision(Ball ball) {
         return 0;
+    }
+    
+    /**
+     * reflects the ball off gadget
+     * @param ball to be reflected
+     * @return the new velocity vector of the ball
+     */
+    @Override
+    public Vect reflectOffGadget(Ball ball){
+        return null;
+    }
+    
+    /**
+     * @return list of gadgets that are fired when this gadget is triggered
+     */
+    public List<Gadget> getGadgetsToFire(){
+        return null;
+    }
+    
+    /**
+     * adds gadget to gadgets to be fired when this gadget is triggered
+     * @param gadget gadget to be added to the list of gadgets that are fired when this
+     *          gadget is triggered
+     */
+    public void addGadgetToFire(Gadget gadget){
+        
+    }
+    
+    /**
+     * @return a String representation of TriangularBumper in the orientation specified
+     */
+    @Override
+    public String toString(){
+        return null;
     }
     
     private void checkRep(){

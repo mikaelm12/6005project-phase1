@@ -8,13 +8,17 @@ public class Ball {
     
     private Circle ball;
     private Vect velocityVector;
-    private final double radius;
+    private final double radius = 0.5;
     
+    //Rep invariant:
+    
+    //Abstraction Function:
 
-    public Ball(double cx, double cy, double r, Vect vel){
-        this.ball = new Circle(cx, cy, r);
+    public Ball(double cx, double cy, Vect vel){
+        this.ball = new Circle(cx, cy, 0.5);
         this.velocityVector = vel;
-        this.radius = r;
+        
+        checkRep();
     }
     
     /**
@@ -23,6 +27,14 @@ public class Ball {
      */
     public Vect getVelocity() {
         return this.velocityVector;
+    }
+    
+    /**
+     * set the velocity of the ball
+     * @param vect new velocity vector of the ball
+     */
+    public void setVelocity(Vect vect){
+        this.velocityVector = vect;
     }
     
     /**
@@ -61,6 +73,10 @@ public class Ball {
     public void updateVelocityVector(LineSegment line, double coR) {
        Vect newVector = physics.Geometry.reflectWall(line, this.velocityVector, coR); 
        this.velocityVector = newVector;
+    }
+    
+    private void checkRep(){
+        
     }
 
 }

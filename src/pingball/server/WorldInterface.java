@@ -1,7 +1,7 @@
 package pingball.server;
 
-import warmup.Ball;
-import warmup.Board;
+import pingball.datatypes.Board;
+
 
 /**
  * World that represents a set of boards connected through the network
@@ -34,12 +34,6 @@ public interface WorldInterface {
      * @param boardRight   Board to be on the right
      */
     public void joinHorizontal(Board boardLeft, Board boardRight);
+
     
-    /**
-     * Moves a ball from one board to another
-     * @param ball to be moved
-     * @param from board that sends the ball
-     * @param to Board that receives the ball
-     */
-    public void moveBall(Ball ball, Board from, Board to);
 }
