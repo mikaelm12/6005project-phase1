@@ -30,6 +30,9 @@ public class BoardGrammarBaseListener implements BoardGrammarListener {
 	@Override public void enterFlipperleft(BoardGrammarParser.FlipperleftContext ctx) { }
 	@Override public void exitFlipperleft(BoardGrammarParser.FlipperleftContext ctx) { }
 
+	@Override public void enterBumpertype(BoardGrammarParser.BumpertypeContext ctx) { }
+	@Override public void exitBumpertype(BoardGrammarParser.BumpertypeContext ctx) { }
+
 	@Override public void enterXv(BoardGrammarParser.XvContext ctx) { }
 	@Override public void exitXv(BoardGrammarParser.XvContext ctx) { }
 
@@ -57,8 +60,8 @@ public class BoardGrammarBaseListener implements BoardGrammarListener {
 	@Override public void enterBumper(BoardGrammarParser.BumperContext ctx) { }
 	@Override public void exitBumper(BoardGrammarParser.BumperContext ctx) { }
 
-	@Override public void enterComment(BoardGrammarParser.CommentContext ctx) { }
-	@Override public void exitComment(BoardGrammarParser.CommentContext ctx) { }
+	@Override public void enterOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx) { }
+	@Override public void exitOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx) { }
 
 	@Override public void enterY(BoardGrammarParser.YContext ctx) { }
 	@Override public void exitY(BoardGrammarParser.YContext ctx) { }

@@ -27,6 +27,9 @@ public interface BoardGrammarListener extends ParseTreeListener {
 	void enterFlipperleft(BoardGrammarParser.FlipperleftContext ctx);
 	void exitFlipperleft(BoardGrammarParser.FlipperleftContext ctx);
 
+	void enterBumpertype(BoardGrammarParser.BumpertypeContext ctx);
+	void exitBumpertype(BoardGrammarParser.BumpertypeContext ctx);
+
 	void enterXv(BoardGrammarParser.XvContext ctx);
 	void exitXv(BoardGrammarParser.XvContext ctx);
 
@@ -54,8 +57,8 @@ public interface BoardGrammarListener extends ParseTreeListener {
 	void enterBumper(BoardGrammarParser.BumperContext ctx);
 	void exitBumper(BoardGrammarParser.BumperContext ctx);
 
-	void enterComment(BoardGrammarParser.CommentContext ctx);
-	void exitComment(BoardGrammarParser.CommentContext ctx);
+	void enterOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx);
+	void exitOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx);
 
 	void enterY(BoardGrammarParser.YContext ctx);
 	void exitY(BoardGrammarParser.YContext ctx);
