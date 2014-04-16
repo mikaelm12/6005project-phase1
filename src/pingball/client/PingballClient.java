@@ -68,7 +68,7 @@ public class PingballClient {
             e.printStackTrace();
         }
         } else { //Play single machine mode
-            runSingleMachine(file);
+           // runSingleMachine(file);
         }
     }
     

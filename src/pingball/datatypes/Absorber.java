@@ -138,12 +138,5 @@ public class Absorber implements Gadget{
         assertTrue(width > 0 && height > 0);
     }
 
-    /**
-     * This is a method to tell outside classes that this is a gadget
-     * @return true
-     */
-    @Override
-    public boolean isGadget() {
-        return true;
-    }
+
 }
