@@ -44,10 +44,9 @@ import static org.junit.Assert.*
     }
     
     /**
-     * triggers the actions of gadgets in gadgetsToFire
+     * fires the actions of gadgets in gadgetsToFire
      */
-    @Override
-    public void trigger(){
+    private void trigger(){
         for (Gadget gadget : gadgetsToFire) {
             gadget.action();
         }
@@ -78,7 +77,7 @@ import static org.junit.Assert.*
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        double timeToClosestCollision = 10000;
+        double timeToClosestCollision = Double.POSITIVE_INFINITY;
         for (LineSegment edge : edges) {
             double timeToEdgeCollision = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
             if(timeToEdgeCollision < timeToClosestCollision){
@@ -89,13 +88,15 @@ import static org.junit.Assert.*
     }
     
     /**
-     * reflects the ball off gadget
+     * stop ball and store it unmoving in the bottom right hand corner of the absorber
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
      */
     @Override
-    public Vect reflectOffGadget(Ball ball){
-        return null;
+    public void reflectOffGadget(Ball ball){
+        ball.setVelocity(new Vect(0,0)); //stop ball
+        //set ball center position .25L away from bottom and right wall
+        ball.setPosition(bottom.p2().x()-0.25, bottom.p2().y()-0.25);
+        this.trigger();
     }
     
     /**

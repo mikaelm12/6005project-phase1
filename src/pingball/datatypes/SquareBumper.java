@@ -7,7 +7,6 @@ import java.util.List;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-
 import static org.junit.Assert.*;
 
 
@@ -49,10 +48,9 @@ public class SquareBumper implements Gadget{
     }
     
     /**
-     * triggers the actions of gadgets in gadgetsToFire
+     * fires the actions of gadgets in gadgetsToFire
      */
-    @Override
-    public void trigger(){
+    private void trigger(){
         for (Gadget gadget : gadgetsToFire) {
             gadget.action();
         }
@@ -81,7 +79,7 @@ public class SquareBumper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        double closestTimeToCollision = 10000; //default value since double has to be initialized
+        double closestTimeToCollision = Double.POSITIVE_INFINITY; //default value since double has to be initialized
         for (LineSegment edge : edges) {
             double timeToEdge = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
             if(timeToEdge < closestTimeToCollision){
@@ -92,13 +90,24 @@ public class SquareBumper implements Gadget{
     }
     
     /**
-     * reflects the ball off gadget
+     * reflects the ball off gadget and updates its velocity and triggers this gadget
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
+     * @throws Exception 
      */
     @Override
-    public Vect reflectOffGadget(Ball ball){
-        return null;
+    public void reflectOffGadget(Ball ball){
+        LineSegment edgeShortestTimeToCollision = null;
+        double closestTimeToCollision = Double.POSITIVE_INFINITY; //default value since double has to be initialized
+        for (LineSegment edge : edges) {
+            double timeToEdge = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
+            if(timeToEdge < closestTimeToCollision){
+                closestTimeToCollision = timeToEdge;
+                edgeShortestTimeToCollision = edge;
+            }
+        }
+        Vect newVelocityVector = Geometry.reflectWall(edgeShortestTimeToCollision, ball.getVelocity(), coR);
+        ball.setVelocity(newVelocityVector);
+        this.trigger();
     }
     
     /**

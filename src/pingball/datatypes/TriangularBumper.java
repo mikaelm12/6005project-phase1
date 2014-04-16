@@ -42,8 +42,8 @@ public class TriangularBumper implements Gadget{
             this.hypotenuse = new LineSegment(x,y+1,x+1,y);
         }
         else if(orientation == 90){
-            this.sideA = new LineSegment(x,y,x+1,y);
-            this.sideB = new LineSegment(x+1,y,x+1,y+1);
+            this.sideA = new LineSegment(x,y,x,y+1);
+            this.sideB = new LineSegment(x,y+1,x+1,y+1);
             this.hypotenuse = new LineSegment(x,y,x+1,y+1);
         }
         else if(orientation == 180){
@@ -52,9 +52,9 @@ public class TriangularBumper implements Gadget{
             this.hypotenuse = new LineSegment(x,y+1,x+1,y);
         }
         else{ //orientation = 270
-            this.sideA = new LineSegment(x,y,x,y+1);
-            this.sideB = new LineSegment(x,y+1,x+1,y+1);
-            this.hypotenuse = new LineSegment(x,y,x+1,y+1);   
+            this.sideA = new LineSegment(x,y,x+1,y);
+            this.sideB = new LineSegment(x+1,y,x+1,y+1);
+            this.hypotenuse = new LineSegment(x,y,x+1,y+1);
         }
         
         edges[0] = sideA;
@@ -67,10 +67,9 @@ public class TriangularBumper implements Gadget{
     }
     
     /**
-     * triggers the actions of gadgets in gadgetsToFire
+     * fires the actions of gadgets in gadgetsToFire
      */
-    @Override
-    public void trigger(){
+    private void trigger(){
         for (Gadget gadget : gadgetsToFire) {
             gadget.action();
         }
@@ -98,7 +97,7 @@ public class TriangularBumper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        double timeToClosestCollision = 10000;
+        double timeToClosestCollision = Double.POSITIVE_INFINITY;
         for (LineSegment edge : edges) {
             double timeToEdgeCollision = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
             if(timeToEdgeCollision < timeToClosestCollision){
@@ -109,13 +108,23 @@ public class TriangularBumper implements Gadget{
     }
     
     /**
-     * reflects the ball off gadget
+     * reflects the ball off gadget, updates its velocity and triggers this gadget
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
      */
     @Override
-    public Vect reflectOffGadget(Ball ball){
-        return null;
+    public void reflectOffGadget(Ball ball){
+        LineSegment edgeShortestTimeToCollision = null;
+        double timeToClosestCollision = Double.POSITIVE_INFINITY;
+        for (LineSegment edge : edges) {
+            double timeToEdgeCollision = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
+            if(timeToEdgeCollision < timeToClosestCollision){
+                timeToClosestCollision = timeToEdgeCollision;
+                edgeShortestTimeToCollision = edge;
+            }
+        }
+        Vect newVelocityVector = Geometry.reflectWall(edgeShortestTimeToCollision, ball.getVelocity(), coR);
+        ball.setVelocity(newVelocityVector);
+        this.trigger();
     }
     
     /**

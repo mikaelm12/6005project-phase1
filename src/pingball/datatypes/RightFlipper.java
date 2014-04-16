@@ -19,6 +19,7 @@ public class RightFlipper implements Gadget{
     private final LineSegment flipper;
     private List<Gadget> gadgetsToFire;
     private String state = "initial";//not triggered yet
+    private double angularVelocity;
     
     //Rep invariant
     //if orientation == 0, then lineSegment is at right of bounding box initially
@@ -33,6 +34,7 @@ public class RightFlipper implements Gadget{
         this.boxLength = 2.0;
         this.coR = 0.95;
         this.orientation = orientation;
+        this.angularVelocity = (1080/180)*Math.PI;
         
         this.gadgetsToFire = new ArrayList<Gadget>();
         
@@ -41,10 +43,10 @@ public class RightFlipper implements Gadget{
             this.flipper = new LineSegment(x+2,y,x+2,y+2);
         }
         else if(orientation == 90){
-            this.flipper = new LineSegment(x,y+2,x+2,y+2);
+            this.flipper = new LineSegment(x+2,y+2,x,y+2);
         }
         else if(orientation == 180){
-            this.flipper = new LineSegment(x,y,x,y+2);
+            this.flipper = new LineSegment(x,y+2,x,y);
         }
         else{ //orientation == 270
             this.flipper = new LineSegment(x,y,x+2,y);
@@ -54,10 +56,9 @@ public class RightFlipper implements Gadget{
     }
     
     /**
-     * triggers the actions of gadgets in gadgetsToFire
+     * fires the actions of gadgets in gadgetsToFire
      */
-    @Override
-    public void trigger(){
+    private void trigger(){
         for (Gadget gadget : gadgetsToFire) {
             gadget.action();
         }
@@ -88,17 +89,27 @@ public class RightFlipper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return Geometry.timeUntilWallCollision(flipper, ball.getCircle(), ball.getVelocity());
+        return Geometry.timeUntilRotatingWallCollision(flipper, flipper.p1(), angularVelocity, 
+                                                        ball.getCircle(), ball.getVelocity());
     }
     
     /**
      * reflects the ball off gadget
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
      */
     @Override
-    public Vect reflectOffGadget(Ball ball){
-        return null;
+    public void reflectOffGadget(Ball ball){
+        Vect newVelocityVector = Geometry.reflectRotatingWall(flipper, flipper.p1(), angularVelocity, 
+                ball.getCircle(), ball.getVelocity(), coR);
+        ball.setVelocity(newVelocityVector);
+        //update state of flipper
+        if(state.equals("initial")){
+        state = "final";
+        }
+        else{
+        state = "initial";
+        }
+        this.trigger();
     }
     
     /**
