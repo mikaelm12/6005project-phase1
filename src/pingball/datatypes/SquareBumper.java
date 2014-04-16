@@ -122,7 +122,7 @@ public class SquareBumper implements Gadget{
      */
     @Override
     public String toString(){
-        return null;
+        return "Bumper";
     }
     
     /**
