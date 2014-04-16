@@ -13,7 +13,9 @@ public class LeftFlipper implements Gadget{
     private final double boxLength;
     private final double coR;
     private int orientation;
-    private final LineSegment flipper;
+    private LineSegment flipper;
+    private final Vect initialP2;
+    private final Vect finalP2;
     private final String name;
     private List<Gadget> gadgetsToFire;
     private String state = "initial"; //not triggered yet
@@ -39,15 +41,23 @@ public class LeftFlipper implements Gadget{
         
         if(orientation == 0){
             this.flipper = new LineSegment(x,y,x,y+2);
+            this.initialP2 = flipper.p2();
+            this.finalP2 = new Vect(x+2,y);
         }
         else if(orientation == 90){
             this.flipper = new LineSegment(x+2,y,x,y);
+            this.initialP2 = flipper.p2();
+            this.finalP2 = new Vect(x+2,y+2);
         }
         else if(orientation == 180){
             this.flipper = new LineSegment(x+2,y+2,x+2,y);
+            this.initialP2 = flipper.p2();
+            this.finalP2 = new Vect(x,y+2);
         }
         else{ //orientation == 270
             this.flipper = new LineSegment(x,y+2,x+2,y+2);
+            this.initialP2 = flipper.p2();
+            this.finalP2 = new Vect(x,y);
         }
         
         checkRep();
@@ -67,8 +77,16 @@ public class LeftFlipper implements Gadget{
      */
     @Override
     public void action() {
-        //TODO: perform rotation when triggered
-        
+        if(state.equals("initial")){
+            //change to final state
+            this.flipper = new LineSegment(flipper.p1(),finalP2);
+            state = "final";
+        }
+        else{
+            //change to initial state
+            this.flipper = new LineSegment(flipper.p1(),initialP2);
+            state = "initial";
+        }
         checkRep();
     }
     
@@ -87,26 +105,32 @@ public class LeftFlipper implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
+        //define +angularVelocity as being clockwise rotation
+        if(state.equals("initial")){
+            return Geometry.timeUntilRotatingWallCollision(flipper, flipper.p1(), -angularVelocity, 
+                    ball.getCircle(), ball.getVelocity());
+        }
+        
         return Geometry.timeUntilRotatingWallCollision(flipper, flipper.p1(), angularVelocity, 
                                                         ball.getCircle(), ball.getVelocity());
     }
     
     /**
-     * reflects the ball off gadget
+     * reflects the ball off gadget, updates the ball's velocity and triggers this gadget
      * @param ball to be reflected
      */
     @Override
     public void reflectOffGadget(Ball ball){
-        Vect newVelocityVector = Geometry.reflectRotatingWall(flipper, flipper.p1(), angularVelocity, 
-                                                                ball.getCircle(), ball.getVelocity(), coR);
-        ball.setVelocity(newVelocityVector);
-        //update state of flipper
+        Vect newVelocityVector;
+      //define +angularVelocity as being clockwise rotation
         if(state.equals("initial")){
-            state = "final";
+            newVelocityVector = Geometry.reflectRotatingWall(flipper, flipper.p1(), -angularVelocity, 
+                    ball.getCircle(), ball.getVelocity(), coR);
+        }else{
+            newVelocityVector = Geometry.reflectRotatingWall(flipper, flipper.p1(), angularVelocity, 
+                    ball.getCircle(), ball.getVelocity(), coR);
         }
-        else{
-            state = "initial";
-        }
+        ball.setVelocity(newVelocityVector);
         this.trigger();    
     }
     

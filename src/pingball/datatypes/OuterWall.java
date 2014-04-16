@@ -72,9 +72,11 @@ public class OuterWall implements Gadget{
      */
     @Override
     public void reflectOffGadget(Ball ball){
-        Vect newVelocityVector = Geometry.reflectWall(wall, ball.getVelocity(), coR);
-        ball.setVelocity(newVelocityVector);
-        this.trigger();
+        //reflect only if solid
+        if(solid){
+            Vect newVelocityVector = Geometry.reflectWall(wall, ball.getVelocity(), coR);
+            ball.setVelocity(newVelocityVector);
+        }    
     }
     
     /**
