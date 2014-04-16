@@ -21,12 +21,24 @@ public class PingballClientThread extends Thread {
     /**
      * Initializes a user
      * @param socket to be used by this thread
+     * @throws IOException 
      */
-    public PingballClientThread(Socket socket, Board board2, World world) {
+    public PingballClientThread(Socket socket, World world) throws IOException {
         super("PingballClientThread");
         this.socket = socket;
-        this.board = board2;
         this.world = world;
+        String fileBoard = "";
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        try {
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
+                fileBoard += line;
+            }
+            board = null; //create board
+        }
+        finally {
+            in.close();
+        }
+    
     }
 
     public void run() {
@@ -44,6 +56,12 @@ public class PingballClientThread extends Thread {
     }
     
     public void handleConnection (Socket socket) throws IOException{
+        /*Game is played here. Output to the client is the string representation of the board
+        * sent every so often. 
+        * PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        * out.println(board.toString());
+        */
+        
         System.out.println("hello world");
         long start = System.currentTimeMillis();
         long previous = start;

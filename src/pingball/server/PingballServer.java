@@ -51,7 +51,7 @@ public class PingballServer {
                 String output = handleRequest(line);
                     out.println(output);
             }
-            new PingballClientThread(ClientSocket, new Board("Constructed board?"), world).start();
+            new PingballClientThread(ClientSocket, world).start();
             
             int x = 20;
             int y = 20;
