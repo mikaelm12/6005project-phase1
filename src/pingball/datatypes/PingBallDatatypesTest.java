@@ -63,11 +63,11 @@ public class PingBallDatatypesTest {
         assertTrue(ball1.getVelocity().x() == 1.0);
         assertTrue(ball1.getVelocity().y() == 0);
         
-        TriangularBumper triangle = new TriangularBumper("triangle",5,5,0);
-        Ball ball2 = new Ball("ball2",5.2,4.8,0,1); //moving in +y direction
+        TriangularBumper triangle = new TriangularBumper("triangle",5,5,180);
+        Ball ball2 = new Ball("ball2",6.2,5.2,-1,0); //moving in -x direction
         triangle.reflectOffGadget(ball2);
-        assertTrue(ball2.getVelocity().x() == 0);
-        assertTrue(ball2.getVelocity().y() == 1.0);
+        assertTrue(ball2.getVelocity().x() == 1);
+        assertTrue(ball2.getVelocity().y() == 0);
         
         CircularBumper circular = new CircularBumper("circular",2.5,2.5);
         Ball ball3 = new Ball("ball3",3.7,3,-1,0); //moving in -x direction
