@@ -103,7 +103,7 @@ import static org.junit.Assert.*
      * @return list of gadgets that are fired when this gadget is triggered
      */
     public List<Gadget> getGadgetsToFire(){
-        return null;
+        return new ArrayList<Gadget>(gadgetsToFire);
     }
     
     /**
@@ -112,7 +112,7 @@ import static org.junit.Assert.*
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget){
-        
+        gadgetsToFire.add(gadget);
     }
     
     /**

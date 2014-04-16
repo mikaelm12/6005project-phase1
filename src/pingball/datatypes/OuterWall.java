@@ -83,7 +83,7 @@ public class OuterWall implements Gadget{
      * @return list of gadgets that are fired when this gadget is triggered
      */
     public List<Gadget> getGadgetsToFire(){
-        return null;
+        return new ArrayList<Gadget>(gadgetsToFire);
     }
     
     /**
@@ -92,7 +92,15 @@ public class OuterWall implements Gadget{
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget){
-        
+        gadgetsToFire.add(gadget);
+    }
+    
+    /**
+     * sets the solidity of the wall
+     * @param isSolid
+     */
+    public void setWallSolidity(boolean isSolid){
+        solid = isSolid;
     }
     
     /**

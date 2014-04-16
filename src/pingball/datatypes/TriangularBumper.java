@@ -6,7 +6,6 @@ import java.util.List;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-
 import static org.junit.Assert.*;
 
 
@@ -131,7 +130,7 @@ public class TriangularBumper implements Gadget{
      * @return list of gadgets that are fired when this gadget is triggered
      */
     public List<Gadget> getGadgetsToFire(){
-        return null;
+        return new ArrayList<Gadget>(gadgetsToFire);
     }
     
     /**
@@ -140,7 +139,7 @@ public class TriangularBumper implements Gadget{
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget){
-        
+        gadgetsToFire.add(gadget);
     }
     
     /**

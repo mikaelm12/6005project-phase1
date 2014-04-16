@@ -84,10 +84,10 @@ public class World implements WorldInterface {
      */
     public void transferBallHorizontal(Board to, Ball ball){
         if (ball.getPosition()[0] > 10){
-            Ball newBall = new Ball(0, ball.getPosition()[1], ball.getVelocity());
+            Ball newBall = new Ball(ball.getName(),0, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
         } else {
-            Ball newBall = new Ball(20, ball.getPosition()[1], ball.getVelocity());
+            Ball newBall = new Ball(ball.getName(),20, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
         }
     }
@@ -101,10 +101,10 @@ public class World implements WorldInterface {
      */
     public void transferBallVertical(Board to, Ball ball){
         if (ball.getPosition()[1] > 10){
-            Ball newBall = new Ball(ball.getPosition()[0], 0, ball.getVelocity());
+            Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
         } else {
-            Ball newBall = new Ball(ball.getPosition()[0], 20, ball.getVelocity());
+            Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
         }
         

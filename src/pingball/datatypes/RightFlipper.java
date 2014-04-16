@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Angle;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
@@ -19,8 +20,9 @@ public class RightFlipper implements Gadget{
     private LineSegment flipper;
     private List<Gadget> gadgetsToFire;
     private String state = "initial";//not triggered yet
-    private final Vect initialP2;
-    private final Vect finalP2;
+    private final double rotationAngle;
+    //private final Vect initialP2;
+    //private final Vect finalP2;
     private double angularVelocity;
     
     //Rep invariant
@@ -36,30 +38,32 @@ public class RightFlipper implements Gadget{
         this.boxLength = 2.0;
         this.coR = 0.95;
         this.orientation = orientation;
-        this.angularVelocity = (1080/180)*Math.PI;
+        this.angularVelocity = (1080.0/180)*Math.PI;
+        this.rotationAngle = (90.0/180)*Math.PI;
+        
         
         this.gadgetsToFire = new ArrayList<Gadget>();
         
         
         if(orientation == 0){
             this.flipper = new LineSegment(x+2,y,x+2,y+2);
-            this.initialP2 = flipper.p2();
-            this.finalP2 = new Vect(x,y);
+//            this.initialP2 = flipper.p2();
+//            this.finalP2 = new Vect(x,y);
         }
         else if(orientation == 90){
             this.flipper = new LineSegment(x+2,y+2,x,y+2);
-            this.initialP2 = flipper.p2();
-            this.finalP2 = new Vect(x+2,y);
+//            this.initialP2 = flipper.p2();
+//            this.finalP2 = new Vect(x+2,y);
         }
         else if(orientation == 180){
             this.flipper = new LineSegment(x,y+2,x,y);
-            this.initialP2 = flipper.p2();
-            this.finalP2 = new Vect(x+2,y+2);
+//            this.initialP2 = flipper.p2();
+//            this.finalP2 = new Vect(x+2,y+2);
         }
         else{ //orientation == 270
             this.flipper = new LineSegment(x,y,x+2,y);
-            this.initialP2 = flipper.p2();
-            this.finalP2 = new Vect(x,y+2);
+//            this.initialP2 = flipper.p2();
+//            this.finalP2 = new Vect(x,y+2);
         }
         
         checkRep();
@@ -81,12 +85,14 @@ public class RightFlipper implements Gadget{
     public void action() {
         if(state.equals("initial")){
             //change to final state
-            this.flipper = new LineSegment(flipper.p1(),finalP2);
+            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), new Angle(rotationAngle));
+            //this.flipper = new LineSegment(flipper.p1(),finalP2);
             state = "final";
         }
         else{
             //change to initial state
-            this.flipper = new LineSegment(flipper.p1(),initialP2);
+            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), new Angle(2*Math.PI-rotationAngle));
+            //this.flipper = new LineSegment(flipper.p1(),initialP2);
             state = "initial";
         }
         
@@ -139,17 +145,17 @@ public class RightFlipper implements Gadget{
     
     /**
      * 
-     * @return current orientation of the flipper
+     * @return orientation of the flipper
      */
     public int getOrientation(){
-       return 0; 
+       return orientation; 
     }
     
     /**
      * @return list of gadgets that are fired when this gadget is triggered
      */
     public List<Gadget> getGadgetsToFire(){
-        return null;
+        return new ArrayList<Gadget>(gadgetsToFire);
     }
     
     /**
@@ -158,7 +164,7 @@ public class RightFlipper implements Gadget{
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget){
-        
+        gadgetsToFire.add(gadget);
     }
     
     /**

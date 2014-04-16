@@ -34,14 +34,15 @@ public class Board {
      * @param y height of board
      */
     public Board(String name){ //TODO: board take in list of gadgets
+        //set walls to be solid by default
         wallLeft = new OuterWall("left", 0,0,0,height,true);
         wallRight = new OuterWall( "right",width,0,width,height,true);
         wallTop = new OuterWall("top",0,0,width,0,true);
         wallBottom = new OuterWall("bottom",0,height,width,height,true);
         this.name = name;
-        this.gravity = 0;
-        this.mu = 0;
-        this.mu2 = 0;
+        this.gravity = 25;
+        this.mu = 0.025;
+        this.mu2 = 0.025;
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
         

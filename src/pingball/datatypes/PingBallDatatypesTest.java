@@ -50,7 +50,7 @@ public class PingBallDatatypesTest {
     }
     
     @Test public void testTimeUntilCollision(){
-        Ball ball = new Ball(2,1.2,new Vect(1,0)); //moving in x+ direction
+        Ball ball = new Ball("ball",2,1.2,1,0); //moving in x+ direction
         TriangularBumper triangle = new TriangularBumper("triangle",1,1,0);
         SquareBumper square = new SquareBumper("square",3,1);
         assertTrue(square.timeUntilCollision(ball) < triangle.timeUntilCollision(ball));
@@ -58,19 +58,19 @@ public class PingBallDatatypesTest {
     
     @Test public void testReflectOffGadget(){
         SquareBumper square = new SquareBumper("square",3,3);
-        Ball ball1 = new Ball(4.2,3.3,new Vect(-1.0,0)); //moving in -x direction
+        Ball ball1 = new Ball("ball1",4.2,3.3,-1.0,0); //moving in -x direction
         square.reflectOffGadget(ball1);
         assertTrue(ball1.getVelocity().x() == 1.0);
         assertTrue(ball1.getVelocity().y() == 0);
         
         TriangularBumper triangle = new TriangularBumper("triangle",5,5,0);
-        Ball ball2 = new Ball(5.2,4.8,new Vect(0,1)); //moving in +y direction
+        Ball ball2 = new Ball("ball2",5.2,4.8,0,1); //moving in +y direction
         triangle.reflectOffGadget(ball2);
         assertTrue(ball2.getVelocity().x() == 0);
         assertTrue(ball2.getVelocity().y() == 1.0);
         
         CircularBumper circular = new CircularBumper("circular",2.5,2.5);
-        Ball ball3 = new Ball(3.7,3,new Vect(-1,0)); //moving in -x direction
+        Ball ball3 = new Ball("ball3",3.7,3,-1,0); //moving in -x direction
         circular.reflectOffGadget(ball3);
         assertTrue(ball3.getVelocity().x() == 1.0);
         assertTrue(ball3.getVelocity().y() == 0);
