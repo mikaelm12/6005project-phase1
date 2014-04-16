@@ -23,8 +23,8 @@ public class PingballClient {
     public static void main(String[] args){
         int port = 10987; //default port
         String hostName = null;
-        File file = null;
-        
+//        File file = null;
+        File file = new File ("/Users/AlexR/Desktop/6.005/pingball-phase1/sampleBoard1");        
         Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
         try {
             while ( ! arguments.isEmpty()) {
@@ -77,28 +77,33 @@ public class PingballClient {
      * @throws IOException
      */
     public static void runPingBallServerClient(String host, int port, File file) throws IOException{
+        System.out.println("Go multiplayer! "+host+" "+port);
         String hostName = host;
         int portNumber = port;
         Socket toServerSocket = new Socket(hostName, portNumber);
-         
-        PrintWriter toServe = new PrintWriter(toServerSocket.getOutputStream(), true);
-        BufferedReader fromServe = new BufferedReader(new InputStreamReader(toServerSocket.getInputStream()));
-        String fromServer;
-        while ((fromServer = fromServe.readLine()) != null) {
-            System.out.println(fromServer);
-        }
-        BufferedReader inputFileStream = null;
-        try {
+         PrintWriter toServe = new PrintWriter(toServerSocket.getOutputStream(), true);
+         BufferedReader inputFileStream = null;
+         try {
             inputFileStream = new BufferedReader(new FileReader(file));
             String l;
             while ((l = inputFileStream.readLine()) != null) {
                 toServe.println(l);
+                System.out.println(l);
             }
         } finally {
             if (inputFileStream != null) {
                 inputFileStream.close();
             }
         }
+         
+       
+        BufferedReader fromServe = new BufferedReader(new InputStreamReader(toServerSocket.getInputStream()));
+        String fromServer;
+        while ((fromServer = fromServe.readLine()) != null) {
+            System.out.println(fromServer);
+        }
+       
+        
     }
     
     public static void runSingleMachine (File file){
@@ -107,40 +112,40 @@ public class PingballClient {
         //PLAY!
         
         System.out.println("hello world");
-        long start = System.currentTimeMillis();
-        long previous = start;
-        Ball ball = board.balls.get(0);
-        while (true){
-            long current = System.currentTimeMillis();
-           
-            previous = current;
-            Wall wallToCollide = null;
-
-            if ((current-start) % 50 == 0){
-                double timeToClosestCollision = 1000;
-                Wall[] walls = board.getWalls();                
-                for (Wall wall: walls){
-                    double timeToWall = Geometry.timeUntilWallCollision(wall.getLine(), ball.getCircle(), ball.getVelocity());
-                    if (timeToClosestCollision > timeToWall){
-                        timeToClosestCollision = timeToWall;
-                        wallToCollide = wall;
-                    }
-                }
-                if ((ball.getPosition()[0] + ball.getVelocity().x()*.50) >= 19 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) >= 19||
-                        (ball.getPosition()[0] + ball.getVelocity().x()*.50) <= 0 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) <= 0){
-                    //System.out.println("bouncing against " + wallToCollide.name);
-                    Vect newvel = ball.update(wallToCollide, ball.getVelocity());
-                    ball.setVelocity(newvel);
-                    System.out.println(ball.getVelocity());
-                }
-                double newx = ball.getPosition()[0] + ball.getVelocity().x()*.050;
-                double newy = ball.getPosition()[1] + ball.getVelocity().y()*.050;
-                System.out.println("old position: ("+ball.getPosition()[0]+","+ball.getPosition()[1]+")");
-                System.out.println("new position: ("+newx+","+newy+")");
-                ball.setPosition(newx, newy);
-                System.out.println("updated position: ("+ball.getCircle().getCenter().x()+","+ball.getPosition()[1]+")");
-                System.out.println(board.toString());
-            }
-        }
+//        long start = System.currentTimeMillis();
+//        long previous = start;
+//        Ball ball = board.balls.get(0);
+//        while (true){
+//            long current = System.currentTimeMillis();
+//           
+//            previous = current;
+//            Wall wallToCollide = null;
+//
+//            if ((current-start) % 50 == 0){
+//                double timeToClosestCollision = 1000;
+//                Wall[] walls = board.getWalls();                
+//                for (Wall wall: walls){
+//                    double timeToWall = Geometry.timeUntilWallCollision(wall.getLine(), ball.getCircle(), ball.getVelocity());
+//                    if (timeToClosestCollision > timeToWall){
+//                        timeToClosestCollision = timeToWall;
+//                        wallToCollide = wall;
+//                    }
+//                }
+//                if ((ball.getPosition()[0] + ball.getVelocity().x()*.50) >= 19 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) >= 19||
+//                        (ball.getPosition()[0] + ball.getVelocity().x()*.50) <= 0 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) <= 0){
+//                    //System.out.println("bouncing against " + wallToCollide.name);
+//                    Vect newvel = ball.update(wallToCollide, ball.getVelocity());
+//                    ball.setVelocity(newvel);
+//                    System.out.println(ball.getVelocity());
+//                }
+//                double newx = ball.getPosition()[0] + ball.getVelocity().x()*.050;
+//                double newy = ball.getPosition()[1] + ball.getVelocity().y()*.050;
+//                System.out.println("old position: ("+ball.getPosition()[0]+","+ball.getPosition()[1]+")");
+//                System.out.println("new position: ("+newx+","+newy+")");
+//                ball.setPosition(newx, newy);
+//                System.out.println("updated position: ("+ball.getCircle().getCenter().x()+","+ball.getPosition()[1]+")");
+//                System.out.println(board.toString());
+//            }
+//        }
     }
 }

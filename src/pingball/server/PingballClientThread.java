@@ -33,6 +33,7 @@ public class PingballClientThread extends Thread {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 fileBoard += line;
             }
+            System.out.println("FILE\n"+fileBoard);
             board = null; //create board
         }
         finally {
@@ -43,6 +44,7 @@ public class PingballClientThread extends Thread {
     }
 
     public void run() {
+        System.out.println("New thread! :)");
         try {
             handleConnection(socket);
         } catch (IOException e) {
