@@ -55,6 +55,14 @@ public class Board {
     }
     
     /**
+     * Get this board's name
+     * @return the name
+     */
+    public String getName(){
+        return this.name;
+    }
+    
+    /**
      * 
      * @return array containing all walls
      */

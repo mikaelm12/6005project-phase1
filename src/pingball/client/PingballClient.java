@@ -2,6 +2,7 @@ package pingball.client;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -78,10 +79,27 @@ public class PingballClient {
     public static void runPingBallServerClient(String host, int port, File file) throws IOException{
         String hostName = host;
         int portNumber = port;
-        try (
-            Socket pbSocket = new Socket(hostName, portNumber);
-            ) {}
+        Socket toServerSocket = new Socket(hostName, portNumber);
+         
+        PrintWriter toServe = new PrintWriter(toServerSocket.getOutputStream(), true);
+        BufferedReader fromServe = new BufferedReader(new InputStreamReader(toServerSocket.getInputStream()));
+        String fromServer;
+        while ((fromServer = fromServe.readLine()) != null) {
+            System.out.println(fromServer);
         }
+        BufferedReader inputFileStream = null;
+        try {
+            inputFileStream = new BufferedReader(new FileReader(file));
+            String l;
+            while ((l = inputFileStream.readLine()) != null) {
+                toServe.println(l);
+            }
+        } finally {
+            if (inputFileStream != null) {
+                inputFileStream.close();
+            }
+        }
+    }
     
     public static void runSingleMachine (File file){
         Board board = null; //create board from file
