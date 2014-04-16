@@ -1,7 +1,9 @@
 package pingball.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pingball.datatypes.Board;
 
@@ -15,7 +17,7 @@ import pingball.datatypes.Board;
 public class World implements WorldInterface {
     /*
      * Rep Invariants
-     *   N/A
+     *   boards != null
      * Abstraction Function
      *    Represents an abstract world of Pingball boards
      *    that may or may not be connected to each other
@@ -26,46 +28,49 @@ public class World implements WorldInterface {
      *   allowing only one joining of boards to happen at the same time
      */
     
-    private final List<Board> boards;
+    private final Map<String, Board> boards;
     
     public World(){
-        boards = new ArrayList<Board>();
+        boards = new HashMap<String, Board>();
     }
 
     @Override
     public synchronized void addBoard(Board board) {
-        boards.add(board);
+        boards.put(board.getName(), board);
+        
 
     }
 
     @Override
     public synchronized void removeBoard(Board board) {
-        if (board.getNeighborLeft() != null){
-            board.getNeighborLeft().unNeighbor(board);
+        String name = board.getName();
+        if (boards.get(name).getNeighborLeft() != null){
+            boards.get(name).getNeighborLeft().unNeighbor(board);
         }
-        if (board.getNeighborRight() != null){
-            board.getNeighborRight().unNeighbor(board);
+        if (boards.get(name).getNeighborRight() != null){
+            boards.get(name).getNeighborRight().unNeighbor(board);
         }
-        if (board.getNeighborTop() != null){
-            board.getNeighborTop().unNeighbor(board);
+        if (boards.get(name).getNeighborTop() != null){
+            boards.get(name).getNeighborTop().unNeighbor(board);
         }
-        if (board.getNeighborBottom() != null){
-            board.getNeighborBottom().unNeighbor(board);
+        if (boards.get(name).getNeighborBottom() != null){
+            boards.get(name).getNeighborBottom().unNeighbor(board);
         }
-        boards.remove(board);
+        boards.remove(boards.get(name));
+        
     }
 
     @Override
-    public synchronized void joinVertical(Board boardTop, Board boardBottom) {
-        boardTop.setNeighborBottom(boardBottom);
-        boardBottom.setNeighborTop(boardTop);
+    public synchronized void joinVertical(String boardTop, String boardBottom) {
+        boards.get(boardTop).setNeighborBottom(boards.get(boardBottom));
+        boards.get(boardBottom).setNeighborTop(boards.get(boardTop));
 
     }
 
     @Override
-    public synchronized void joinHorizontal(Board boardLeft, Board boardRight) {
-        boardLeft.setNeighborRight(boardRight);
-        boardRight.setNeighborLeft(boardLeft);
+    public synchronized void joinHorizontal(String boardLeft, String boardRight) {
+        boards.get(boardLeft).setNeighborRight(boards.get(boardRight));
+        boards.get(boardRight).setNeighborLeft(boards.get(boardLeft));
 
     }
 
