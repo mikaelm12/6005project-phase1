@@ -47,6 +47,12 @@ public interface Gadget {
     
     /**
      * 
+     * @return name of the gadget
+     */
+    public String getName();
+    
+    /**
+     * 
      * @return string representation of the gadget
      */
     @Override

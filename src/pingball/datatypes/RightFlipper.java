@@ -169,6 +169,13 @@ public class RightFlipper implements Gadget{
     }
     
     /**
+     * @return name of this gadget
+     */
+    public String getName(){
+        return new String(name);
+    }
+    
+    /**
      * 
      * @return current state of flipper
      */
@@ -181,7 +188,35 @@ public class RightFlipper implements Gadget{
      */
     @Override
     public String toString(){
-        return null;
+        if(state.equals("initial")){
+            if(orientation == 0){
+                return "  ||";
+            }
+            else if(orientation == 90){
+                return " - -";
+            }
+            else if(orientation == 180){
+                return "||  ";
+            }
+            else{
+                return "- - ";
+            }
+            
+        }
+        else{
+            if(orientation == 0){
+                return "- - ";
+            }
+            else if(orientation == 90){
+                return "  ||";
+            }
+            else if(orientation == 180){
+                return " - -";
+            }
+            else{
+                return "||  ";
+            }
+        }
     }
     
     /**

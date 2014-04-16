@@ -122,11 +122,22 @@ import static org.junit.Assert.*
     }
     
     /**
+     * @return name of this gadget
+     */
+    public String getName(){
+        return new String(name);
+    }
+    
+    /**
      * @return String representation of the absorber
      */
     @Override 
     public String toString(){
-        return null;
+        String string = new String();
+        for (int i = 0; i < (width*height); i++) {
+            string += "=";
+        }
+        return string;
     }
     
     /**

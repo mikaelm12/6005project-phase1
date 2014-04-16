@@ -143,6 +143,13 @@ public class TriangularBumper implements Gadget{
     }
     
     /**
+     * @return name of this gadget
+     */
+    public String getName(){
+        return new String(name);
+    }
+    
+    /**
      * @return a String representation of TriangularBumper in the orientation specified
      */
     @Override

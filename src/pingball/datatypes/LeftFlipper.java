@@ -175,11 +175,46 @@ public class LeftFlipper implements Gadget{
     }
     
     /**
+     * @return name of this gadget
+     */
+    public String getName(){
+        return new String(name);
+    }
+    
+    /**
      * @return String representation of the flipper
      */
     @Override
     public String toString(){
-        return "LEFTFLipper";
+        if(state.equals("initial")){
+            if(orientation == 0){
+                return "||  ";
+            }
+            else if(orientation == 90){
+                return "- - ";
+            }
+            else if(orientation == 180){
+                return "  ||";
+            }
+            else{
+                return " - -";
+            }
+            
+        }
+        else{
+            if(orientation == 0){
+                return "- - ";
+            }
+            else if(orientation == 90){
+                return "  ||";
+            }
+            else if(orientation == 180){
+                return " - -";
+            }
+            else{
+                return "||  ";
+            }
+        }
     }
     
     /**

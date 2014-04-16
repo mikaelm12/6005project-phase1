@@ -91,6 +91,24 @@ public class Ball {
         this.setVelocity(newVelocityVector);
     }
     
+    /**
+     * updates the position of the ball after a timestep
+     * @param timeStep period of time 
+     */
+    public void updateBallPosition(double timeStep){
+        double xPos = velocityVector.x()*timeStep;
+        double yPos = velocityVector.y()*timeStep;
+        this.setPosition(xPos, yPos);
+    }
+    
+    /**
+     * @return string representation of the ball
+     */
+    @Override
+    public String toString(){
+        return "*";
+    }
+    
     private void checkRep(){
         
     }
