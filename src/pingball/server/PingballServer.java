@@ -58,11 +58,11 @@ public class PingballServer {
             int xc = 10;
             int yc = 10;
             Vect vel = new Vect(3.0, 4.0);
-            Board board = new Board("Name");
+//            Board board = new Board("Name");
             Ball ball = new Ball(xc, yc, .25, vel);
 //            board.addBall(ball);
             System.out.println("hello");
-            System.out.println(board.toString());
+//            System.out.println(board.toString());
             
         }
     }
