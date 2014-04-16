@@ -39,9 +39,20 @@ public class PingballServer {
      *                     (IOExceptions from individual clients do *not* terminate serve())
      */
     public void serve() throws IOException {
+        System.out.println("Server is running now");
         while (true) {
             // block until a client connects
-            Socket socket = serverSocket.accept();
+            Socket ClientSocket = serverSocket.accept();
+            
+            //Constantly wait for user input to join boards
+            BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
+            PrintWriter out = new PrintWriter(ClientSocket.getOutputStream(), true);
+            for (String line = fromUser.readLine(); line != null; line = fromUser.readLine()) {
+                String output = handleRequest(line);
+                    out.println(output);
+            }
+            new PingballClientThread(ClientSocket, world).start();
+            
             int x = 20;
             int y = 20;
             int xc = 10;
@@ -52,7 +63,7 @@ public class PingballServer {
 //            board.addBall(ball);
             System.out.println("hello");
             System.out.println(board.toString());
-            new PingballClientThread(socket, board, world).start();
+            
         }
     }
     
@@ -93,9 +104,27 @@ public class PingballServer {
             
 
     public static void runPingballServer(int port) throws IOException{
-        //Create world
-        World worl = null;
+        World worl = new World();
         PingballServer server = new PingballServer(port, worl);
         server.serve();
+    }
+    
+    private String handleRequest(String input) {
+        String help = "Invalid input, please use  'h NAME_left NAME_right' or 'v NAME_top NAME_bottom' to join boards\n";
+        String regex = "(h [a-zA-Z]+)|(v [a-zA-Z]+)";
+        if ( ! input.matches(regex)) {
+            // invalid input
+            return help;
+        }
+        
+        String[] tokens = input.split(" ");
+        if (tokens[0].equals("h")) {
+            world.joinHorizontal(tokens[1], tokens[2]);
+        } else if (tokens[0].equals("v")) {
+            world.joinVertical(tokens[1], tokens[2]);
+            return null;
+        // Should never get here
+        }
+        throw new UnsupportedOperationException();
     }
 }

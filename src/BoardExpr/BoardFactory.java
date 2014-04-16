@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import pingball.datatypes.Gadget;
 import warmup.Board;
 
 
@@ -22,7 +23,7 @@ public class BoardFactory {
      * @param input string representing a conjunctive boolean expression
      * @return Expression corresponding to the input
      */
-    public static Board parse(String path) {
+    public static Gadget parse(String path) {
         // Create a stream of tokens using the lexer.
         CharStream stream;
         try {
@@ -54,12 +55,12 @@ public class BoardFactory {
 //        new ParseTreeWalker().walk(new PrintEverythingListener(), tree);
         
         // Finally, construct an Expression value by walking over the parse tree.
-        //ParseTreeWalker walker = new ParseTreeWalker();
-        //BoardFileListener listener = new BoardFileListener();
-        //walker.walk(listener, tree);
+        ParseTreeWalker walker = new ParseTreeWalker();
+        BoardFileListener listener = new BoardFileListener();
+        walker.walk(listener, tree);
         
         // return the Expression value that the listener created
-        return null;//listener.getExpression(); //mot boilerplate
+        return listener.getGadget(); //mot boilerplate
     }
     
     

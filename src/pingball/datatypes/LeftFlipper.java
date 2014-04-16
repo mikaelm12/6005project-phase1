@@ -149,7 +149,7 @@ public class LeftFlipper implements Gadget{
      */
     @Override
     public String toString(){
-        return null;
+        return "LEFTFLipper";
     }
     
     /**

@@ -32,7 +32,10 @@ package BoardExpr;
  * *** ANTLR requires tokens to be CAPITALIZED, like START_ITALIC, END_ITALIC, and TEXT.
  */
 
- 
+COMMENT : ('#' (~'\n')* '\n') -> skip;
+WHITESPACE : [ \t\r\n,]+ -> skip;
+
+INTEGER : [0-9]+; 
 X : 'x';
 Y : 'y';
 EQUALS : '=';
@@ -47,9 +50,10 @@ ORIENTATIONKEY : 'orientation';
 ACTION : 'action';
 WIDTH : 'width';
 HEIGHT : 'height';
-HASHTAG : '#';
 
-WHITESPACE : [ \t\r\n.,]+ -> skip;
+
+
+
 
 BOARD : 'board';
 BALL :'ball';
@@ -63,14 +67,14 @@ FIRE : 'fire';
 SQUAREBUMPER : 'squareBumper';
 CIRCLEBUMPER : 'circleBumper';
 TRIANGLEBUMPER :'triangleBumper';
-ORIENTATIONVALUE : ('0'|'90'|'180'|'270');
+
 
 // Flippers
 LEFTFLIPPER : 'leftFlipper';
 RIGHTFLIPPER :'rightFlipper';
 
 
-INTEGER : [0-9]+;
+
 FLOAT : ('-')?[0-9]+(.[0-9]+)?;
 NAME : [A-Za-z_][A-Za-z_0-9.,]*; 
 
@@ -88,7 +92,8 @@ gravity : GRAVITY EQUALS FLOAT;
 friction1:  FRICTION1 EQUALS FLOAT;
 friction2: FRICTION2 EQUALS FLOAT;
 
-bumper : (SQUAREBUMPER | CIRCLEBUMPER| TRIANGLEBUMPER) id x y orientation*;
+bumper : bumpertype id x y orientation*;
+bumpertype : (SQUAREBUMPER | CIRCLEBUMPER| TRIANGLEBUMPER);
 
 
 flipperleft : LEFTFLIPPER id x y orientation;  //Not sure if they need to be different
@@ -97,13 +102,14 @@ flipperright : RIGHTFLIPPER id x y orientation;
 absorber : ABSORBER id x y width height;
 
 fire : FIRE TRIGGER EQUALS NAME ACTION EQUALS NAME;
-comment : HASHTAG+ NAME*;
+
 
 x : X EQUALS  (INTEGER|FLOAT);
 y : Y EQUALS (INTEGER|FLOAT);
 xv: XVEL EQUALS FLOAT;
 yv : YVEL EQUALS FLOAT;
-orientation: ORIENTATIONKEY EQUALS ORIENTATIONVALUE ;
+orientationvalue : ('0'|'90'|'180'|'270');
+orientation: ORIENTATIONKEY EQUALS orientationvalue ;
 width : WIDTH EQUALS INTEGER;
 height : HEIGHT EQUALS INTEGER;
 id : NAMEKEY EQUALS NAME;

@@ -55,6 +55,14 @@ public class Board {
     }
     
     /**
+     * Get this board's name
+     * @return the name
+     */
+    public String getName(){
+        return this.name;
+    }
+    
+    /**
      * 
      * @return array containing all walls
      */
@@ -165,41 +173,5 @@ public class Board {
         else if (neighborRight == board){neighborRight = null;}
     }
     
-    /**
-     * Transfers a ball from the left or right extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
-    public void transferBallHorizontal(Board to, Ball ball){
-        balls.remove(ball);
-        if (ball.getPosition()[0] > 10){
-            Ball newBall = new Ball(0, ball.getPosition()[1], ball.getVelocity());
-            to.addBall(newBall);
-        } else {
-            Ball newBall = new Ball(20, ball.getPosition()[1], ball.getVelocity());
-            to.addBall(newBall);
-        }
-    }
     
-    /**
-     * Transfers a ball from the top or bottom extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
-    public void transferBallVertical(Board to, Ball ball){
-        balls.remove(ball);
-        if (ball.getPosition()[1] > 10){
-            Ball newBall = new Ball(ball.getPosition()[0], 0, ball.getVelocity());
-            to.addBall(newBall);
-        } else {
-            Ball newBall = new Ball(ball.getPosition()[0], 20, ball.getVelocity());
-            to.addBall(newBall);
-        }
-        
-        
-    }
 }

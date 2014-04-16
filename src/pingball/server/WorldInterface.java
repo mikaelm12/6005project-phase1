@@ -26,14 +26,14 @@ public interface WorldInterface {
      * @param boardTop Board to be on top
      * @param boardBottom  Board to be on bottom
      */
-    public void joinVertical(Board boardTop, Board boardBottom);
+    public void joinVertical(String boardTop, String boardBottom);
     
     /**
      * Joins two boards in the world horizontally
      * @param boardLeft  Board to be on the left
      * @param boardRight   Board to be on the right
      */
-    public void joinHorizontal(Board boardLeft, Board boardRight);
+    public void joinHorizontal(String boardLeft, String boardRight);
 
     
 }

@@ -21,12 +21,25 @@ public class PingballClientThread extends Thread {
     /**
      * Initializes a user
      * @param socket to be used by this thread
+     * @throws IOException 
      */
-    public PingballClientThread(Socket socket, Board board2, World world) {
+    public PingballClientThread(Socket socket, World world) throws IOException {
         super("PingballClientThread");
         this.socket = socket;
-        this.board = board2;
         this.world = world;
+        String fileBoard = "";
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        try {
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
+                fileBoard += line;
+            }
+            board = null; //create board
+        }
+        finally {
+            in.close();
+        }
+        world.addBoard(board);
+    
     }
 
     public void run() {
@@ -44,20 +57,17 @@ public class PingballClientThread extends Thread {
     }
     
     public void handleConnection (Socket socket) throws IOException{
-           
+        /*Game is played here. Output to the client is the string representation of the board
+        * sent every so often. 
+        * PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        * out.println(board.toString());
+        */
         
         System.out.println("hello world");
         long start = System.currentTimeMillis();
         long previous = start;
 //        Ball ball = board.balls.get(0);
         while (true){
-            
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            for (String line = in.readLine(); line != null; line = in.readLine()) {
-                String output = handleRequest(line);
-                    out.println(output);
-            }
             
             long current = System.currentTimeMillis();
            
@@ -92,27 +102,6 @@ public class PingballClientThread extends Thread {
         }
             
     }
-    
-    
-            private static String handleRequest(String input) {
-                String help = "Invalid input, please use  'h NAME_left NAME_right' or 'v NAME_top NAME_bottom' to join boards\n";
-                String regex = "(h [a-zA-Z]+)|(v [a-zA-Z]+)";
-                if ( ! input.matches(regex)) {
-                    // invalid input
-                    return help;
-                }
-                
-                String[] tokens = input.split(" ");
-                if (tokens[0].equals("h")) {
-                    // join horizontally the two boards
-                    return null;
-                } else if (tokens[0].equals("v")) {
-                    //join vertically the two boards
-                    return null;
-                // Should never get here
-                }
-                throw new UnsupportedOperationException();
-            }
     
     
 }
