@@ -103,7 +103,7 @@ public class CircularBumper implements Gadget{
      */
     @Override
     public String toString(){
-        return null;
+        return "O";
     }
     
     /**

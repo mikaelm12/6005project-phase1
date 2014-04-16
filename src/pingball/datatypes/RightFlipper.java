@@ -131,6 +131,7 @@ public class RightFlipper implements Gadget{
     @Override
     public void reflectOffGadget(Ball ball){
         Vect newVelocityVector;
+      //collision will cause instantaneous rotation of flipper
         //define +angularVelocity as being clockwise rotation
         if(state.equals("initial")){
             newVelocityVector = Geometry.reflectRotatingWall(flipper, flipper.p1(), angularVelocity, 

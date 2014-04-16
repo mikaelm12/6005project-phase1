@@ -19,6 +19,8 @@ import static org.junit.Assert.*
     private final String name;
     private List<Gadget> gadgetsToFire;
     private final LineSegment[] edges = new LineSegment[4];
+    private String state = "empty";
+    public Ball ball;
     
     //Rep invariant:
     //width>0, height>0, name!=null && name.length>0
@@ -56,9 +58,11 @@ import static org.junit.Assert.*
      * shoots out a stored ball when triggered
      */
     @Override
-    public void action() {
-        //TODO: shoot stored ball
-        
+    public synchronized void action() {
+        if(state.equals("full")){
+            ball.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            state = "empty";
+        }
         checkRep();
     }
     
@@ -96,6 +100,8 @@ import static org.junit.Assert.*
         ball.setVelocity(new Vect(0,0)); //stop ball
         //set ball center position .25L away from bottom and right wall
         ball.setPosition(bottom.p2().x()-0.25, bottom.p2().y()-0.25);
+        this.ball = ball;
+        state = "full";
         this.trigger();
     }
     

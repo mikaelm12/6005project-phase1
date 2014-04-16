@@ -147,7 +147,11 @@ public class TriangularBumper implements Gadget{
      */
     @Override
     public String toString(){
-        return null;
+        if(orientation == 0 || orientation == 180){
+            return "/";
+        }else{
+            return "\\";
+        }
     }
     
     /**
