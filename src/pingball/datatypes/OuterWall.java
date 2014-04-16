@@ -32,10 +32,9 @@ public class OuterWall implements Gadget{
     }
     
     /**
-     * triggers the actions of gadgets in gadgetsToFire
+     * fires the actions of gadgets in gadgetsToFire
      */
-    @Override
-    public void trigger(){
+    private void trigger(){
         for (Gadget gadget : gadgetsToFire) {
             gadget.action();
         }
@@ -68,20 +67,23 @@ public class OuterWall implements Gadget{
     }
     
     /**
-     * reflects the ball off gadget
+     * reflects the ball off wall,updates ball's velocity and triggers this gadget
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
      */
     @Override
-    public Vect reflectOffGadget(Ball ball){
-        return null;
+    public void reflectOffGadget(Ball ball){
+        //reflect only if solid
+        if(solid){
+            Vect newVelocityVector = Geometry.reflectWall(wall, ball.getVelocity(), coR);
+            ball.setVelocity(newVelocityVector);
+        }    
     }
     
     /**
      * @return list of gadgets that are fired when this gadget is triggered
      */
     public List<Gadget> getGadgetsToFire(){
-        return null;
+        return new ArrayList<Gadget>(gadgetsToFire);
     }
     
     /**
@@ -90,7 +92,15 @@ public class OuterWall implements Gadget{
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget){
-        
+        gadgetsToFire.add(gadget);
+    }
+    
+    /**
+     * sets the solidity of the wall
+     * @param isSolid
+     */
+    public void setWallSolidity(boolean isSolid){
+        solid = isSolid;
     }
     
     /**

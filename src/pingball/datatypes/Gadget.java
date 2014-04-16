@@ -8,12 +8,6 @@ import physics.Vect;
 public interface Gadget {
     
     /**
-     * event that happens at the gadget such as when the ball collides with it
-     * triggers the action of other gadgets that may include itself
-     */
-    public void trigger(); //TODO: consider making method private within gadgets
-    
-    /**
      * response that the gadget makes to a trigger happening somewhere on the board
      */
     public void action();
@@ -32,11 +26,11 @@ public interface Gadget {
     public double timeUntilCollision(Ball ball);
     
     /**
-     * reflects the ball off gadget. Calls on trigger to trigger gadgets connected to this gadget
+     * reflects the ball off gadget and updates its velocity. Calls on trigger to trigger 
+     * gadgets connected to this gadget
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
      */
-    public Vect reflectOffGadget(Ball ball);
+    public void reflectOffGadget(Ball ball);
     
     /**
      * 

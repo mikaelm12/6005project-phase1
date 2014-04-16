@@ -36,10 +36,9 @@ public class CircularBumper implements Gadget{
     }
     
     /**
-     * triggers the actions of gadgets in gadgetsToFire
+     * fires the actions of gadgets in gadgetsToFire
      */
-    @Override
-    public void trigger(){
+    private void trigger(){
         for (Gadget gadget : gadgetsToFire) {
             gadget.action();
         }
@@ -72,20 +71,22 @@ public class CircularBumper implements Gadget{
     }
     
     /**
-     * reflects the ball off gadget
+     * reflects the ball off gadget, updates the ball's velocity and triggers this gadget
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
      */
     @Override
-    public Vect reflectOffGadget(Ball ball){
-        return null;
+    public void reflectOffGadget(Ball ball){
+        Vect newVelocityVector = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), 
+                                                        ball.getVelocity(), coR);
+        ball.setVelocity(newVelocityVector);
+        this.trigger();
     }
     
     /**
      * @return list of gadgets that are fired when this gadget is triggered
      */
     public List<Gadget> getGadgetsToFire(){
-        return null;
+        return new ArrayList<Gadget>(gadgetsToFire);
     }
     
     /**
@@ -94,7 +95,7 @@ public class CircularBumper implements Gadget{
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget){
-        
+        gadgetsToFire.add(gadget);
     }
     
     /**
@@ -102,7 +103,7 @@ public class CircularBumper implements Gadget{
      */
     @Override
     public String toString(){
-        return null;
+        return "O";
     }
     
     /**

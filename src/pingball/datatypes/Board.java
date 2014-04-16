@@ -33,15 +33,16 @@ public class Board {
      * @param x width of board
      * @param y height of board
      */
-    public Board(String name){ //TODO: board take in list of gadgets
+    public Board(String name,double gravity, double mu, double mu2){ 
+        //set walls to be solid by default
         wallLeft = new OuterWall("left", 0,0,0,height,true);
         wallRight = new OuterWall( "right",width,0,width,height,true);
         wallTop = new OuterWall("top",0,0,width,0,true);
         wallBottom = new OuterWall("bottom",0,height,width,height,true);
         this.name = name;
-        this.gravity = 0;
-        this.mu = 0;
-        this.mu2 = 0;
+        this.gravity = gravity;
+        this.mu = mu;
+        this.mu2 = mu2;
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
         
@@ -173,41 +174,5 @@ public class Board {
         else if (neighborRight == board){neighborRight = null;}
     }
     
-    /**
-     * Transfers a ball from the left or right extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
-    public void transferBallHorizontal(Board to, Ball ball){
-        balls.remove(ball);
-        if (ball.getPosition()[0] > 10){
-            Ball newBall = new Ball(0, ball.getPosition()[1], ball.getVelocity());
-            to.addBall(newBall);
-        } else {
-            Ball newBall = new Ball(20, ball.getPosition()[1], ball.getVelocity());
-            to.addBall(newBall);
-        }
-    }
     
-    /**
-     * Transfers a ball from the top or bottom extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
-    public void transferBallVertical(Board to, Ball ball){
-        balls.remove(ball);
-        if (ball.getPosition()[1] > 10){
-            Ball newBall = new Ball(ball.getPosition()[0], 0, ball.getVelocity());
-            to.addBall(newBall);
-        } else {
-            Ball newBall = new Ball(ball.getPosition()[0], 20, ball.getVelocity());
-            to.addBall(newBall);
-        }
-        
-        
-    }
 }

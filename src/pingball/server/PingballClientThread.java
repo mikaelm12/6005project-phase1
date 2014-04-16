@@ -38,6 +38,7 @@ public class PingballClientThread extends Thread {
         finally {
             in.close();
         }
+        world.addBoard(board);
     
     }
 

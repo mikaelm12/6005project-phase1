@@ -19,6 +19,8 @@ import static org.junit.Assert.*
     private final String name;
     private List<Gadget> gadgetsToFire;
     private final LineSegment[] edges = new LineSegment[4];
+    private String state = "empty";
+    public Ball ball;
     
     //Rep invariant:
     //width>0, height>0, name!=null && name.length>0
@@ -44,10 +46,9 @@ import static org.junit.Assert.*
     }
     
     /**
-     * triggers the actions of gadgets in gadgetsToFire
+     * fires the actions of gadgets in gadgetsToFire
      */
-    @Override
-    public void trigger(){
+    private void trigger(){
         for (Gadget gadget : gadgetsToFire) {
             gadget.action();
         }
@@ -57,9 +58,11 @@ import static org.junit.Assert.*
      * shoots out a stored ball when triggered
      */
     @Override
-    public void action() {
-        //TODO: shoot stored ball
-        
+    public synchronized void action() {
+        if(state.equals("full")){
+            ball.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            state = "empty";
+        }
         checkRep();
     }
     
@@ -78,7 +81,7 @@ import static org.junit.Assert.*
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        double timeToClosestCollision = 10000;
+        double timeToClosestCollision = Double.POSITIVE_INFINITY;
         for (LineSegment edge : edges) {
             double timeToEdgeCollision = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
             if(timeToEdgeCollision < timeToClosestCollision){
@@ -89,20 +92,24 @@ import static org.junit.Assert.*
     }
     
     /**
-     * reflects the ball off gadget
+     * stop ball and store it unmoving in the bottom right hand corner of the absorber
      * @param ball to be reflected
-     * @return the new velocity vector of the ball
      */
     @Override
-    public Vect reflectOffGadget(Ball ball){
-        return null;
+    public void reflectOffGadget(Ball ball){
+        ball.setVelocity(new Vect(0,0)); //stop ball
+        //set ball center position .25L away from bottom and right wall
+        ball.setPosition(bottom.p2().x()-0.25, bottom.p2().y()-0.25);
+        this.ball = ball;
+        state = "full";
+        this.trigger();
     }
     
     /**
      * @return list of gadgets that are fired when this gadget is triggered
      */
     public List<Gadget> getGadgetsToFire(){
-        return null;
+        return new ArrayList<Gadget>(gadgetsToFire);
     }
     
     /**
@@ -111,7 +118,7 @@ import static org.junit.Assert.*
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget){
-        
+        gadgetsToFire.add(gadget);
     }
     
     /**
