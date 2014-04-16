@@ -6,8 +6,9 @@ import java.util.List;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-import static org.junit.Assert.*
-;public class Absorber implements Gadget{
+import static org.junit.Assert.*;
+
+public class Absorber implements Gadget{
     
     private final int width;
     private final int height;
@@ -147,4 +148,6 @@ import static org.junit.Assert.*
         assertTrue(name.length() > 0);
         assertTrue(width > 0 && height > 0);
     }
+
+
 }

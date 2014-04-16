@@ -226,4 +226,6 @@ public class RightFlipper implements Gadget{
         assertTrue(name.length() > 0);
         assertTrue(state.equals("initial") || state.equals("final"));
     }
+
+
 }

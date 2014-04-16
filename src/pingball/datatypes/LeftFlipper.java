@@ -225,4 +225,6 @@ public class LeftFlipper implements Gadget{
         assertTrue(state.equals("initial") || state.equals("final"));
     }
 
+
+
 }

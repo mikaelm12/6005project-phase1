@@ -45,6 +45,8 @@ public interface Gadget {
      */
     public void addGadgetToFire(Gadget gadget);
     
+
+    
     /**
      * 
      * @return name of the gadget

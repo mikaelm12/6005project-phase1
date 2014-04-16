@@ -9,13 +9,17 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
+import BoardExpr.BoardFactory;
+import BoardExpr.BoardFileListener;
 import physics.Geometry;
 import physics.Vect;
-import warmup.Ball;
-import warmup.Board;
+import pingball.datatypes.Ball;
+import pingball.datatypes.Board;
+
 import warmup.Wall;
 
 public class PingballClient {
@@ -64,7 +68,7 @@ public class PingballClient {
             e.printStackTrace();
         }
         } else { //Play single machine mode
-            runSingleMachine(file);
+           // runSingleMachine(file);
         }
     }
     
@@ -77,7 +81,6 @@ public class PingballClient {
      * @throws IOException
      */
     public static void runPingBallServerClient(String host, int port, File file) throws IOException{
-        System.out.println("Go multiplayer! "+host+" "+port);
         String hostName = host;
         int portNumber = port;
         Socket toServerSocket = new Socket(hostName, portNumber);
@@ -88,7 +91,6 @@ public class PingballClient {
             String l;
             while ((l = inputFileStream.readLine()) != null) {
                 toServe.println(l);
-                System.out.println(l);
             }
         } finally {
             if (inputFileStream != null) {
@@ -106,8 +108,10 @@ public class PingballClient {
         
     }
     
-    public static void runSingleMachine (File file){
-        Board board = null; //create board from file
+    public static void runSingleMachine (String path){
+        
+        Board board  =  BoardFactory.parse(path);
+        
         
         //PLAY!
         
