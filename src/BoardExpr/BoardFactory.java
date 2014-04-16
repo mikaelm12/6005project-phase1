@@ -2,6 +2,7 @@ package BoardExpr;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -23,7 +24,7 @@ public class BoardFactory {
      * @param input string representing a conjunctive boolean expression
      * @return Expression corresponding to the input
      */
-    public static Gadget parse(String path) {
+    public static List<Gadget> parse(String path) {
         // Create a stream of tokens using the lexer.
         CharStream stream;
         try {
@@ -60,7 +61,7 @@ public class BoardFactory {
         walker.walk(listener, tree);
         
         // return the Expression value that the listener created
-        return listener.getGadget(); //mot boilerplate
+        return listener.getGadgets(); //not boilerplate
     }
     
     

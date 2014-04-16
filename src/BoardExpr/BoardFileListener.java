@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import physics.Vect;
 import pingball.datatypes.Absorber;
+import pingball.datatypes.Ball;
 import pingball.datatypes.CircularBumper;
 import pingball.datatypes.Gadget;
 import pingball.datatypes.LeftFlipper;
@@ -14,6 +16,7 @@ import pingball.datatypes.SquareBumper;
 import pingball.datatypes.TriangularBumper;
 import BoardExpr.BoardGrammarParser.AbsorberContext;
 import BoardExpr.BoardGrammarParser.BallContext;
+import BoardExpr.BoardGrammarParser.BoardContext;
 import BoardExpr.BoardGrammarParser.BumperContext;
 import BoardExpr.BoardGrammarParser.FlipperleftContext;
 import BoardExpr.BoardGrammarParser.FlipperrightContext;
@@ -21,10 +24,40 @@ import BoardExpr.BoardGrammarParser.FlipperrightContext;
 
 public class BoardFileListener extends BoardGrammarBaseListener {
     
-    List<Gadget>  gadgets = new ArrayList<Gadget>();
+    List<Object>  gadgets = new ArrayList<Object>();
+    List<Ball> balls = new ArrayList<Ball>();
+    String[] boardInfo = new String[4];  // position 0 = name  pos 1 = gravity pos2 = friction1 pos3 = friction2
+    
+    
+    
+    
+    @Override
+    public void exitBoard(BoardContext ctx) {
+        
+        //name=sampleBoard2_1 gravity=20.0 friction1=0.020 friction2=0.020
+        double gravity = Double.parseDouble(ctx.boardspec().gravity().FLOAT().getText());
+        double friction1 = Double.parseDouble(ctx.boardspec().friction1().FLOAT().getText());
+        double friction2 = Double.parseDouble(ctx.boardspec().friction2().FLOAT().getText());
+        
+        String name = ctx.boardspec().id().NAME().getText();
+        
+        
+        super.exitBoard(ctx);
+    }
     
     @Override
     public void exitBall(BallContext ctx) {
+        
+        int x = Integer.parseInt(ctx.x().INTEGER().getText());
+        int y = Integer.parseInt(ctx.y().INTEGER().getText());
+        double xvel = Double.parseDouble(ctx.xv().XVEL().getText());
+        double yvel = Double.parseDouble(ctx.yv().YVEL().getText());
+        Vect vect = new Vect(xvel, yvel);
+        String name = ctx.id().NAME().getText();
+        
+        Ball ball = new Ball(x,y, vect);
+        gadgets.add(ball);
+        
         
         
         super.exitBall(ctx);
@@ -114,14 +147,8 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         super.exitAbsorber(ctx);
     }
     
-    public Gadget getGadget(){
-        if (gadgets.size() > 0){
-            Gadget g = gadgets.get(0);
-            gadgets.remove(0);
-            return g;
-            
-        }
-        else return null;
+    public List<Gadget> getGadgets(){
+        return gadgets;
     }
 
 }

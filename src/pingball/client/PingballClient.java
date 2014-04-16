@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
+import BoardExpr.BoardFactory;
+import BoardExpr.BoardFileListener;
 import physics.Geometry;
 import physics.Vect;
 import warmup.Ball;
@@ -101,7 +103,9 @@ public class PingballClient {
         }
     }
     
-    public static void runSingleMachine (File file){
+    public static void runSingleMachine (String path){
+        
+        BoardFactory.parse(path);
         Board board = null; //create board from file
         
         //PLAY!
