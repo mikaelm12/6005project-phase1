@@ -115,4 +115,9 @@ public class CircularBumper implements Gadget{
         assertTrue(this.circle.getCenter().x() <= 19.5 && this.circle.getCenter().y() <= 19.5);
     }
 
+    @Override
+    public boolean isGadget() {
+        return true;
+    }
+
 }

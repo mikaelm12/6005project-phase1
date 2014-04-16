@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
@@ -16,8 +17,9 @@ import BoardExpr.BoardFactory;
 import BoardExpr.BoardFileListener;
 import physics.Geometry;
 import physics.Vect;
-import warmup.Ball;
-import warmup.Board;
+import pingball.datatypes.Ball;
+import pingball.datatypes.Board;
+
 import warmup.Wall;
 
 public class PingballClient {
@@ -105,8 +107,8 @@ public class PingballClient {
     
     public static void runSingleMachine (String path){
         
-        BoardFactory.parse(path);
-        Board board = null; //create board from file
+        Board board  =  BoardFactory.parse(path);
+        
         
         //PLAY!
         

@@ -6,8 +6,9 @@ import java.util.List;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-import static org.junit.Assert.*
-;public class Absorber implements Gadget{
+import static org.junit.Assert.*;
+
+public class Absorber implements Gadget{
     
     private final int width;
     private final int height;
@@ -135,5 +136,14 @@ import static org.junit.Assert.*
     private void checkRep(){
         assertTrue(name.length() > 0);
         assertTrue(width > 0 && height > 0);
+    }
+
+    /**
+     * This is a method to tell outside classes that this is a gadget
+     * @return true
+     */
+    @Override
+    public boolean isGadget() {
+        return true;
     }
 }

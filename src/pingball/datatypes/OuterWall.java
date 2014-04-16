@@ -121,6 +121,15 @@ public class OuterWall implements Gadget{
         assertTrue(wall.p2().x() == 0 || wall.p2().x() == 20);
         assertTrue(wall.p2().y() == 0 || wall.p2().y() == 20);
     }
+
+    /**
+     * This is a method to tell outside classes that this is a gadget
+     * @return true
+     */
+    @Override
+    public boolean isGadget() {
+       return true;
+    }
     
     
 

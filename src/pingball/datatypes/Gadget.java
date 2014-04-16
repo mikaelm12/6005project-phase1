@@ -45,6 +45,13 @@ public interface Gadget {
      */
     public void addGadgetToFire(Gadget gadget);
     
+    
+    /**
+     * This is a method to tell outside classes that this is a gadget
+     * @return true
+     */
+    public boolean isGadget();
+    
     /**
      * 
      * @return string representation of the gadget

@@ -166,4 +166,13 @@ public class TriangularBumper implements Gadget{
         }
     }
 
+    /**
+     * This is a method to tell outside classes that this is a gadget
+     * @return true
+     */
+    @Override
+    public boolean isGadget() {
+        return true;
+    }
+    
 }
