@@ -21,6 +21,7 @@ public class Absorber implements Gadget{
     private List<Gadget> gadgetsToFire;
     private final LineSegment[] edges = new LineSegment[4];
     private String state = "empty";
+    private List<Ball> balls;
     public Ball ball;
     
     //Rep invariant:
@@ -28,7 +29,7 @@ public class Absorber implements Gadget{
     //Abstraction Function:
     //represents an absorber with width, width, and height, height
     
-    public Absorber(String name,double x,double y, int width, int height){
+    public Absorber(String name,int x,int y, int width, int height){
         this.name = name;
         this.width = width;
         this.height = height;
@@ -61,7 +62,10 @@ public class Absorber implements Gadget{
     @Override
     public synchronized void action() {
         if(state.equals("full")){
-            ball.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            for (Ball ball : balls) {
+                //shoot all balls simultaneously
+                ball.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            }
             state = "empty";
         }
         checkRep();
@@ -103,6 +107,7 @@ public class Absorber implements Gadget{
         ball.setPosition(bottom.p2().x()-0.25, bottom.p2().y()-0.25);
         this.ball = ball;
         state = "full";
+        balls.add(ball);
         this.trigger();
     }
     
@@ -127,6 +132,14 @@ public class Absorber implements Gadget{
      */
     public String getName(){
         return new String(name);
+    }
+    
+    /**
+     * @return position of the gadget
+     */
+    @Override
+    public Vect getPosition(){
+        return new Vect(top.p1().x(),top.p1().y());
     }
     
     /**

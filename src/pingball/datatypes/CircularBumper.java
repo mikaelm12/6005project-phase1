@@ -18,6 +18,7 @@ public class CircularBumper implements Gadget{
     private final Circle circle;
     private final String name;
     private List<Gadget> gadgetsToFire;
+    private final Vect origin;
     
     //Rep invariant:
     //name!=null && name.length>0
@@ -25,8 +26,9 @@ public class CircularBumper implements Gadget{
     //Abstraction Function:
     //circle represents circularBumper
     
-    public CircularBumper(String name,double x, double y){
+    public CircularBumper(String name,int x, int y){
         this.name = name;
+        this.origin = new Vect(x,y);
         this.diameter = 1.0;
         this.coR = 1.0;
         this.circle = new Circle(x+0.5,y+0.5,diameter);
@@ -103,6 +105,14 @@ public class CircularBumper implements Gadget{
      */
     public String getName(){
         return new String(name);
+    }
+    
+    /**
+     * @return position of the gadget
+     */
+    @Override
+    public Vect getPosition(){
+        return new Vect(origin.x(),origin.y());
     }
     
     /**

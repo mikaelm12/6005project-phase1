@@ -69,7 +69,7 @@ public class PingBallDatatypesTest {
         assertTrue(ball2.getVelocity().x() == 1);
         assertTrue(ball2.getVelocity().y() == 0);
         
-        CircularBumper circular = new CircularBumper("circular",2.5,2.5);
+        CircularBumper circular = new CircularBumper("circular",2,2);
         Ball ball3 = new Ball("ball3",3.7,3,-1,0); //moving in -x direction
         circular.reflectOffGadget(ball3);
         assertTrue(ball3.getVelocity().x() == 1.0);

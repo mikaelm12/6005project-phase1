@@ -24,6 +24,7 @@ public class RightFlipper implements Gadget{
     //private final Vect initialP2;
     //private final Vect finalP2;
     private double angularVelocity;
+    private final Vect origin;
     
     //Rep invariant
     //if orientation == 0, then lineSegment is at right of bounding box initially
@@ -33,7 +34,7 @@ public class RightFlipper implements Gadget{
     //Abstraction Function
     //lineSegment represents flipper that rotates
     
-    public RightFlipper(String name, double x, double y,int orientation){
+    public RightFlipper(String name, int x, int y,int orientation){
         this.name = name;
         this.boxLength = 2.0;
         this.coR = 0.95;
@@ -41,9 +42,9 @@ public class RightFlipper implements Gadget{
         this.angularVelocity = (1080.0/180)*Math.PI;
         this.rotationAngle = (90.0/180)*Math.PI;
         
-        
+        this.origin = new Vect(x,y);
         this.gadgetsToFire = new ArrayList<Gadget>();
-        
+        this.gadgetsToFire.add(this); //flipper triggers itself
         
         if(orientation == 0){
             this.flipper = new LineSegment(x+2,y,x+2,y+2);
@@ -173,6 +174,14 @@ public class RightFlipper implements Gadget{
      */
     public String getName(){
         return new String(name);
+    }
+    
+    /**
+     * @return position of the gadget
+     */
+    @Override
+    public Vect getPosition(){
+        return new Vect(origin.x(),origin.y());
     }
     
     /**

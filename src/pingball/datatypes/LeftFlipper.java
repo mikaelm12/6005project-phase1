@@ -22,6 +22,7 @@ public class LeftFlipper implements Gadget{
     private List<Gadget> gadgetsToFire;
     private String state = "initial"; //not triggered yet
     private double angularVelocity;
+    private final Vect origin;
     
     //Rep invariant:
     //box within board
@@ -33,14 +34,17 @@ public class LeftFlipper implements Gadget{
     //lineSegment represents flipper that rotates
     
     
-    public LeftFlipper(String name, double x, double y, int orientation){
+    public LeftFlipper(String name, int x, int y, int orientation){
         this.name = name;
         this.boxLength = 2.0;
         this.coR = 0.95;
         this.orientation = orientation;
         this.gadgetsToFire = new ArrayList<Gadget>();
+        this.gadgetsToFire.add(this); //flipper triggers itself
         this.angularVelocity = (1080.0/180)*Math.PI;
         this.rotationAngle = (90.0/180)*Math.PI;
+        
+        this.origin = new Vect(x,y);
         
         if(orientation == 0){
             this.flipper = new LineSegment(x,y,x,y+2);
@@ -179,6 +183,14 @@ public class LeftFlipper implements Gadget{
      */
     public String getName(){
         return new String(name);
+    }
+    
+    /**
+     * @return position of the gadget
+     */
+    @Override
+    public Vect getPosition(){
+        return new Vect(origin.x(),origin.y());
     }
     
     /**

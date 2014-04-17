@@ -3,6 +3,8 @@ package pingball.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import physics.Vect;
+
 
 public class Board {
 
@@ -15,14 +17,14 @@ public class Board {
     private Board neighborRight = null;
     private Board neighborTop = null;
     private Board neighborBottom = null;
-    private final double width = 20;
-    private final double height = 20;
+    private final int width = 20;
+    private final int height = 20;
     private final double gravity;
     private final double mu;
     private final double mu2;
     private List<Ball> balls;
     private List<Gadget> gadgets;
-    private String[][] board;
+    private String[][] boardString;
     
     //Rep invariant:
     
@@ -46,13 +48,15 @@ public class Board {
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
         
+        boardString = new String[20][20];
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                boardString[i][j] = " ";
+            }
+        }
+        
         checkRep();
         
-    }
-
-    @Override
-    public String toString(){
-        return null;
     }
     
     /**
@@ -81,6 +85,18 @@ public class Board {
     }
     
     /**
+     * updates positions and velocity of the balls on the board
+     * @param timeStep difference in time
+     */
+    public void updateBallPositionsAndVelocity(double timeStep){
+        //TODO: make this compatible with more than one ball
+        for (Ball ball : balls) {
+            ball.updateBallPosition(timeStep);
+            ball.updateBallVelocityAfterTimestep(gravity, mu, mu2, timeStep);
+        }
+    }
+    
+    /**
      * removes ball from the list of balls contained in board
      * @param ball to be removed to the board
      */
@@ -94,6 +110,16 @@ public class Board {
      */
     public void addGadget(Gadget gadget){
         gadgets.add(gadget);
+    }
+    
+    /**
+     * adds the gadgets in the list of gadgets to gadgets in the board
+     * @param gadgets to be added to the board
+     */
+    public void addGadgetList(List<Gadget> gadgets){
+        for(Gadget gadget: gadgets){
+            this.gadgets.add(gadget);
+        }
     }
     
     private void checkRep(){
@@ -168,11 +194,61 @@ public class Board {
      * @param board to be removed from neighbors
      */
     public void unNeighbor (Board board){
-        if (neighborBottom == board){neighborBottom = null;}
+        if (neighborBottom == board){neighborBottom = null;} //TODO: define equals????
         else if (neighborTop == board){neighborTop = null;}
         else if (neighborLeft == board){neighborLeft = null;}
         else if (neighborRight == board){neighborRight = null;}
     }
     
+    /**
+     * @return string representation of the board
+     */
+    @Override
+    public String toString(){
+        String string = new String();
+        string += wallTop.toString() + "\n";
+        for (Gadget gadget : gadgets) {
+            Vect pos = gadget.getPosition();
+            int xPos = (int) pos.x();
+            int yPos = (int) pos.y();
+            String gadgetString = gadget.toString();
+            if(gadgetString.length() == 1){
+                boardString[yPos][xPos] = gadgetString;
+            }
+            else if(gadgetString.length() == 4){
+                boardString[yPos][xPos] = Character.toString(gadgetString.charAt(0));
+                boardString[yPos+1][xPos] = Character.toString(gadgetString.charAt(1));
+                boardString[yPos][xPos+1] = Character.toString(gadgetString.charAt(2));
+                boardString[yPos+1][xPos+1] = Character.toString(gadgetString.charAt(3));
+            }
+            else{
+                if(gadgetString.length() <= 20){
+                    for (int i = 0; i < gadgetString.length(); i++) {
+                        boardString[yPos][xPos+i] = Character.toString(gadgetString.charAt(i));
+                    }
+                }else{
+                    for (int i = 0; i < (gadgetString.length()/20); i++) {
+                        for (int j = 0; j < 20; j++) {
+                            boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((20*i)+j));
+                        }
+                    }
+                }
+            }
+            
+            
+        }
+        for (int i = 0; i < height; i++) {
+            string += ".";
+            for (int j = 0; j < width; j++) {
+                string += boardString[i][j];
+            }
+            string += ".\n";
+        }
+        string += wallBottom.toString();
+        return string;
+    }
     
 }
+
+
+
