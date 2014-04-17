@@ -162,8 +162,8 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         
         
         String name = ctx.id().NAME().getText();
-        double x = Double.parseDouble(ctx.x().INTEGER().getText());
-        double y = Double.parseDouble(ctx.y().INTEGER().getText());
+        int x = Integer.parseInt(ctx.x().INTEGER().getText());
+        int y = Integer.parseInt(ctx.y().INTEGER().getText());
         int width = Integer.parseInt(ctx.width().INTEGER().getText());
         int height = Integer.parseInt(ctx.height().INTEGER().getText());
         

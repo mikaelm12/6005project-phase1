@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import BoardExpr.BoardFactory;
+import BoardExpr.BoardFileListener;
 import physics.Geometry;
 import physics.Vect;
 import pingball.datatypes.Board;
@@ -35,7 +37,8 @@ public class PingballClientThread extends Thread {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 fileBoard += line;
             }
-            board = null; //create board
+            board = BoardFactory.parse(fileBoard);
+            out.println(board.toString());
         }
         finally {
             in.close();

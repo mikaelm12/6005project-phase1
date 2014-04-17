@@ -25,16 +25,10 @@ public class BoardFactory {
      * @param input string representing a conjunctive boolean expression
      * @return Expression corresponding to the input
      */
-    public static Board parse(String path) {
+    public static Board parse(String input) {
         // Create a stream of tokens using the lexer.
         CharStream stream;
-        try {
-            stream = new ANTLRFileStream(path);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            throw new RuntimeException("Cannot Read File");
-        }
+        stream = new ANTLRInputStream(input);
         
         BoardGrammarLexer lexer = new BoardGrammarLexer(stream);
         lexer.reportErrorsAsExceptions();
