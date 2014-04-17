@@ -93,13 +93,15 @@ public class PingballClient {
             String l;
             while ((l = inputFileStream.readLine()) != null) {
                 toServe.println(l);
+                
             }
         } finally {
+            toServe.println("END OF FILE");
+            System.out.println("done with file");
             if (inputFileStream != null) {
                 inputFileStream.close();
             }
         }
-         
        
         BufferedReader fromServe = new BufferedReader(new InputStreamReader(toServerSocket.getInputStream()));
         String fromServer;
