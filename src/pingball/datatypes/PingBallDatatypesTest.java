@@ -9,8 +9,7 @@ import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 /**
- * Test some super complicated stuff.
- * @category no_didit
+
  */
 
 public class PingBallDatatypesTest {
@@ -22,15 +21,6 @@ public class PingBallDatatypesTest {
         square.addGadgetToFire(leftFlipper);
         square.addGadgetToFire(rightFlipper);
         
-//        LineSegment line = new LineSegment(2,0,2,2);
-//        System.out.println("p1x: " + line.p1().x() + " ,p1y: " + line.p1().y());
-//        System.out.println("p2x: " + line.p2().x() + " ,p2y: " + line.p2().y());
-//        line = Geometry.rotateAround(line, line.p1(), Angle.DEG_90);
-//        System.out.println("p1x: " + line.p1().x() + " ,p1y: " + line.p1().y());
-//        System.out.println("p2x: " + line.p2().x() + " ,p2y: " + line.p2().y());
-//        line = Geometry.rotateAround(line, line.p1(), Angle.DEG_270);
-//        System.out.println("p1x: " + line.p1().x() + " ,p1y: " + line.p1().y());
-//        System.out.println("p2x: " + line.p2().x() + " ,p2y: " + line.p2().y());
         Ball ball1 = new Ball("ball1",3.2,1.2,-1.0,0);
         square.reflectOffGadget(ball1);
         
@@ -63,7 +53,6 @@ public class PingBallDatatypesTest {
         assertTrue(leftFlipper.toString().equals("  ||"));
         assertTrue(rightFlipper.toString().equals("  ||"));
         
-        System.out.println(square.timeUntilCollision(ball1));
         square.reflectOffGadget(ball1);
         
         assertTrue(leftFlipper.getState().equals("initial"));
@@ -133,7 +122,7 @@ public class PingBallDatatypesTest {
         Ball ball8 = new Ball("ball8",5,18,0,1); //moving in +y direction
         assertTrue(absorber.getState().equals("full"));
         absorber.reflectOffGadget(ball8);
-        assertTrue(absorber.getState().equals("empty"));
+        assertTrue(absorber.getState().equals("full"));
         assertTrue(ball7.getVelocity().x() == 0);
         assertTrue(ball7.getVelocity().y() == -50.0);
         assertTrue(ball8.getPosition()[0] == 19.75);
