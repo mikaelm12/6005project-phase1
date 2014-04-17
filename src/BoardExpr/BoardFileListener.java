@@ -53,7 +53,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
             
             board.addGadget(gadget);
         }
-        System.out.println(board);
+        
         
         
     super.exitBoard(ctx);
@@ -98,7 +98,6 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         String name = ctx.id().NAME().getText();
         
         
-        System.out.println(ctx.bumpertype().getText());
         if(ctx.bumpertype().getText().equals("circleBumper")){
             CircularBumper bumper = new CircularBumper(name,x,y);
             gadgets.add(bumper);

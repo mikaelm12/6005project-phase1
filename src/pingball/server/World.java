@@ -82,7 +82,7 @@ public class World implements WorldInterface {
      * @param to board where the ball will appear
      * @param ball to be transfered from board to board
      */
-    public void transferBallHorizontal(Board to, Ball ball){
+    public synchronized void transferBallHorizontal(Board to, Ball ball){
         if (ball.getPosition()[0] > 10){
             Ball newBall = new Ball(ball.getName(),0, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
@@ -99,7 +99,7 @@ public class World implements WorldInterface {
      * @param to board where the ball will appear
      * @param ball to be transfered from board to board
      */
-    public void transferBallVertical(Board to, Ball ball){
+    public synchronized void transferBallVertical(Board to, Ball ball){
         if (ball.getPosition()[1] > 10){
             Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
