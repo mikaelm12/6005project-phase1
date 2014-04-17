@@ -127,8 +127,8 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     public void exitFlipperleft(FlipperleftContext ctx) {
         
         String name = ctx.id().NAME().getText();
-        double x = Double.parseDouble(ctx.x().INTEGER().getText());
-        double y = Double.parseDouble(ctx.y().INTEGER().getText());
+        int x = Integer.parseInt(ctx.x().INTEGER().getText());
+        int y = Integer.parseInt(ctx.y().INTEGER().getText());
         
         int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
        
@@ -144,8 +144,8 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     public void exitFlipperright(FlipperrightContext ctx) {
        
         String name = ctx.id().NAME().getText();
-        double x = Double.parseDouble(ctx.x().INTEGER().getText());
-        double y = Double.parseDouble(ctx.y().INTEGER().getText());
+        int x = Integer.parseInt(ctx.x().INTEGER().getText());
+        int y = Integer.parseInt(ctx.y().INTEGER().getText());
         
         int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
         
