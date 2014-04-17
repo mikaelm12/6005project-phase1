@@ -2,6 +2,7 @@ package pingball.client;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +20,6 @@ import physics.Geometry;
 import physics.Vect;
 import pingball.datatypes.Ball;
 import pingball.datatypes.Board;
-
 import warmup.Wall;
 
 public class PingballClient {
@@ -110,9 +110,23 @@ public class PingballClient {
         
     }
     
-    public static void runSingleMachine (String path){
+    public static void runSingleMachine (File file) throws IOException{
         
-        Board board  =  BoardFactory.parse(path);
+        String fileString = "";
+        BufferedReader inputFileStream = null;
+        try {
+           inputFileStream = new BufferedReader(new FileReader(file));
+           String l;
+           while ((l = inputFileStream.readLine()) != null) {
+               fileString += l;
+           }
+       } finally {
+           if (inputFileStream != null) {
+               inputFileStream.close();
+           }
+       }
+        Board board  =  BoardFactory.parse(fileString);
+        System.out.println(board.toString());
         
         
         //PLAY!

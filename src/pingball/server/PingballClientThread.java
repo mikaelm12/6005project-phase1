@@ -36,10 +36,13 @@ public class PingballClientThread extends Thread {
         try {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 fileBoard += line;
+                out.println("reading file");
             }
+            out.println("creating board");
             board = BoardFactory.parse(fileBoard);
             out.println(board.toString());
         }
+        
         finally {
             in.close();
         }
