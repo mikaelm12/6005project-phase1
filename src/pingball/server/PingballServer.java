@@ -43,14 +43,14 @@ public class PingballServer {
         while (true) {
             // block until a client connects
             Socket ClientSocket = serverSocket.accept();
-            
+            new PingballClientThread(ClientSocket, world).start();
             //Constantly wait for user input to join boards
             BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
             for (String line = fromUser.readLine(); line != null; line = fromUser.readLine()) {
                 String output = handleRequest(line);
                     System.out.println(output);
             }
-            new PingballClientThread(ClientSocket, world).start();
+           
             
             int x = 20;
             int y = 20;
