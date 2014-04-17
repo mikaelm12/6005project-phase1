@@ -270,7 +270,7 @@ public class Board {
                 if(gadgetString.length() == 1){
                     boardString[yPos][xPos] = gadgetString;
                 }
-                else if(gadgetString.length() == 4){
+                else if(gadgetString.length() > 1 && gadgetString.charAt(0) != '='){
                     boardString[yPos][xPos] = Character.toString(gadgetString.charAt(0));
                     boardString[yPos+1][xPos] = Character.toString(gadgetString.charAt(1));
                     boardString[yPos][xPos+1] = Character.toString(gadgetString.charAt(2));

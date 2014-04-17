@@ -14,7 +14,7 @@ public class Main {
         CircularBumper circleBumper = new CircularBumper("circleBumper",4,3);
         TriangularBumper triangleBumper = new TriangularBumper("triangleBumper",1,1,270);
         LeftFlipper flipperL = new LeftFlipper("flipperL",6,7,0);
-        RightFlipper flipperR = new RightFlipper("flipperR",18,7,0);
+        RightFlipper flipperR = new RightFlipper("flipperR",10,7,0);
         Absorber absorber = new Absorber("abs",0,19,20,1);
         square.addGadgetToFire(flipperL);
         //flipperL.addGadgetToFire(flipperR);
