@@ -62,7 +62,6 @@ public class PingballClientThread extends Thread {
         board = BoardFactory.parse(fileBoard);
         out.println(board.toString());
         world.addBoard(board);
-        out.close();
     }
 
     public void run() {
@@ -88,26 +87,28 @@ public class PingballClientThread extends Thread {
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         
         out.println("hello world!\n");
-        long start = System.currentTimeMillis();
-        long previous = start;
+        //PLAY!!
+        
+//        long start = System.currentTimeMillis();
+//        long previous = start;
 //        Ball ball = board.balls.get(0);
-        while (true){
-            
-            long current = System.currentTimeMillis();
-           
-            previous = current;
-            OuterWall wallToCollide = null;
-
-            if ((current-start) % 50 == 0){
-                double timeToClosestCollision = 1000;
-                OuterWall[] walls = board.getOuterWalls();                
-                for (OuterWall wall: walls){
+//        while (true){
+//            
+//            long current = System.currentTimeMillis();
+//           
+//            previous = current;
+//            OuterWall wallToCollide = null;
+//
+//            if ((current-start) % 50 == 0){
+//                double timeToClosestCollision = 1000;
+//                OuterWall[] walls = board.getOuterWalls();                
+//                for (OuterWall wall: walls){
 //                    double timeToWall = Geometry.timeUntilWallCollision(wall.getLine(), ball.getCircle(), ball.getVelocity());
 //                    if (timeToClosestCollision > timeToWall){
 //                        timeToClosestCollision = timeToWall;
 //                        wallToCollide = wall;
 //                    }
-                }
+//                }
 //                if ((ball.getPosition()[0] + ball.getVelocity().x()*.50) >= 19 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) >= 19||
 //                        (ball.getPosition()[0] + ball.getVelocity().x()*.50) <= 0 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) <= 0){
 //                    //System.out.println("bouncing against " + wallToCollide.name);
@@ -121,11 +122,9 @@ public class PingballClientThread extends Thread {
 //                System.out.println("new position: ("+newx+","+newy+")");
 //                ball.setPosition(newx, newy);
 //                System.out.println("updated position: ("+ball.getCircle().getCenter().x()+","+ball.getPosition()[1]+")");
-                System.out.println(board.toString());
-            }
-        }
+//                System.out.println(board.toString());
+//            }
+//        }
             
     }
-    
-    
 }
