@@ -40,30 +40,44 @@ public class PingballServer {
      */
     public void serve() throws IOException {
         System.out.println("Server is running now");
+        Thread t = new Thread (new Runnable(){
+
+            @Override
+            public void run() {
+              //Constantly wait for user input to join boards
+                System.out.println("running now");
+                BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
+                try {
+                    for (String line = fromUser.readLine(); line != null; line = fromUser.readLine()) {
+                        String output = handleRequest(line);
+                            System.out.println(output);
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+            }
+        });
+        t.start();
+            
         while (true) {
             // block until a client connects
             Socket ClientSocket = serverSocket.accept();
+            System.out.println("new client!");
             new PingballClientThread(ClientSocket, world).start();
-            //Constantly wait for user input to join boards
-            BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
-            for (String line = fromUser.readLine(); line != null; line = fromUser.readLine()) {
-                String output = handleRequest(line);
-                    System.out.println(output);
-            }
+        } 
            
             
-            int x = 20;
-            int y = 20;
-            int xc = 10;
-            int yc = 10;
-            Vect vel = new Vect(3.0, 4.0);
+//               int yc = 10;
+         
+//        Vect vel = new Vect(3.0, 4.0);
 //            Board board = new Board("Name");
-            Ball ball = new Ball(xc, yc, .25, vel);
+//            Ball ball = new Ball(xc, yc, .25, vel);
 //            board.addBall(ball);
-            System.out.println("hello");
+//            System.out.println("hello");
 //            System.out.println(board.toString());
             
-        }
     }
     
     public static void main(String[] args) throws IOException {

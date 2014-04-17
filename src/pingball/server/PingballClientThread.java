@@ -27,6 +27,7 @@ public class PingballClientThread extends Thread {
      */
     public PingballClientThread(Socket socket, World world) throws IOException {
         super("PingballClientThread");
+        String kill = "END OF FILE!!";
         this.socket = socket;
         this.world = world;
         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -35,10 +36,10 @@ public class PingballClientThread extends Thread {
         BufferedReader in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         String line;
         while ((line = in.readLine()) != null){
-            if (line.equals("END OF FILE")){
+            if (line.equals(kill)){
                 break;
             }
-            fileBoard+= line;
+            fileBoard+= line + "\n";
             out.println("reading file --> "+ line);
         }
 //        for (String line = in.readLine(); line != null; line = in.readLine()) {
@@ -57,6 +58,7 @@ public class PingballClientThread extends Thread {
 //            in.close();
 //        }
         out.println("creating board");
+        out.println(fileBoard);
         board = BoardFactory.parse(fileBoard);
         out.println(board.toString());
         world.addBoard(board);
