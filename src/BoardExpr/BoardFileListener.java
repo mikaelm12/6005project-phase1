@@ -102,13 +102,13 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         if(ctx.bumpertype().getText().equals("circleBumper")){
             CircularBumper bumper = new CircularBumper(name,x,y);
             gadgets.add(bumper);
-            System.out.println("Peter  messed up");
+         
         }
         else if(ctx.bumpertype().getText().equals("squareBumper")){
             SquareBumper bumper = new SquareBumper(name, x,y);
             gadgets.add(bumper);
         }
-        else if (ctx.bumpertype().getText().equals("triangularBumper")){
+        else if (ctx.bumpertype().getText().equals("triangleBumper")){
           int orientation = Integer.parseInt(ctx.objectorientation(0).INTEGER().getText());
            TriangularBumper bumper = new TriangularBumper(name,x,y, orientation );
             gadgets.add(bumper);
@@ -138,7 +138,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         LeftFlipper leftflipper = new LeftFlipper(name, x, y, orientation);
         
         gadgets.add(leftflipper);
-        System.out.println(gadgets);
+        
         
         super.exitFlipperleft(ctx);
     }
@@ -155,7 +155,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         RightFlipper rightflipper = new RightFlipper(name, x, y, orientation);
         
         gadgets.add(rightflipper);
-        System.out.println(gadgets);
+       
         
         super.exitFlipperright(ctx);
     }
@@ -172,7 +172,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         
         Absorber abs = new Absorber(name, x, y, width, height);
         gadgets.add(abs);
-        System.out.println(gadgets);
+       
         super.exitAbsorber(ctx);
     }
     
