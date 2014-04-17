@@ -13,6 +13,7 @@ public class Main {
 
   "# define a series of square bumpers\n" +
  " squareBumper name=Square0 x=2 y=2"+
+  "leftFlipper name=FlipL2 x=16 y=9 orientation=0"+
 " circleBumper name=Circle10 x=10 y=3" +
  "circleBumper name=Circle11 x=11 y=4" + 
  "circleBumper name=Circle12 x=12 y=5");

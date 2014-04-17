@@ -12,9 +12,6 @@ public class BoardGrammarBaseListener implements BoardGrammarListener {
 	@Override public void enterFriction1(BoardGrammarParser.Friction1Context ctx) { }
 	@Override public void exitFriction1(BoardGrammarParser.Friction1Context ctx) { }
 
-	@Override public void enterOrientation(BoardGrammarParser.OrientationContext ctx) { }
-	@Override public void exitOrientation(BoardGrammarParser.OrientationContext ctx) { }
-
 	@Override public void enterAbsorber(BoardGrammarParser.AbsorberContext ctx) { }
 	@Override public void exitAbsorber(BoardGrammarParser.AbsorberContext ctx) { }
 
@@ -51,6 +48,9 @@ public class BoardGrammarBaseListener implements BoardGrammarListener {
 	@Override public void enterBoardObjects(BoardGrammarParser.BoardObjectsContext ctx) { }
 	@Override public void exitBoardObjects(BoardGrammarParser.BoardObjectsContext ctx) { }
 
+	@Override public void enterObjectorientation(BoardGrammarParser.ObjectorientationContext ctx) { }
+	@Override public void exitObjectorientation(BoardGrammarParser.ObjectorientationContext ctx) { }
+
 	@Override public void enterYv(BoardGrammarParser.YvContext ctx) { }
 	@Override public void exitYv(BoardGrammarParser.YvContext ctx) { }
 
@@ -62,9 +62,6 @@ public class BoardGrammarBaseListener implements BoardGrammarListener {
 
 	@Override public void enterBumper(BoardGrammarParser.BumperContext ctx) { }
 	@Override public void exitBumper(BoardGrammarParser.BumperContext ctx) { }
-
-	@Override public void enterOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx) { }
-	@Override public void exitOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx) { }
 
 	@Override public void enterY(BoardGrammarParser.YContext ctx) { }
 	@Override public void exitY(BoardGrammarParser.YContext ctx) { }

@@ -97,6 +97,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         int y = Integer.parseInt(ctx.y().INTEGER().getText());
         String name = ctx.id().NAME().getText();
         
+        
         System.out.println(ctx.bumpertype().getText());
         if(ctx.bumpertype().getText().equals("circleBumper")){
             CircularBumper bumper = new CircularBumper(name,x,y);
@@ -107,11 +108,11 @@ public class BoardFileListener extends BoardGrammarBaseListener {
             SquareBumper bumper = new SquareBumper(name, x,y);
             gadgets.add(bumper);
         }
-//        else if (ctx.bumpertype().getText().equals("triangularBumper")){
-//            int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
-//            TriangularBumper bumper = new TriangularBumper(name,x,y, orientation );
-//            gadgets.add(bumper);
-//        }
+        else if (ctx.bumpertype().getText().equals("triangularBumper")){
+          int orientation = Integer.parseInt(ctx.objectorientation(0).INTEGER().getText());
+           TriangularBumper bumper = new TriangularBumper(name,x,y, orientation );
+            gadgets.add(bumper);
+        }
        
         
         
@@ -132,7 +133,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         int x = Integer.parseInt(ctx.x().INTEGER().getText());
         int y = Integer.parseInt(ctx.y().INTEGER().getText());
         
-        int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
+        int orientation = Integer.parseInt(ctx.objectorientation().INTEGER().getText());
        
         LeftFlipper leftflipper = new LeftFlipper(name, x, y, orientation);
         
@@ -149,7 +150,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         int x = Integer.parseInt(ctx.x().INTEGER().getText());
         int y = Integer.parseInt(ctx.y().INTEGER().getText());
         
-        int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
+        int orientation = Integer.parseInt(ctx.objectorientation().INTEGER().getText());
         
         RightFlipper rightflipper = new RightFlipper(name, x, y, orientation);
         
