@@ -28,7 +28,7 @@ public class SquareBumper implements Gadget{
     //Abstraction Function:
     //the four lineSegments represent a square
     
-    public SquareBumper(String name, double x, double y){
+    public SquareBumper(String name, int x, int y){
         assert(x>=0 && x<=19);
         assert(y>=0 && y<=19);
         this.name = name;
@@ -131,6 +131,14 @@ public class SquareBumper implements Gadget{
      */
     public String getName(){
         return new String(name);
+    }
+    
+    /**
+     * @return position of the gadget
+     */
+    @Override
+    public Vect getPosition(){
+        return new Vect(top.p1().x(),top.p1().y());
     }
     
     /**

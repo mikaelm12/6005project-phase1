@@ -20,6 +20,7 @@ public class TriangularBumper implements Gadget{
     private final String name;
     private List<Gadget> gadgetsToFire;
     private final LineSegment[] edges = new LineSegment[3];
+    private final Vect origin;
     
     //Rep invariant:
     //orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270
@@ -28,12 +29,13 @@ public class TriangularBumper implements Gadget{
     //lineSegments represent sides of a triangle
     
     
-    public TriangularBumper(String name, double x, double y, int orientation){
+    public TriangularBumper(String name, int x, int y, int orientation){
         this.name = name;
         this.sideLength = 1.0;
         this.coR = 1.0;
         this.orientation = orientation;
         this.gadgetsToFire = new ArrayList<Gadget>();
+        this.origin = new Vect(x,y);
         
         if(orientation == 0){
             this.sideA = new LineSegment(x,y,x+1,y);
@@ -147,6 +149,14 @@ public class TriangularBumper implements Gadget{
      */
     public String getName(){
         return new String(name);
+    }
+    
+    /**
+     * @return position of the gadget
+     */
+    @Override
+    public Vect getPosition(){
+        return new Vect(origin.x(),origin.y());
     }
     
     /**

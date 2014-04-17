@@ -21,7 +21,7 @@ public class OuterWall implements Gadget{
     //wall located on boundaries of board
     //Abstraction function:
     
-    public OuterWall(String name, double x0 , double y0, double x1, double y1, boolean solid){
+    public OuterWall(String name, int x0 , int y0, int x1, int y1, boolean solid){
         this.wall = new LineSegment(x0, y0, x1, y1);
         this.coR = 1.0;
         this.solid = solid;
@@ -111,12 +111,20 @@ public class OuterWall implements Gadget{
     }
     
     /**
+     * @return position of the gadget
+     */
+    @Override
+    public Vect getPosition(){
+        return new Vect(wall.p1().x(),wall.p1().y());
+    }
+    
+    /**
      * @return String representation of the outer walls
      */
     @Override
     public String toString(){
         String string = new String();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 22; i++) {
             string += ".";
         }
         return string;
