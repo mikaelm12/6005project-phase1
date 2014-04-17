@@ -53,6 +53,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
             
             board.addGadget(gadget);
         }
+        System.out.println(board);
         
         
     super.exitBoard(ctx);
@@ -74,10 +75,10 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     @Override
     public void exitBall(BallContext ctx) {
         
-        int x = Integer.parseInt(ctx.x().INTEGER().getText());
-        int y = Integer.parseInt(ctx.y().INTEGER().getText());
-        double xvel = Double.parseDouble(ctx.xv().XVEL().getText());
-        double yvel = Double.parseDouble(ctx.yv().YVEL().getText());
+        double  x = Double.parseDouble(ctx.x().FLOAT().getText());
+        double y = Double.parseDouble(ctx.y().FLOAT().getText());
+        double xvel = Double.parseDouble(ctx.xv().FLOAT().getText());
+        double yvel = Double.parseDouble(ctx.yv().FLOAT().getText());
        
         String name = ctx.id().NAME().getText();
         
@@ -96,10 +97,11 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         int y = Integer.parseInt(ctx.y().INTEGER().getText());
         String name = ctx.id().NAME().getText();
         
-        
-        if(ctx.bumpertype().getText().equals("circularBumper")){
+        System.out.println(ctx.bumpertype().getText());
+        if(ctx.bumpertype().getText().equals("circleBumper")){
             CircularBumper bumper = new CircularBumper(name,x,y);
             gadgets.add(bumper);
+            System.out.println("Peter  messed up");
         }
         else if(ctx.bumpertype().getText().equals("squareBumper")){
             SquareBumper bumper = new SquareBumper(name, x,y);

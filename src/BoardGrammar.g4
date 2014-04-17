@@ -83,8 +83,8 @@ NAME : [A-Za-z_][A-Za-z_0-9.,]*;
  * *** ANTLR requires grammar nonterminals to be lowercase, like html, normal, and italic.
  */
 
-board : boardspec  ball*  bumper* flipperleft* flipperright* absorber*  fire*  EOF;
-
+board : boardspec boardObjects*   EOF;
+boardObjects : (ball|  bumper| flipperleft| flipperright| absorber | fire) ;
 boardspec : BOARD id gravity friction1 friction2  ;
 
 ball :  BALL  id x y xv yv;

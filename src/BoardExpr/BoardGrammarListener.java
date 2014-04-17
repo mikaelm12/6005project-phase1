@@ -45,6 +45,9 @@ public interface BoardGrammarListener extends ParseTreeListener {
 	void enterId(BoardGrammarParser.IdContext ctx);
 	void exitId(BoardGrammarParser.IdContext ctx);
 
+	void enterBoardObjects(BoardGrammarParser.BoardObjectsContext ctx);
+	void exitBoardObjects(BoardGrammarParser.BoardObjectsContext ctx);
+
 	void enterYv(BoardGrammarParser.YvContext ctx);
 	void exitYv(BoardGrammarParser.YvContext ctx);
 

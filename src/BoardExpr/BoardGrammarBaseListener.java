@@ -48,6 +48,9 @@ public class BoardGrammarBaseListener implements BoardGrammarListener {
 	@Override public void enterId(BoardGrammarParser.IdContext ctx) { }
 	@Override public void exitId(BoardGrammarParser.IdContext ctx) { }
 
+	@Override public void enterBoardObjects(BoardGrammarParser.BoardObjectsContext ctx) { }
+	@Override public void exitBoardObjects(BoardGrammarParser.BoardObjectsContext ctx) { }
+
 	@Override public void enterYv(BoardGrammarParser.YvContext ctx) { }
 	@Override public void exitYv(BoardGrammarParser.YvContext ctx) { }
 
