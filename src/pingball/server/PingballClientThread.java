@@ -25,15 +25,16 @@ public class PingballClientThread extends Thread {
      */
     public PingballClientThread(Socket socket, World world) throws IOException {
         super("PingballClientThread");
-        System.out.println("initiated a thread");
         this.socket = socket;
         this.world = world;
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        out.println("initiated a thread");
         String fileBoard = "";
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         try {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 fileBoard += line;
-                System.out.println(line);
+                out.println(line);
             }
             board = null; //create board
         }
