@@ -49,7 +49,7 @@ public class PingballServer {
             PrintWriter out = new PrintWriter(ClientSocket.getOutputStream(), true);
             for (String line = fromUser.readLine(); line != null; line = fromUser.readLine()) {
                 String output = handleRequest(line);
-                    out.println(output);
+                    System.out.println(output);
             }
             new PingballClientThread(ClientSocket, world).start();
             

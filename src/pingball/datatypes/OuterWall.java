@@ -104,11 +104,22 @@ public class OuterWall implements Gadget{
     }
     
     /**
+     * @return name of this gadget
+     */
+    public String getName(){
+        return new String(name);
+    }
+    
+    /**
      * @return String representation of the outer walls
      */
     @Override
     public String toString(){
-        return null;
+        String string = new String();
+        for (int i = 0; i < 20; i++) {
+            string += ".";
+        }
+        return string;
     }
     
     /**

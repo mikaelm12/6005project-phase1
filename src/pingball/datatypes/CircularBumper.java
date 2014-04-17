@@ -99,6 +99,13 @@ public class CircularBumper implements Gadget{
     }
     
     /**
+     * @return name of this gadget
+     */
+    public String getName(){
+        return new String(name);
+    }
+    
+    /**
      * @return a String representation of the CircularBumper
      */
     @Override

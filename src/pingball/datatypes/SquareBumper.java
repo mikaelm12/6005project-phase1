@@ -127,6 +127,13 @@ public class SquareBumper implements Gadget{
     }
     
     /**
+     * @return name of this gadget
+     */
+    public String getName(){
+        return new String(name);
+    }
+    
+    /**
      * @return string representation of the SquareBumper
      */
     @Override

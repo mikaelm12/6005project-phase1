@@ -81,6 +81,7 @@ public class PingballClient {
      * @throws IOException
      */
     public static void runPingBallServerClient(String host, int port, File file) throws IOException{
+        System.out.println("Going multiplayer! host "+host+" port "+port);
         String hostName = host;
         int portNumber = port;
         Socket toServerSocket = new Socket(hostName, portNumber);
@@ -91,6 +92,7 @@ public class PingballClient {
             String l;
             while ((l = inputFileStream.readLine()) != null) {
                 toServe.println(l);
+                System.out.println(l);
             }
         } finally {
             if (inputFileStream != null) {
