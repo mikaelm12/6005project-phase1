@@ -24,7 +24,7 @@ import warmup.Wall;
 
 public class PingballClient {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         int port = 10987; //default port
         String hostName = null;
 //        File file = null;
@@ -68,7 +68,7 @@ public class PingballClient {
             e.printStackTrace();
         }
         } else { //Play single machine mode
-           // runSingleMachine(file);
+           runSingleMachine(file);
         }
     }
     
@@ -81,6 +81,7 @@ public class PingballClient {
      * @throws IOException
      */
     public static void runPingBallServerClient(String host, int port, File file) throws IOException{
+        String kill = "END OF FILE!!";
         System.out.println("Going multiplayer! host "+host+" port "+port);
         String hostName = host;
         int portNumber = port;
@@ -93,13 +94,14 @@ public class PingballClient {
             String l;
             while ((l = inputFileStream.readLine()) != null) {
                 toServe.println(l);
+                
             }
         } finally {
+            toServe.println(kill);
             if (inputFileStream != null) {
                 inputFileStream.close();
             }
         }
-         
        
         BufferedReader fromServe = new BufferedReader(new InputStreamReader(toServerSocket.getInputStream()));
         String fromServer;
@@ -111,14 +113,13 @@ public class PingballClient {
     }
     
     public static void runSingleMachine (File file) throws IOException{
-        
         String fileString = "";
         BufferedReader inputFileStream = null;
         try {
            inputFileStream = new BufferedReader(new FileReader(file));
            String l;
            while ((l = inputFileStream.readLine()) != null) {
-               fileString += l;
+               fileString += l + "\n";
            }
        } finally {
            if (inputFileStream != null) {

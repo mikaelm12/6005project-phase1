@@ -37,6 +37,17 @@ public class CircularBumper implements Gadget{
         checkRep();
     }
     
+    public CircularBumper(String name,int x, int y, double radius){
+        this.name = name;
+        this.origin = new Vect(x,y);
+        this.radius = radius;
+        this.coR = 1.0;
+        this.circle = new Circle(x+0.5,y+0.5,radius);
+        this.gadgetsToFire = new ArrayList<Gadget>();
+        
+        checkRep();
+    }
+    
     /**
      * fires the actions of gadgets in gadgetsToFire
      */
@@ -128,8 +139,8 @@ public class CircularBumper implements Gadget{
      */
     private void checkRep(){
         assertTrue(name.length() > 0);
-        assertTrue(this.circle.getCenter().x() >= 0.5 && this.circle.getCenter().y() >= 0.5);
-        assertTrue(this.circle.getCenter().x() <= 19.5 && this.circle.getCenter().y() <= 19.5);
+//        assertTrue(this.circle.getCenter().x() >= 0.5 && this.circle.getCenter().y() >= 0.5);
+//        assertTrue(this.circle.getCenter().x() <= 19.5 && this.circle.getCenter().y() <= 19.5);
     }
 
 

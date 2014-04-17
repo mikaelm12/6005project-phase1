@@ -26,6 +26,10 @@ public class Board {
     private List<Ball> balls;
     private List<Gadget> gadgets;
     private String[][] boardString;
+    private CircularBumper topLeft;
+    private CircularBumper topRight;
+    private CircularBumper bottomRight;
+    private CircularBumper bottomLeft;
     
     //Rep invariant:
     
@@ -42,12 +46,22 @@ public class Board {
         wallRight = new OuterWall( "right",width,0,width,height,true);
         wallTop = new OuterWall("top",0,0,width,0,true);
         wallBottom = new OuterWall("bottom",0,height,width,height,true);
+        topLeft = new CircularBumper("topLeft",0,0,0);
+        topRight = new CircularBumper("topRight",20,0,0);
+        bottomRight = new CircularBumper("bottomRight",20,20,0);
+        bottomLeft = new CircularBumper("topLeft",0,20,0);
         this.name = name;
         this.gravity = gravity;
         this.mu = mu;
         this.mu2 = mu2;
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
+        
+        //add circular bumpers to corners of board: edge case
+        gadgets.add(topLeft);
+        gadgets.add(topRight);
+        gadgets.add(bottomRight);
+        gadgets.add(bottomLeft);
         
         
         checkRep();
@@ -139,9 +153,6 @@ public class Board {
         for(Gadget gadget: gadgets){
             this.gadgets.add(gadget);
         }
-    }
-    
-    private void checkRep(){
     }
     
     /**
@@ -250,47 +261,41 @@ public class Board {
         String string = new String();
         string += wallTop.toString() + "\n";
         for (Gadget gadget : gadgets) {
-            Vect pos = gadget.getPosition();
-            int xPos = (int) pos.x();
-            int yPos = (int) pos.y();
-            String gadgetString = gadget.toString();
-            if(gadgetString.length() == 1){
-                boardString[yPos][xPos] = gadgetString;
-            }
-            else if(gadgetString.length() == 4){
-                boardString[yPos][xPos] = Character.toString(gadgetString.charAt(0));
-                boardString[yPos+1][xPos] = Character.toString(gadgetString.charAt(1));
-                boardString[yPos][xPos+1] = Character.toString(gadgetString.charAt(2));
-                boardString[yPos+1][xPos+1] = Character.toString(gadgetString.charAt(3));
-            }
-            else{
-                if(gadgetString.length() <= 20){
-                    for (int i = 0; i < gadgetString.length(); i++) {
-                        boardString[yPos][xPos+i] = Character.toString(gadgetString.charAt(i));
-                    }
-                }else{
-                    for (int i = 0; i < (gadgetString.length()/20); i++) {
-                        for (int j = 0; j < 20; j++) {
-                            boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((20*i)+j));
+            if(!(gadget.getName().equals("topLeft") || gadget.getName().equals("topRight") || 
+                    gadget.getName().equals("bottomRight") || gadget.getName().equals("bottomLeft"))){
+                Vect pos = gadget.getPosition();
+                int xPos = (int) pos.x();
+                int yPos = (int) pos.y();
+                String gadgetString = gadget.toString();
+                if(gadgetString.length() == 1){
+                    boardString[yPos][xPos] = gadgetString;
+                }
+                else if(gadgetString.length() == 4){
+                    boardString[yPos][xPos] = Character.toString(gadgetString.charAt(0));
+                    boardString[yPos+1][xPos] = Character.toString(gadgetString.charAt(1));
+                    boardString[yPos][xPos+1] = Character.toString(gadgetString.charAt(2));
+                    boardString[yPos+1][xPos+1] = Character.toString(gadgetString.charAt(3));
+                }
+                else{
+                    if(gadgetString.length() <= 20){
+                        for (int i = 0; i < gadgetString.length(); i++) {
+                            boardString[yPos][xPos+i] = Character.toString(gadgetString.charAt(i));
+                        }
+                    }else{
+                        for (int i = 0; i < (gadgetString.length()/20); i++) {
+                            for (int j = 0; j < 20; j++) {
+                                boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((20*i)+j));
+                            }
                         }
                     }
                 }
-            }
-            
-            
+            }      
         }
         for (Ball ball : balls) {
             System.out.println(Arrays.toString(ball.getPosition()));
             int xPos = (int) Math.floor(ball.getPosition()[0]);
             int yPos = (int) Math.floor(ball.getPosition()[1]);
-//            System.out.println(xPos);
-//            System.out.println(yPos);
-            if(yPos < 0){
-                yPos += 1;
-            }
-            if(xPos < 0){
-                xPos += 1;
-            }
+            
             boardString[yPos][xPos] = ball.toString();
         }
         for (int i = 0; i < height; i++) {
@@ -302,6 +307,12 @@ public class Board {
         }
         string += wallBottom.toString();
         return string;
+    }
+    
+    /**
+     * check representation
+     */
+    private void checkRep(){
     }
     
 }

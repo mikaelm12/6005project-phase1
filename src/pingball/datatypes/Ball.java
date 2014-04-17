@@ -15,6 +15,7 @@ public class Ball {
     //Rep invariant:
     // 0<=ball position <=20
     //Abstraction Function:
+    //represents a ball on a board
 
     public Ball(String name, double cx, double cy, double xVel, double yVel){
         this.name = name;
@@ -100,7 +101,23 @@ public class Ball {
         double xPos = circle.getCenter().x() + velocityVector.x()*timeStep;
         double yPos = circle.getCenter().y()+ velocityVector.y()*timeStep;
         this.setPosition(xPos, yPos);
+
+        
         checkRep();
+    }
+    
+    /**
+     * 
+     * @param timeStep time difference
+     * @return true if ball will be out of bounds after timeStep, false otherwise
+     */
+    public boolean ballOutOfBounds(double timeStep){
+        
+        double xPos = circle.getCenter().x() + velocityVector.x()*timeStep;
+        double yPos = circle.getCenter().y()+ velocityVector.y()*timeStep;
+        
+        return (xPos < 0 || xPos > 20 || yPos < 0 || yPos > 20);
+            
     }
     
     /**
@@ -112,8 +129,8 @@ public class Ball {
     }
     
     private void checkRep(){
-        assertTrue(this.getPosition()[0] >=0 && this.getPosition()[0] <=20);
-        assertTrue(this.getPosition()[1] >=0 && this.getPosition()[1] <=20);
+        assertTrue(this.getPosition()[0] >=0 && this.getPosition()[0] <20);
+        assertTrue(this.getPosition()[1] >=0 && this.getPosition()[1] <20);
     }
     
 
