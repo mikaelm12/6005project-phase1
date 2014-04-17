@@ -20,6 +20,7 @@ import BoardExpr.BoardGrammarParser.BallContext;
 import BoardExpr.BoardGrammarParser.BoardContext;
 import BoardExpr.BoardGrammarParser.BoardspecContext;
 import BoardExpr.BoardGrammarParser.BumperContext;
+import BoardExpr.BoardGrammarParser.FireContext;
 import BoardExpr.BoardGrammarParser.FlipperleftContext;
 import BoardExpr.BoardGrammarParser.FlipperrightContext;
 
@@ -113,13 +114,33 @@ public class BoardFileListener extends BoardGrammarBaseListener {
             gadgets.add(bumper);
         }
        
-        
+        System.out.println("Peter messed up");
         
         super.exitBumper(ctx);
     }
     
 
+    @Override
+    public void exitFire(FireContext ctx) {
+        String trigger = ctx.NAME().get(0).getText();
+        String action = ctx.NAME().get(1).getText();
+        Gadget matchingGadget = null;
+        for(Gadget gadget: gadgets){
+            if (gadget.getName().equals(trigger)){
+                for(Gadget actionGadget: gadgets){
+                    if (actionGadget.getName().equals(action)){
+                        matchingGadget = actionGadget;
+                    }
+                    if (matchingGadget != null){
+                        gadget.addGadgetToFire(matchingGadget);
+                    }
+                }
+            }
+        }
     
+        System.out.println("Trigger: " + trigger);
+        System.out.println("Action: " + action);
+    }
     
     
     @Override

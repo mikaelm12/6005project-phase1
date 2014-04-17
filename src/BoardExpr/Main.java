@@ -18,7 +18,8 @@ public class Main {
  "circleBumper name=Circle11 x=11 y=4" + 
  "circleBumper name=Circle12 x=12 y=5"+
  "triangleBumper name=Tri12 x=5 y=5 orientation=0"+
- "absorber name=Abs x=0 y=19 width=20 height=1 ");
+ "absorber name=Abs x=0 y=19 width=20 height=1 "+
+ "fire trigger=Abs action=Abs ");
 
  
 
