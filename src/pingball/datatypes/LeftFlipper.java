@@ -23,6 +23,8 @@ public class LeftFlipper implements Gadget{
     private String state = "initial"; //not triggered yet
     private double angularVelocity;
     private final Vect origin;
+    private CircularBumper top;
+    private CircularBumper bottom;
     
     //Rep invariant:
     //box within board
@@ -40,29 +42,38 @@ public class LeftFlipper implements Gadget{
         this.coR = 0.95;
         this.orientation = orientation;
         this.gadgetsToFire = new ArrayList<Gadget>();
-        this.gadgetsToFire.add(this); //flipper triggers itself
         this.angularVelocity = (1080.0/180)*Math.PI;
         this.rotationAngle = (90.0/180)*Math.PI;
         
+        
         this.origin = new Vect(x,y);
+        
         
         if(orientation == 0){
             this.flipper = new LineSegment(x,y,x,y+2);
+            this.top = new CircularBumper("top",x,y,0);
+            this.bottom = new CircularBumper("bottom",x,y+2,0);
             //this.initialP2 = flipper.p2();
             //this.finalP2 = new Vect(x+2,y);
         }
         else if(orientation == 90){
             this.flipper = new LineSegment(x+2,y,x,y);
+            this.top = new CircularBumper("top",x+2,y,0);
+            this.bottom = new CircularBumper("bottom",x,y,0);
             //this.initialP2 = flipper.p2();
             //this.finalP2 = new Vect(x+2,y+2);
         }
         else if(orientation == 180){
             this.flipper = new LineSegment(x+2,y+2,x+2,y);
+            this.top = new CircularBumper("top",x+2,y+2,0);
+            this.bottom = new CircularBumper("bottom",x+2,y,0);
             //this.initialP2 = flipper.p2();
             //this.finalP2 = new Vect(x,y+2);
         }
         else{ //orientation == 270
             this.flipper = new LineSegment(x,y+2,x+2,y+2);
+            this.top = new CircularBumper("top",x,y+2,0);
+            this.bottom = new CircularBumper("bottom",x+2,y+2,0);
             //this.initialP2 = flipper.p2();
             //this.finalP2 = new Vect(x,y);
         }
@@ -94,13 +105,15 @@ public class LeftFlipper implements Gadget{
     public void action() {
         if(state.equals("initial")){
             //change to final state
-            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), new Angle(2*Math.PI-rotationAngle));
+            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), Angle.DEG_270);
+            this.bottom = new CircularBumper("bottom",(int) flipper.p2().x(),(int) flipper.p2().y(),0);
             //this.flipper = new LineSegment(flipper.p1(),finalP2);
             state = "final";
         }
         else{
             //change to initial state
-            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), new Angle(rotationAngle));
+            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), Angle.DEG_90);
+            this.bottom = new CircularBumper("bottom",(int) flipper.p2().x(),(int) flipper.p2().y(),0);
             //this.flipper = new LineSegment(flipper.p1(),initialP2);
             state = "initial";
         }

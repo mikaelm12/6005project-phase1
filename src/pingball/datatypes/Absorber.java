@@ -62,13 +62,9 @@ public class Absorber implements Gadget{
      */
     @Override
     public void action() {
-        if(state.equals("full")){
-            for (Ball ball : balls) {
-                //shoot all balls simultaneously
-                ball.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
-                balls.remove(ball);
-            }
-            state = "empty";
+        if(balls.size() > 1){
+            balls.get(0).setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            balls.remove(0);
         }
         checkRep();
     }
@@ -79,6 +75,14 @@ public class Absorber implements Gadget{
     @Override
     public double getCoR() {
         return new Double(coR).doubleValue();
+    }
+    
+    /**
+     * 
+     * @return current state of absorber
+     */
+    public String getState(){
+        return state;
     }
     
     /**
