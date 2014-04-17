@@ -46,7 +46,6 @@ public class PingballServer {
             
             //Constantly wait for user input to join boards
             BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
-            PrintWriter out = new PrintWriter(ClientSocket.getOutputStream(), true);
             for (String line = fromUser.readLine(); line != null; line = fromUser.readLine()) {
                 String output = handleRequest(line);
                     System.out.println(output);
