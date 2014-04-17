@@ -38,8 +38,6 @@ public class World implements WorldInterface {
     @Override
     public synchronized void addBoard(Board board) {
         boards.put(board.getName(), board);
-        
-
     }
 
     @Override
@@ -75,13 +73,8 @@ public class World implements WorldInterface {
 
     }
 
-    /**
-     * Transfers a ball from the left or right extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
+    
+    @Override
     public synchronized void transferBallHorizontal(Board to, Ball ball){
         if (ball.getPosition()[0] > 10){
             Ball newBall = new Ball(ball.getName(),0, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
@@ -92,13 +85,8 @@ public class World implements WorldInterface {
         }
     }
     
-    /**
-     * Transfers a ball from the top or bottom extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
+    
+    @Override
     public synchronized void transferBallVertical(Board to, Ball ball){
         if (ball.getPosition()[1] > 10){
             Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
@@ -107,8 +95,6 @@ public class World implements WorldInterface {
             Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
         }
-        
-        
     }
 
 }

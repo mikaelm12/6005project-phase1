@@ -224,10 +224,10 @@ public class Board {
      * @param board to be removed from neighbors
      */
     public void unNeighbor (Board board){
-        if (neighborBottom == board){neighborBottom = null;} //TODO: define equals????
-        else if (neighborTop == board){neighborTop = null;}
-        else if (neighborLeft == board){neighborLeft = null;}
-        else if (neighborRight == board){neighborRight = null;}
+        if (neighborBottom.getName().equals(board.getName())){neighborBottom = null;}
+        else if (neighborTop.getName().equals(board.getName())){neighborTop = null;}
+        else if (neighborLeft.getName().equals(board.getName())){neighborLeft = null;}
+        else if (neighborRight.getName().equals(board.getName())){neighborRight = null;}
     }
     
     /**
