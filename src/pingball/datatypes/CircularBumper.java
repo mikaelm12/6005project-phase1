@@ -13,7 +13,7 @@ import physics.Vect;
 
 public class CircularBumper implements Gadget{
     
-    private final double diameter;
+    private final double radius;
     private final double coR;
     private final Circle circle;
     private final String name;
@@ -29,9 +29,9 @@ public class CircularBumper implements Gadget{
     public CircularBumper(String name,int x, int y){
         this.name = name;
         this.origin = new Vect(x,y);
-        this.diameter = 1.0;
+        this.radius = 0.5;
         this.coR = 1.0;
-        this.circle = new Circle(x+0.5,y+0.5,diameter);
+        this.circle = new Circle(x+0.5,y+0.5,radius);
         this.gadgetsToFire = new ArrayList<Gadget>();
         
         checkRep();
