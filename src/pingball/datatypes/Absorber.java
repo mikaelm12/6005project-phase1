@@ -22,7 +22,7 @@ public class Absorber implements Gadget{
     private final LineSegment[] edges = new LineSegment[4];
     private String state = "empty";
     private List<Ball> balls;
-    public Ball ball;
+    //public Ball ball;
     
     //Rep invariant:
     //width>0, height>0, name!=null && name.length>0
@@ -39,6 +39,7 @@ public class Absorber implements Gadget{
         this.bottom = new LineSegment(x,y+height,x+width,y+height);
         this.left = new LineSegment(x,y,x,y+height);
         this.gadgetsToFire = new ArrayList<Gadget>();
+        this.balls = new ArrayList<Ball>();
         edges[0] = left;
         edges[1] = top;
         edges[2] = right;
@@ -60,11 +61,12 @@ public class Absorber implements Gadget{
      * shoots out a stored ball when triggered
      */
     @Override
-    public synchronized void action() {
+    public void action() {
         if(state.equals("full")){
             for (Ball ball : balls) {
                 //shoot all balls simultaneously
                 ball.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+                balls.remove(ball);
             }
             state = "empty";
         }
@@ -101,11 +103,10 @@ public class Absorber implements Gadget{
      * @param ball to be reflected
      */
     @Override
-    public void reflectOffGadget(Ball ball){
+    public synchronized void  reflectOffGadget(Ball ball){
         ball.setVelocity(new Vect(0,0)); //stop ball
         //set ball center position .25L away from bottom and right wall
         ball.setPosition(bottom.p2().x()-0.25, bottom.p2().y()-0.25);
-        this.ball = ball;
         state = "full";
         balls.add(ball);
         this.trigger();

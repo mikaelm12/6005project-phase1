@@ -9,9 +9,6 @@ public interface BoardGrammarListener extends ParseTreeListener {
 	void enterFriction1(BoardGrammarParser.Friction1Context ctx);
 	void exitFriction1(BoardGrammarParser.Friction1Context ctx);
 
-	void enterOrientation(BoardGrammarParser.OrientationContext ctx);
-	void exitOrientation(BoardGrammarParser.OrientationContext ctx);
-
 	void enterAbsorber(BoardGrammarParser.AbsorberContext ctx);
 	void exitAbsorber(BoardGrammarParser.AbsorberContext ctx);
 
@@ -45,6 +42,12 @@ public interface BoardGrammarListener extends ParseTreeListener {
 	void enterId(BoardGrammarParser.IdContext ctx);
 	void exitId(BoardGrammarParser.IdContext ctx);
 
+	void enterBoardObjects(BoardGrammarParser.BoardObjectsContext ctx);
+	void exitBoardObjects(BoardGrammarParser.BoardObjectsContext ctx);
+
+	void enterObjectorientation(BoardGrammarParser.ObjectorientationContext ctx);
+	void exitObjectorientation(BoardGrammarParser.ObjectorientationContext ctx);
+
 	void enterYv(BoardGrammarParser.YvContext ctx);
 	void exitYv(BoardGrammarParser.YvContext ctx);
 
@@ -56,9 +59,6 @@ public interface BoardGrammarListener extends ParseTreeListener {
 
 	void enterBumper(BoardGrammarParser.BumperContext ctx);
 	void exitBumper(BoardGrammarParser.BumperContext ctx);
-
-	void enterOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx);
-	void exitOrientationvalue(BoardGrammarParser.OrientationvalueContext ctx);
 
 	void enterY(BoardGrammarParser.YContext ctx);
 	void exitY(BoardGrammarParser.YContext ctx);

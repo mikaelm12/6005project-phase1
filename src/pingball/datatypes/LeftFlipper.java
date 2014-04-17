@@ -80,6 +80,14 @@ public class LeftFlipper implements Gadget{
     }
     
     /**
+     * 
+     * @return the angular velocity
+     */
+    public double getAngularVelocity(){
+        return angularVelocity;
+    }
+    
+    /**
      * rotates 90degrees when triggered
      */
     @Override

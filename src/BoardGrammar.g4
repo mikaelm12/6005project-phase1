@@ -55,6 +55,7 @@ HEIGHT : 'height';
 
 
 
+
 BOARD : 'board';
 BALL :'ball';
 ABSORBER : 'absorber';
@@ -75,7 +76,7 @@ RIGHTFLIPPER :'rightFlipper';
 
 
 
-FLOAT : ('-')?[0-9]+(.[0-9]+)?;
+FLOAT : ('-')?[0-9]+('.'[0-9]+)?;
 NAME : [A-Za-z_][A-Za-z_0-9.,]*; 
 
 /*
@@ -83,21 +84,24 @@ NAME : [A-Za-z_][A-Za-z_0-9.,]*;
  * *** ANTLR requires grammar nonterminals to be lowercase, like html, normal, and italic.
  */
 
-board : boardspec  ball*  bumper* flipperleft* flipperright* absorber*  fire*  EOF;
-
+board : boardspec boardObjects*   EOF;
+boardObjects : (ball|  bumper| flipperleft| flipperright| absorber | fire) ;
 boardspec : BOARD id gravity friction1 friction2  ;
+
+
 
 ball :  BALL  id x y xv yv;
 gravity : GRAVITY EQUALS FLOAT;
 friction1:  FRICTION1 EQUALS FLOAT;
 friction2: FRICTION2 EQUALS FLOAT;
 
-bumper : bumpertype id x y orientation*;
+bumper : bumpertype id x y objectorientation*;
 bumpertype : (SQUAREBUMPER | CIRCLEBUMPER| TRIANGLEBUMPER);
 
+objectorientation: ORIENTATIONKEY EQUALS INTEGER;
 
-flipperleft : LEFTFLIPPER id x y orientation;  //Not sure if they need to be different
-flipperright : RIGHTFLIPPER id x y orientation;
+flipperleft : LEFTFLIPPER id x y objectorientation;  //Not sure if they need to be different
+flipperright : RIGHTFLIPPER id x y objectorientation;
 
 absorber : ABSORBER id x y width height;
 
@@ -108,8 +112,8 @@ x : X EQUALS  (INTEGER|FLOAT);
 y : Y EQUALS (INTEGER|FLOAT);
 xv: XVEL EQUALS FLOAT;
 yv : YVEL EQUALS FLOAT;
-orientationvalue : ('0'|'90'|'180'|'270');
-orientation: ORIENTATIONKEY EQUALS orientationvalue ;
+
+
 width : WIDTH EQUALS INTEGER;
 height : HEIGHT EQUALS INTEGER;
 id : NAMEKEY EQUALS NAME;

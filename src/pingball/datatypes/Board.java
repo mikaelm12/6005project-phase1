@@ -1,6 +1,7 @@
 package pingball.datatypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import physics.Vect;
@@ -48,12 +49,6 @@ public class Board {
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
         
-        boardString = new String[20][20];
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                boardString[i][j] = " ";
-            }
-        }
         
         checkRep();
         
@@ -65,6 +60,30 @@ public class Board {
      */
     public String getName(){
         return this.name;
+    }
+    
+    /**
+     * 
+     * @return board gravity
+     */
+    public double getGravity(){
+        return gravity;
+    }
+    
+    /**
+     * 
+     * @return friction1
+     */
+    public double getMu(){
+        return mu;
+    }
+    
+    /**
+     * 
+     * @return friction2
+     */
+    public double getMu2(){
+        return mu2;
     }
     
     /**
@@ -201,10 +220,33 @@ public class Board {
     }
     
     /**
+     * 
+     * @return list of balls in this board
+     */
+    public List<Ball> getBalls(){
+        return balls;
+    }
+    
+    /**
+     * 
+     * @return list of gadgets in this board
+     */
+    public List<Gadget> getGadgets(){
+        return gadgets;
+    }
+    
+    /**
      * @return string representation of the board
      */
     @Override
     public String toString(){
+        boardString = new String[20][20];
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                boardString[i][j] = " ";
+            }
+        }
+        
         String string = new String();
         string += wallTop.toString() + "\n";
         for (Gadget gadget : gadgets) {
@@ -236,6 +278,20 @@ public class Board {
             }
             
             
+        }
+        for (Ball ball : balls) {
+            System.out.println(Arrays.toString(ball.getPosition()));
+            int xPos = (int) Math.floor(ball.getPosition()[0]);
+            int yPos = (int) Math.floor(ball.getPosition()[1]);
+//            System.out.println(xPos);
+//            System.out.println(yPos);
+            if(yPos < 0){
+                yPos += 1;
+            }
+            if(xPos < 0){
+                xPos += 1;
+            }
+            boardString[yPos][xPos] = ball.toString();
         }
         for (int i = 0; i < height; i++) {
             string += ".";

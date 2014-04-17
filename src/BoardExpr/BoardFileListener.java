@@ -53,6 +53,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
             
             board.addGadget(gadget);
         }
+        System.out.println(board);
         
         
     super.exitBoard(ctx);
@@ -74,10 +75,10 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     @Override
     public void exitBall(BallContext ctx) {
         
-        int x = Integer.parseInt(ctx.x().INTEGER().getText());
-        int y = Integer.parseInt(ctx.y().INTEGER().getText());
-        double xvel = Double.parseDouble(ctx.xv().XVEL().getText());
-        double yvel = Double.parseDouble(ctx.yv().YVEL().getText());
+        double  x = Double.parseDouble(ctx.x().FLOAT().getText());
+        double y = Double.parseDouble(ctx.y().FLOAT().getText());
+        double xvel = Double.parseDouble(ctx.xv().FLOAT().getText());
+        double yvel = Double.parseDouble(ctx.yv().FLOAT().getText());
        
         String name = ctx.id().NAME().getText();
         
@@ -97,19 +98,21 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         String name = ctx.id().NAME().getText();
         
         
-        if(ctx.bumpertype().getText().equals("circularBumper")){
+        System.out.println(ctx.bumpertype().getText());
+        if(ctx.bumpertype().getText().equals("circleBumper")){
             CircularBumper bumper = new CircularBumper(name,x,y);
             gadgets.add(bumper);
+            System.out.println("Peter  messed up");
         }
         else if(ctx.bumpertype().getText().equals("squareBumper")){
             SquareBumper bumper = new SquareBumper(name, x,y);
             gadgets.add(bumper);
         }
-//        else if (ctx.bumpertype().getText().equals("triangularBumper")){
-//            int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
-//            TriangularBumper bumper = new TriangularBumper(name,x,y, orientation );
-//            gadgets.add(bumper);
-//        }
+        else if (ctx.bumpertype().getText().equals("triangularBumper")){
+          int orientation = Integer.parseInt(ctx.objectorientation(0).INTEGER().getText());
+           TriangularBumper bumper = new TriangularBumper(name,x,y, orientation );
+            gadgets.add(bumper);
+        }
        
         
         
@@ -130,7 +133,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         int x = Integer.parseInt(ctx.x().INTEGER().getText());
         int y = Integer.parseInt(ctx.y().INTEGER().getText());
         
-        int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
+        int orientation = Integer.parseInt(ctx.objectorientation().INTEGER().getText());
        
         LeftFlipper leftflipper = new LeftFlipper(name, x, y, orientation);
         
@@ -147,7 +150,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         int x = Integer.parseInt(ctx.x().INTEGER().getText());
         int y = Integer.parseInt(ctx.y().INTEGER().getText());
         
-        int orientation = Integer.parseInt(ctx.orientation().orientationvalue().getText());
+        int orientation = Integer.parseInt(ctx.objectorientation().INTEGER().getText());
         
         RightFlipper rightflipper = new RightFlipper(name, x, y, orientation);
         
