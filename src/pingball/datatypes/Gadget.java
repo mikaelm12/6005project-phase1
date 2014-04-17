@@ -55,6 +55,12 @@ public interface Gadget {
     
     /**
      * 
+     * @return position of the gadget
+     */
+    public Vect getPosition();
+    
+    /**
+     * 
      * @return string representation of the gadget
      */
     @Override
