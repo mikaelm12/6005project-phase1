@@ -85,6 +85,7 @@ public class PingballClient {
         String hostName = host;
         int portNumber = port;
         Socket toServerSocket = new Socket(hostName, portNumber);
+        System.out.println("is connected to server "+ toServerSocket.isConnected()+"\n");
          PrintWriter toServe = new PrintWriter(toServerSocket.getOutputStream(), true);
          BufferedReader inputFileStream = null;
          try {
@@ -92,7 +93,6 @@ public class PingballClient {
             String l;
             while ((l = inputFileStream.readLine()) != null) {
                 toServe.println(l);
-                System.out.println(l);
             }
         } finally {
             if (inputFileStream != null) {
