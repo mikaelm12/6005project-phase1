@@ -104,10 +104,22 @@ public class OuterWall implements Gadget{
     }
     
     /**
+     * Determines if the wall is solid or not (if not, then it has neighbor)
+     * @return boolean for solidity
+     */
+    public boolean isSolid(){
+        return solid;
+    }
+    
+    /**
      * @return name of this gadget
      */
     public String getName(){
         return new String(name);
+    }
+    
+    public boolean isVertical(){
+        return (wall.p1().x() == wall.p2().x());
     }
     
     /**
