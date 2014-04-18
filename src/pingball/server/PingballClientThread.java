@@ -82,10 +82,8 @@ public class PingballClientThread extends Thread {
         //PLAY!!
         
         long start = System.currentTimeMillis();
-        long previous = start;
         while(true){
             long current = System.currentTimeMillis();
-            previous = current;
             boolean transferball = false;
             Ball ballToTransfer = null;
             
@@ -169,7 +167,6 @@ public class PingballClientThread extends Thread {
                     }
                     board.getIncomingBalls().clear();
                 }
-              //assume no successive collisions
                 out.println(board.toString());
             }
             
