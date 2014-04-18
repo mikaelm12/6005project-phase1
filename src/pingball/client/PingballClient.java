@@ -2,7 +2,6 @@ package pingball.client;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,20 +9,37 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import BoardExpr.BoardFactory;
-import BoardExpr.BoardFileListener;
-import physics.Geometry;
-import physics.Vect;
-import pingball.datatypes.Ball;
 import pingball.datatypes.Board;
-import warmup.Wall;
 
+/**
+ * Client of a Pingball Game
+ * May connect to PingballServer or play in single mode
+ * @author AlexR
+ *
+ */
 public class PingballClient {
 
+    /**
+     * Start a PingballClient using the given arguments.
+     * 
+     * Usage: PingballClient [--host HOST] [--port PORT] FILE
+     * 
+     * HOST is an optional hostname or IP address of the server to connect to. 
+     * If no HOST is provided, then the client starts in single-machine play mode, as described above.
+     * 
+     * PORT is an optional integer in the range 0 to 65535 inclusive, specifying the port the
+     * server should be listening on for incoming connections. E.g. "MinesweeperServer --port 1234"
+     * starts the server listening on port 1234.
+     * 
+     * FILE is an argument specifying a file pathname where a board has been stored. The stored bored
+     * is initialized as this client's board. If connected to a server, file will be sent to the server to create
+     * the board and add it to the world. Otherwise, board created and run as single player mode.
+     * 
+     */
     public static void main(String[] args) throws IOException{
         int port = 10987; //default port
         String hostName = null;
@@ -75,27 +91,27 @@ public class PingballClient {
 
     /**
      * Runs a multiplayer pingball... creates board and connects to server
-     * @param host
-     * @param port
-     * @param file
+     * @param host where the game is being held
+     * @param port to establish communication to the server
+     * @param file containing board of this client
      * @throws IOException
      */
     public static void runPingBallServerClient(String host, int port, File file) throws IOException{
         String kill = "END OF FILE!!";
-        System.out.println("Going multiplayer! host "+host+" port "+port);
         String hostName = host;
         int portNumber = port;
+        //Establish communication with the server
         Socket toServerSocket = new Socket(hostName, portNumber);
-        System.out.println("is connected to server "+ toServerSocket.isConnected()+"\n");
-         PrintWriter toServe = new PrintWriter(toServerSocket.getOutputStream(), true);
-         BufferedReader inputFileStream = null;
-         try {
-            inputFileStream = new BufferedReader(new FileReader(file));
-            String l;
-            while ((l = inputFileStream.readLine()) != null) {
-                toServe.println(l);
-                
-            }
+        PrintWriter toServe = new PrintWriter(toServerSocket.getOutputStream(), true);
+        
+        //Send file to the server
+        BufferedReader inputFileStream = null;
+        try {
+           inputFileStream = new BufferedReader(new FileReader(file));
+           String l;
+           while ((l = inputFileStream.readLine()) != null) {
+               toServe.println(l);
+           }
         } finally {
             toServe.println(kill);
             if (inputFileStream != null) {
