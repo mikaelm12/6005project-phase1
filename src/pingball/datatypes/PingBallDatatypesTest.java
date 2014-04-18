@@ -6,7 +6,10 @@ import org.junit.Test;
 
 
 /**
-
+ * 
+ * @author PeterGithaiga
+ * Testing strategy for Gadgets
+ *
  */
 
 public class PingBallDatatypesTest {
@@ -130,12 +133,10 @@ public class PingBallDatatypesTest {
         Ball tester = new Ball("tester",4,4,0,-1);
         Ball tester2 = new Ball("tester",4,4,0,-1);
         System.out.println(test.timeUntilCollision(tester));
-        System.out.println(testR.timeUntilCollision(tester));
         test.reflectOffGadget(tester);
         testR.reflectOffGadget(tester2);
-        System.out.println(tester2.getVelocity());
-        System.out.println(tester.getVelocity());
-        //System.out.println(tester.getVelocity());
+        assertTru
+
         
         
     }
