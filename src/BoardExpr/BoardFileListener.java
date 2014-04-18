@@ -40,11 +40,41 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     
     @Override
     public void exitBoard(BoardContext ctx) {
+        double gravity;
+        double friction1;
+        double friction2;
         
         String name = ctx.boardspec().id().NAME().getText();
-        double gravity = Double.parseDouble(ctx.boardspec().gravity().FLOAT().getText());
-        double friction1 = Double.parseDouble(ctx.boardspec().friction1().FLOAT().getText());
-        double friction2 = Double.parseDouble(ctx.boardspec().friction2().FLOAT().getText());
+       
+        
+        try{  //Seeing if a gravity value was provided
+            
+            gravity = Double.parseDouble(ctx.boardspec().gravity(0).FLOAT().getText());
+            
+           }
+            catch(NullPointerException e){
+                gravity = 25.0;
+             
+            }
+       try{ //Seeing if a friction1 value was provided
+            
+        friction1 = Double.parseDouble(ctx.boardspec().friction1(0).FLOAT().getText());
+       }
+        catch(NullPointerException e){
+            friction1 = 0.025;
+           
+        }
+        try{   //Seeing if a friction2 value was provided
+            
+             friction2 = Double.parseDouble(ctx.boardspec().friction1(0).FLOAT().getText());
+           }
+            catch(NullPointerException e){
+                friction2 = 0.025;
+               
+            }
+        
+       
+        
         this.board = new  Board(name , gravity, friction1, friction2);
         
         for(Ball ball: gameBalls){
@@ -55,23 +85,12 @@ public class BoardFileListener extends BoardGrammarBaseListener {
             board.addGadget(gadget);
         }
         
-        
+        System.out.println(board);
         
     super.exitBoard(ctx);
     }
     
-    @Override
-    public void exitBoardspec(BoardspecContext ctx) {
-        double gravity = Double.parseDouble(ctx.gravity().FLOAT().getText());
-        double friction1 = Double.parseDouble(ctx.friction1().FLOAT().getText());
-        double friction2 = Double.parseDouble(ctx.friction2().FLOAT().getText());
-        
-        String name = ctx.id().NAME().getText();
-        
-        
-       
-        super.exitBoardspec(ctx);
-    }
+
     
     @Override
     public void exitBall(BallContext ctx) {
@@ -114,7 +133,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
             gadgets.add(bumper);
         }
        
-        System.out.println("Peter messed up");
+       
         
         super.exitBumper(ctx);
     }
@@ -144,9 +163,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     
     
     @Override
-    //Grammar for flippers
-    //flipperleft : LEFTFLIPPER id x y orientation;  //Not sure if they need to be different
-    //flipperright : RIGHTFLIPPER id x y orientation;
+
     public void exitFlipperleft(FlipperleftContext ctx) {
         
         String name = ctx.id().NAME().getText();

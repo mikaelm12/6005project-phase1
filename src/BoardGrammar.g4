@@ -86,7 +86,7 @@ NAME : [A-Za-z_][A-Za-z_0-9.,]*;
 
 board : boardspec boardObjects*   EOF;
 boardObjects : (ball|  bumper| flipperleft| flipperright| absorber | fire) ;
-boardspec : BOARD id gravity friction1 friction2  ;
+boardspec : BOARD id gravity* friction1* friction2*  ;
 
 
 
