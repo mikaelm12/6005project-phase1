@@ -80,11 +80,11 @@ public class World implements WorldInterface {
     public synchronized void transferBall(Board from, Ball ball, OuterWall wall){
         if (wall.getName().equals("left")){
             Board neighbor = from.getNeighborLeft();
-            Ball newBall = new Ball(ball.getName(),20, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
+            Ball newBall = new Ball(ball.getName(),19.8, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
             neighbor.addBall(newBall);
         } else if (wall.getName().equals("top")){
             Board neighbor = from.getNeighborTop();
-            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
+            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 19.8, ball.getVelocity().x(),ball.getVelocity().y());
             neighbor.addBall(newBall);
         } else if (wall.getName().equals("right")){
             Board neighbor = from.getNeighborRight();
