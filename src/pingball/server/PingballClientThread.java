@@ -110,8 +110,8 @@ public class PingballClientThread extends Thread {
                                 wallToCollide = wall;
                             } 
                         }
-                        System.out.println("timeTowall: " + timeToClosestWallCollision);
-                        System.out.println("xvel: " + ball.getVelocity().x() + "  yvel: " + ball.getVelocity().y());
+//                        out.println("timeTowall: " + timeToClosestWallCollision);
+//                        out.println("xvel: " + ball.getVelocity().x() + "  yvel: " + ball.getVelocity().y());
                         
                         
                         
@@ -140,7 +140,7 @@ public class PingballClientThread extends Thread {
                     if(timeToClosestWallCollision <= timeToClosestCollision){
                         if(timeToClosestWallCollision <= timeToBallCollide){
                             if(wallToCollide != null && timeToClosestWallCollision < 0.11){
-                                System.out.println("reflecting off wall");
+//                                out.println("reflecting off wall");
                                 if (wallToCollide.isSolid()){
                                 wallToCollide.reflectOffGadget(ball);   
                                 } else {
@@ -154,22 +154,22 @@ public class PingballClientThread extends Thread {
                     else if(timeToClosestCollision <= timeToBallCollide && 
                             gadgetToReflect != null && timeToClosestCollision < 0.11){
                         gadgetToReflect.reflectOffGadget(ball);
-                        System.out.println("reflecting off: " + gadgetToReflect.getName());
+//                        out.println("reflecting off: " + gadgetToReflect.getName());
                     }
                     else{
                         if(ballToCollide != null && timeToBallCollide < 0.11){
                             Geometry.VectPair ballVelocities = Geometry.reflectBalls(ball.getCircle().getCenter(),
                                     1, ball.getVelocity(), ballToCollide.getCircle().getCenter(), 
                                     1, ballToCollide.getVelocity());
-                            System.out.println("reflecting against other ball");
+//                            out.println("reflecting against other ball");
                             ball.setVelocity(ballVelocities.v1);
                             ballToCollide.setVelocity(ballVelocities.v2);
                         }
                     }
-                    System.out.println("time: " + timeToClosestCollision);
-                    System.out.println("vel: " + ball.getVelocity());
-                    System.out.println("pos: " + Arrays.toString(ball.getPosition()));
-                    System.out.println("will be outofbounds: " + ball.ballOutOfBounds(0.05));
+//                    out.println("time: " + timeToClosestCollision);
+//                    out.println("vel: " + ball.getVelocity());
+//                    out.println("pos: " + Arrays.toString(ball.getPosition()));
+//                    out.println("will be outofbounds: " + ball.ballOutOfBounds(0.05));
                     ball.updateBallPosition(0.05);
                     ball.updateBallVelocityAfterTimestep(board.getGravity(), board.getMu(), board.getMu2(), 0.05);
                     counter++;
@@ -177,7 +177,7 @@ public class PingballClientThread extends Thread {
                 }
                 //assume no successive collisions
                 
-                System.out.println(board.toString());
+                out.println(board.toString());
             }
             
         }
