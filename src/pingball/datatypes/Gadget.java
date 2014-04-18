@@ -44,9 +44,7 @@ public interface Gadget {
      *          gadget is triggered
      */
     public void addGadgetToFire(Gadget gadget);
-    
 
-    
     /**
      * 
      * @return name of the gadget

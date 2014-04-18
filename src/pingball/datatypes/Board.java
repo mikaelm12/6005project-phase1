@@ -30,6 +30,11 @@ public class Board {
     private CircularBumper topRight;
     private CircularBumper bottomRight;
     private CircularBumper bottomLeft;
+    private String neighborLeftString;
+    private String neighborTopString;
+    private String neighborBottomString;
+    private String neighborRightString;
+    
     
     //Rep invariant:
     
@@ -50,12 +55,18 @@ public class Board {
         topRight = new CircularBumper("topRight",20,0,0);
         bottomRight = new CircularBumper("bottomRight",20,20,0);
         bottomLeft = new CircularBumper("topLeft",0,20,0);
+
         this.name = name;
         this.gravity = gravity;
         this.mu = mu;
         this.mu2 = mu2;
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
+        
+        this.neighborLeftString = wallLeft.toString();
+        this.neighborTopString = wallTop.toString();
+        this.neighborRightString = wallRight.toString();
+        this.neighborBottomString = wallBottom.toString();
         
         //add circular bumpers to corners of board: edge case
         gadgets.add(topLeft);
@@ -193,6 +204,18 @@ public class Board {
     */
     public void setNeighborLeft(Board board){
         neighborLeft = board;
+        String neighborName = neighborLeft.getName();
+        if(neighborName.length() >= 20){
+            neighborLeftString = neighborName.substring(0, 20); 
+        }else{
+            int counter = 0;
+            for (int i = 10-neighborName.length()/2; i < 10+Math.round(neighborName.length()/2.0); i++) {
+                neighborLeftString = neighborLeftString.substring(0, i) + 
+                                        neighborName.charAt(counter) + neighborLeftString.substring(i+1);
+                counter++;
+            }
+        }
+        
     }
     
     /**
@@ -201,6 +224,17 @@ public class Board {
      */
     public void setNeighborRight(Board board){
         neighborRight = board;
+        String neighborName = neighborRight.getName();
+        if(neighborName.length() >= 20){
+            neighborRightString = neighborName.substring(0, 20);
+        }else{
+            int counter = 0;
+            for (int i = 10-neighborName.length()/2; i < 10+Math.round(neighborName.length()/2.0); i++) {
+                neighborRightString = neighborRightString.substring(0, i) + 
+                                        neighborName.charAt(counter) + neighborRightString.substring(i+1);
+                counter++;
+            }
+        }
     }
 
     /**
@@ -209,6 +243,17 @@ public class Board {
      */
     public void setNeighborTop(Board board){
         neighborTop = board;
+        String neighborName = neighborTop.getName();
+        if(neighborName.length() >= 20){
+            neighborTopString = neighborName.substring(0, 20);
+        }else{
+            int counter = 0;
+            for (int i = 10-neighborName.length()/2; i < 10+Math.round(neighborName.length()/2.0); i++) {
+                neighborTopString = neighborTopString.substring(0, i) + 
+                                        neighborName.charAt(counter) + neighborTopString.substring(i+1);
+                counter++;
+            }
+        }
     }
     
     /**
@@ -217,6 +262,17 @@ public class Board {
      */
     public void setNeighborBottom(Board board){
         neighborBottom = board;
+        String neighborName = neighborBottom.getName();
+        if(neighborName.length() >= 20){
+            neighborBottomString = neighborName.substring(0, 20);
+        }else{
+            int counter = 0;
+            for (int i = 10-neighborName.length()/2; i < 10+Math.round(neighborName.length()/2.0); i++) {
+                neighborBottomString = neighborBottomString.substring(0, i) + 
+                                        neighborName.charAt(counter) + neighborBottomString.substring(i+1);
+                counter++;
+            }
+        }
     }
     
     /**
@@ -228,6 +284,23 @@ public class Board {
         else if (neighborTop.getName().equals(board.getName())){neighborTop = null;}
         else if (neighborLeft.getName().equals(board.getName())){neighborLeft = null;}
         else if (neighborRight.getName().equals(board.getName())){neighborRight = null;}
+        // extra version
+        if (neighborBottom == board){
+            neighborBottom = null;
+            neighborBottomString = wallBottom.toString();
+        } //TODO: define equals????
+        else if (neighborTop == board){
+            neighborTop = null;
+            neighborTopString = wallTop.toString();
+        }
+        else if (neighborLeft == board){
+            neighborLeft = null;
+            neighborLeftString = wallLeft.toString();
+        }
+        else if (neighborRight == board){
+            neighborRight = null;
+            neighborRightString = wallRight.toString();
+        }
     }
     
     /**
@@ -259,7 +332,7 @@ public class Board {
         }
         
         String string = new String();
-        string += wallTop.toString() + "\n";
+        string += neighborTopString + "\n";
         for (Gadget gadget : gadgets) {
             if(!(gadget.getName().equals("topLeft") || gadget.getName().equals("topRight") || 
                     gadget.getName().equals("bottomRight") || gadget.getName().equals("bottomLeft"))){
@@ -270,7 +343,7 @@ public class Board {
                 if(gadgetString.length() == 1){
                     boardString[yPos][xPos] = gadgetString;
                 }
-                else if(gadgetString.length() == 4){
+                else if(gadgetString.length() > 1 && gadgetString.charAt(0) != '='){
                     boardString[yPos][xPos] = Character.toString(gadgetString.charAt(0));
                     boardString[yPos+1][xPos] = Character.toString(gadgetString.charAt(1));
                     boardString[yPos][xPos+1] = Character.toString(gadgetString.charAt(2));
@@ -299,13 +372,13 @@ public class Board {
             boardString[yPos][xPos] = ball.toString();
         }
         for (int i = 0; i < height; i++) {
-            string += ".";
+            string += Character.toString(neighborLeftString.charAt(i));
             for (int j = 0; j < width; j++) {
                 string += boardString[i][j];
             }
-            string += ".\n";
+            string += Character.toString(neighborRightString.toString().charAt(i))+ "\n";
         }
-        string += wallBottom.toString();
+        string += neighborBottomString;
         return string;
     }
     

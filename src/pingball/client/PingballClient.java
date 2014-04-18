@@ -44,7 +44,7 @@ public class PingballClient {
         int port = 10987; //default port
         String hostName = null;
 //        File file = null;
-        File file = new File ("/Users/AlexR/Desktop/6.005/pingball-phase1/sampleBoard1");        
+        File file = new File ("/Users/PeterGithaiga/Documents/6.005/projectPhase1/pingball-phase1/sampleBoard1");        
         Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
         try {
             while ( ! arguments.isEmpty()) {

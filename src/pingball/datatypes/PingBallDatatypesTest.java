@@ -133,6 +133,8 @@ public class PingBallDatatypesTest {
         wallLeft.reflectOffGadget(ball9);
         assertTrue(ball9.getVelocity().x() == 1.0);
         assertTrue(ball9.getVelocity().y() == 0);
+        String hello = "hello";
+        
         
     }
     
