@@ -30,6 +30,7 @@ public class Board {
     private CircularBumper topRight;
     private CircularBumper bottomRight;
     private CircularBumper bottomLeft;
+    private List<CircularBumper> corners;
     private String neighborLeftString;
     private String neighborTopString;
     private String neighborBottomString;
@@ -352,7 +353,6 @@ public class Board {
             }      
         }
         for (Ball ball : balls) {
-            System.out.println(Arrays.toString(ball.getPosition()));
             int xPos = (int) Math.floor(ball.getPosition()[0]);
             int yPos = (int) Math.floor(ball.getPosition()[1]);
             

@@ -42,7 +42,7 @@ public class CircularBumper implements Gadget{
         this.origin = new Vect(x,y);
         this.radius = radius;
         this.coR = 1.0;
-        this.circle = new Circle(x+0.5,y+0.5,radius);
+        this.circle = new Circle(x,y,radius);
         this.gadgetsToFire = new ArrayList<Gadget>();
         
         checkRep();
@@ -124,6 +124,14 @@ public class CircularBumper implements Gadget{
     @Override
     public Vect getPosition(){
         return new Vect(origin.x(),origin.y());
+    }
+    
+    /**
+     * 
+     * @return circle that represents circularbumper
+     */
+    public Circle getCircle(){
+        return circle;
     }
     
     /**

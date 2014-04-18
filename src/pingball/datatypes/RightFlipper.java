@@ -20,13 +20,12 @@ public class RightFlipper implements Gadget{
     private LineSegment flipper;
     private List<Gadget> gadgetsToFire;
     private String state = "initial";//not triggered yet
-    private final double rotationAngle;
-    //private final Vect initialP2;
-    //private final Vect finalP2;
     private double angularVelocity;
     private final Vect origin;
     private CircularBumper top;
     private CircularBumper bottom;
+    private final Angle rotationAngle;
+    private final Angle reverseRotationAngle;
     
     //Rep invariant
     //if orientation == 0, then lineSegment is at right of bounding box initially
@@ -42,7 +41,8 @@ public class RightFlipper implements Gadget{
         this.coR = 0.95;
         this.orientation = orientation;
         this.angularVelocity = (1080.0/180)*Math.PI;
-        this.rotationAngle = (90.0/180)*Math.PI;
+        this.rotationAngle = Angle.DEG_90;
+        this.reverseRotationAngle = Angle.DEG_270;
         
         this.origin = new Vect(x,y);
         this.gadgetsToFire = new ArrayList<Gadget>();
@@ -51,29 +51,21 @@ public class RightFlipper implements Gadget{
             this.flipper = new LineSegment(x+2,y,x+2,y+2);
             this.top = new CircularBumper("top",x+2,y,0);
             this.bottom = new CircularBumper("bottom",x+2,y+2,0);
-//            this.initialP2 = flipper.p2();
-//            this.finalP2 = new Vect(x,y);
         }
         else if(orientation == 90){
             this.flipper = new LineSegment(x+2,y+2,x,y+2);
             this.top = new CircularBumper("top",x+2,y+2,0);
             this.bottom = new CircularBumper("bottom",x,y+2,0);
-//            this.initialP2 = flipper.p2();
-//            this.finalP2 = new Vect(x+2,y);
         }
         else if(orientation == 180){
             this.flipper = new LineSegment(x,y+2,x,y);
             this.top = new CircularBumper("top",x,y+2,0);
             this.bottom = new CircularBumper("bottom",x,y,0);
-//            this.initialP2 = flipper.p2();
-//            this.finalP2 = new Vect(x+2,y+2);
         }
         else{ //orientation == 270
             this.flipper = new LineSegment(x,y,x+2,y);
             this.top = new CircularBumper("top",x,y,0);
             this.bottom = new CircularBumper("bottom",x+2,y,0);
-//            this.initialP2 = flipper.p2();
-//            this.finalP2 = new Vect(x,y+2);
         }
         
         checkRep();
@@ -95,14 +87,14 @@ public class RightFlipper implements Gadget{
     public void action() {
         if(state.equals("initial")){
             //change to final state
-            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), Angle.DEG_90);
+            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), rotationAngle);
             this.bottom = new CircularBumper("bottom",(int) flipper.p2().x(),(int) flipper.p2().y(),0);
             //this.flipper = new LineSegment(flipper.p1(),finalP2);
             state = "final";
         }
         else{
             //change to initial state
-            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), Angle.DEG_270);
+            this.flipper = Geometry.rotateAround(flipper, flipper.p1(), reverseRotationAngle);
             this.bottom = new CircularBumper("bottom",(int) flipper.p2().x(),(int) flipper.p2().y(),0);
             //this.flipper = new LineSegment(flipper.p1(),initialP2);
             state = "initial";
@@ -127,13 +119,29 @@ public class RightFlipper implements Gadget{
     @Override
     public double timeUntilCollision(Ball ball) {
       //define +angularVelocity as being clockwise rotation
+        double timeToLine;
         if(state.equals("initial")){
-            return Geometry.timeUntilRotatingWallCollision(flipper, flipper.p1(), angularVelocity, 
+            timeToLine = Geometry.timeUntilRotatingWallCollision(flipper, flipper.p1(), angularVelocity, 
+                    ball.getCircle(), ball.getVelocity());
+        }else{
+            timeToLine = Geometry.timeUntilRotatingWallCollision(flipper, flipper.p1(), -angularVelocity, 
                     ball.getCircle(), ball.getVelocity());
         }
-        
-        return Geometry.timeUntilRotatingWallCollision(flipper, flipper.p1(), -angularVelocity, 
-                                                        ball.getCircle(), ball.getVelocity());
+            double time;
+            double timeToTop = Geometry.timeUntilCircleCollision(top.getCircle(), 
+                                                                ball.getCircle(), ball.getVelocity());
+            double timeToBottom = Geometry.timeUntilCircleCollision(bottom.getCircle(), 
+                                                                    ball.getCircle(), ball.getVelocity());
+            
+            time = timeToBottom;
+            if(timeToTop < timeToBottom && timeToTop < timeToLine){
+                time = timeToTop;
+            }
+            if(timeToLine < timeToTop && timeToLine < timeToBottom){
+                time = timeToLine;
+            }
+            
+            return time;
     }
     
     /**
@@ -147,13 +155,28 @@ public class RightFlipper implements Gadget{
         //define +angularVelocity as being clockwise rotation
         if(state.equals("initial")){
             newVelocityVector = Geometry.reflectRotatingWall(flipper, flipper.p1(), angularVelocity, 
-                                                             ball.getCircle(), ball.getVelocity(), coR);
+                    ball.getCircle(), ball.getVelocity(), coR);
         }else{
             newVelocityVector = Geometry.reflectRotatingWall(flipper, flipper.p1(), -angularVelocity, 
-                                                             ball.getCircle(), ball.getVelocity(), coR);
+                    ball.getCircle(), ball.getVelocity(), coR);
+        }
+        double timeTillTopCollision = top.timeUntilCollision(ball);
+        double timeTillBottomCollision = bottom.timeUntilCollision(ball);
+        CircularBumper bumper = null;
+        double time;
+        if(timeTillTopCollision < timeTillBottomCollision){
+            time = timeTillTopCollision;
+            bumper = top;
+        }else{
+            time = timeTillBottomCollision;
+            bumper = bottom;
+        }
+        double timeTillLineCollision = Geometry.timeUntilWallCollision(flipper, ball.getCircle(), ball.getVelocity());
+        if(time <= timeTillLineCollision){
+            newVelocityVector = Geometry.reflectCircle(bumper.getCircle().getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), coR);
         }
         ball.setVelocity(newVelocityVector);
-        this.trigger(); 
+        this.trigger();
     }
     
     /**
