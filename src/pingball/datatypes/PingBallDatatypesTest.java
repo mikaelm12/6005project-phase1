@@ -135,7 +135,6 @@ public class PingBallDatatypesTest {
         System.out.println(test.timeUntilCollision(tester));
         test.reflectOffGadget(tester);
         testR.reflectOffGadget(tester2);
-        assertTru
 
         
         
