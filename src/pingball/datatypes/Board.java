@@ -48,14 +48,14 @@ public class Board {
      */
     public Board(String name,double gravity, double mu, double mu2){ 
         //set walls to be solid by default
-        wallLeft = new OuterWall("left", 0,0,0,height,true);
-        wallRight = new OuterWall( "right",width,0,width,height,true);
-        wallTop = new OuterWall("top",0,0,width,0,true);
-        wallBottom = new OuterWall("bottom",0,height,width,height,true);
-        topLeft = new CircularBumper("topLeft",0,0,0);
-        topRight = new CircularBumper("topRight",20,0,0);
-        bottomRight = new CircularBumper("bottomRight",20,20,0);
-        bottomLeft = new CircularBumper("topLeft",0,20,0);
+        this.wallLeft = new OuterWall("left", 0,0,0,height,true);
+        this.wallRight = new OuterWall( "right",width,0,width,height,true);
+        this.wallTop = new OuterWall("top",0,0,width,0,true);
+        this.wallBottom = new OuterWall("bottom",0,height,width,height,true);
+        this.topLeft = new CircularBumper("topLeft",0,0,0);
+        this.topRight = new CircularBumper("topRight",20,0,0);
+        this.bottomRight = new CircularBumper("bottomRight",20,20,0);
+        this.bottomLeft = new CircularBumper("topLeft",0,20,0);
 
         this.name = name;
         this.gravity = gravity;
@@ -64,16 +64,13 @@ public class Board {
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
         
+        this.corners = new ArrayList<CircularBumper>(Arrays.asList(topLeft,topRight,bottomRight,bottomLeft));
+        
         this.neighborLeftString = wallLeft.toString();
         this.neighborTopString = wallTop.toString();
         this.neighborRightString = wallRight.toString();
         this.neighborBottomString = wallBottom.toString();
         
-        //add circular bumpers to corners of board: edge case
-        gadgets.add(topLeft);
-        gadgets.add(topRight);
-        gadgets.add(bottomRight);
-        gadgets.add(bottomLeft);
         
         
         checkRep();
@@ -334,8 +331,6 @@ public class Board {
         String string = new String();
         string += neighborTopString + "\n";
         for (Gadget gadget : gadgets) {
-            if(!(gadget.getName().equals("topLeft") || gadget.getName().equals("topRight") || 
-                    gadget.getName().equals("bottomRight") || gadget.getName().equals("bottomLeft"))){
                 Vect pos = gadget.getPosition();
                 int xPos = (int) pos.x();
                 int yPos = (int) pos.y();
@@ -361,8 +356,7 @@ public class Board {
                             }
                         }
                     }
-                }
-            }      
+                }     
         }
         for (Ball ball : balls) {
             int xPos = (int) Math.floor(ball.getPosition()[0]);
