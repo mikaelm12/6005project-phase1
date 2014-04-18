@@ -7,6 +7,7 @@ import java.util.Map;
 
 import pingball.datatypes.Ball;
 import pingball.datatypes.Board;
+import pingball.datatypes.OuterWall;
 
 
 /**
@@ -76,25 +77,23 @@ public class World implements WorldInterface {
 
     
     @Override
-    public synchronized void transferBallHorizontal(Board to, Ball ball){
-        if (ball.getPosition()[0] > 10){//if ball leaves the right wall of one board, it enters through the left of the other
-            Ball newBall = new Ball(ball.getName(),0, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
-            to.addBall(newBall);
-        } else {//if ball leaves the left wall of one board, it enters through the right of the other
+    public synchronized void transferBall(Board from, Ball ball, OuterWall wall){
+        if (wall == from.getOuterWalls()[0]){
+            Board neighbor = from.getNeighborLeft();
             Ball newBall = new Ball(ball.getName(),20, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
-            to.addBall(newBall);
-        }
-    }
-    
-    
-    @Override
-    public synchronized void transferBallVertical(Board to, Ball ball){
-        if (ball.getPosition()[1] > 10){ //if ball leaves the top wall of one board, it enters through the bottom of the other
-            Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
-            to.addBall(newBall);
-        } else {//if ball leaves the bottom wall of one board, it enters through the top of the other
-            Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
-            to.addBall(newBall);
+            neighbor.addBall(newBall);
+        } else if (wall == from.getOuterWalls()[0]){
+            Board neighbor = from.getNeighborTop();
+            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
+            neighbor.addBall(newBall);
+        } else if (wall == from.getOuterWalls()[0]){
+            Board neighbor = from.getNeighborRight();
+            Ball newBall = new Ball(ball.getName(), 0, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
+            neighbor.addBall(newBall);
+        } else {
+            Board neighbor = from.getNeighborBottom();
+            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
+            neighbor.addBall(newBall);
         }
     }
 

@@ -5,9 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 
 import BoardExpr.BoardFactory;
+import physics.Geometry;
+import pingball.datatypes.Ball;
 import pingball.datatypes.Board;
+import pingball.datatypes.Gadget;
+import pingball.datatypes.OuterWall;
 
 /**
  * Thread to handle a single client's game
@@ -81,42 +86,100 @@ public class PingballClientThread extends Thread {
         out.println("hello world!\n");
         //PLAY!!
         
-//        long start = System.currentTimeMillis();
-//        long previous = start;
-//        Ball ball = board.balls.get(0);
-//        while (true){
-//            
-//            long current = System.currentTimeMillis();
-//           
-//            previous = current;
-//            OuterWall wallToCollide = null;
-//
-//            if ((current-start) % 50 == 0){
-//                double timeToClosestCollision = 1000;
-//                OuterWall[] walls = board.getOuterWalls();                
-//                for (OuterWall wall: walls){
-//                    double timeToWall = Geometry.timeUntilWallCollision(wall.getLine(), ball.getCircle(), ball.getVelocity());
-//                    if (timeToClosestCollision > timeToWall){
-//                        timeToClosestCollision = timeToWall;
-//                        wallToCollide = wall;
-//                    }
-//                }
-//                if ((ball.getPosition()[0] + ball.getVelocity().x()*.50) >= 19 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) >= 19||
-//                        (ball.getPosition()[0] + ball.getVelocity().x()*.50) <= 0 || (ball.getPosition()[1] + ball.getVelocity().y()*.50) <= 0){
-//                    //System.out.println("bouncing against " + wallToCollide.name);
-//                    Vect newvel = ball.update(wallToCollide, ball.getVelocity());
-//                    ball.setVelocity(newvel);
-//                    System.out.println(ball.getVelocity());
-//                }
-//                double newx = ball.getPosition()[0] + ball.getVelocity().x()*.050;
-//                double newy = ball.getPosition()[1] + ball.getVelocity().y()*.050;
-//                System.out.println("old position: ("+ball.getPosition()[0]+","+ball.getPosition()[1]+")");
-//                System.out.println("new position: ("+newx+","+newy+")");
-//                ball.setPosition(newx, newy);
-//                System.out.println("updated position: ("+ball.getCircle().getCenter().x()+","+ball.getPosition()[1]+")");
-//                System.out.println(board.toString());
-//            }
-//        }
+        long start = System.currentTimeMillis();
+        long previous = start;
+        while(true){
+            long current = System.currentTimeMillis();
+            previous = current;
             
+            if ((current-start) % 50 == 0){
+                int counter = 1;
+                
+                for (Ball ball : board.getBalls()) {
+                    double timeToClosestWallCollision = Double.POSITIVE_INFINITY;
+                    OuterWall wallToCollide = null;
+                    double timeToBallCollide = Double.POSITIVE_INFINITY;
+                    Ball ballToCollide = null;
+                    if(ball.ballOutOfBounds(0.05)){
+                        
+                        
+                        for(OuterWall wall: board.getOuterWalls()){
+                            double timeUntilWallCollision = wall.timeUntilCollision(ball);
+                            if(timeUntilWallCollision < timeToClosestWallCollision){
+                                timeToClosestWallCollision = timeUntilWallCollision;
+                                wallToCollide = wall;
+                            } 
+                        }
+                        System.out.println("timeTowall: " + timeToClosestWallCollision);
+                        System.out.println("xvel: " + ball.getVelocity().x() + "  yvel: " + ball.getVelocity().y());
+                        
+                        
+                        
+                    }
+                    double timeToClosestCollision = Double.POSITIVE_INFINITY;
+                    Gadget gadgetToReflect = null;
+                    
+                    for (Gadget gadget : board.getGadgets()) {
+                        double timeUntilGadgetCollision = gadget.timeUntilCollision(ball);
+                        //System.out.println(gadget.timeUntilCollision(ball));
+                        if(timeUntilGadgetCollision < timeToClosestCollision){
+                            timeToClosestCollision = timeUntilGadgetCollision;
+                            gadgetToReflect = gadget;
+                        }
+                    }
+                    for (int i = counter; i < board.getBalls().size()-1; i++) {
+                        Ball that = board.getBalls().get(i);
+                        double timeToThatCollide = Geometry.timeUntilBallBallCollision(ball.getCircle(), 
+                                                                                ball.getVelocity(), that.getCircle(), 
+                                                                                that.getVelocity());
+                        if(timeToThatCollide < timeToBallCollide){
+                            timeToBallCollide = timeToThatCollide;
+                            ballToCollide = that;
+                        }
+                    }
+                    if(timeToClosestWallCollision <= timeToClosestCollision){
+                        if(timeToClosestWallCollision <= timeToBallCollide){
+                            if(wallToCollide != null && timeToClosestWallCollision < 0.11){
+                                System.out.println("reflecting off wall");
+                                if (wallToCollide.isSolid()){
+                                wallToCollide.reflectOffGadget(ball);   
+                                } else {
+                                        world.transferBall(board, ballToCollide, wallToCollide);
+                                        board.removeBall(ballToCollide);
+                                    }
+                                }
+                            }
+                        } 
+                    
+                    else if(timeToClosestCollision <= timeToBallCollide && 
+                            gadgetToReflect != null && timeToClosestCollision < 0.11){
+                        gadgetToReflect.reflectOffGadget(ball);
+                        System.out.println("reflecting off: " + gadgetToReflect.getName());
+                    }
+                    else{
+                        if(ballToCollide != null && timeToBallCollide < 0.11){
+                            Geometry.VectPair ballVelocities = Geometry.reflectBalls(ball.getCircle().getCenter(),
+                                    1, ball.getVelocity(), ballToCollide.getCircle().getCenter(), 
+                                    1, ballToCollide.getVelocity());
+                            System.out.println("reflecting against other ball");
+                            ball.setVelocity(ballVelocities.v1);
+                            ballToCollide.setVelocity(ballVelocities.v2);
+                        }
+                    }
+                    System.out.println("time: " + timeToClosestCollision);
+                    System.out.println("vel: " + ball.getVelocity());
+                    System.out.println("pos: " + Arrays.toString(ball.getPosition()));
+                    System.out.println("will be outofbounds: " + ball.ballOutOfBounds(0.05));
+                    ball.updateBallPosition(0.05);
+                    ball.updateBallVelocityAfterTimestep(board.getGravity(), board.getMu(), board.getMu2(), 0.05);
+                    counter++;
+                    
+                }
+                //assume no successive collisions
+                
+                System.out.println(board.toString());
+            }
+            
+        }
     }
 }

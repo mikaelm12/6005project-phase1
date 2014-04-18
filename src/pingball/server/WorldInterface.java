@@ -2,6 +2,7 @@ package pingball.server;
 
 import pingball.datatypes.Ball;
 import pingball.datatypes.Board;
+import pingball.datatypes.OuterWall;
 
 
 /**
@@ -36,21 +37,13 @@ public interface WorldInterface {
      */
     public void joinHorizontal(String boardLeft, String boardRight);
 
-    /**
-     * Transfers a ball from the left or right extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
-    void transferBallHorizontal(Board to, Ball ball);
 
     /**
-     * Transfers a ball from the top or bottom extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
+     * Transfers a ball from one board to its neighboring board
      * Ball keeps original velocity vector
-     * @param to board where the ball will appear
+     * @param from board where the ball came from
      * @param ball to be transfered from board to board
+     * @param wall through which the ball is exiting
      */
-    void transferBallVertical(Board to, Ball ball);
+    void transferBall(Board from, Ball ball, OuterWall wall);
 }
