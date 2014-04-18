@@ -1,7 +1,6 @@
 package pingball.datatypes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import physics.Vect;
@@ -26,11 +25,6 @@ public class Board {
     private List<Ball> balls;
     private List<Gadget> gadgets;
     private String[][] boardString;
-    private CircularBumper topLeft;
-    private CircularBumper topRight;
-    private CircularBumper bottomRight;
-    private CircularBumper bottomLeft;
-    private List<CircularBumper> corners;
     private String neighborLeftString;
     private String neighborTopString;
     private String neighborBottomString;
@@ -53,10 +47,6 @@ public class Board {
         this.wallRight = new OuterWall( "right",width,0,width,height,true);
         this.wallTop = new OuterWall("top",0,0,width,0,true);
         this.wallBottom = new OuterWall("bottom",0,height,width,height,true);
-        this.topLeft = new CircularBumper("topLeft",0,0,0);
-        this.topRight = new CircularBumper("topRight",20,0,0);
-        this.bottomRight = new CircularBumper("bottomRight",20,20,0);
-        this.bottomLeft = new CircularBumper("topLeft",0,20,0);
 
         this.name = name;
         this.gravity = gravity;
@@ -64,16 +54,12 @@ public class Board {
         this.mu2 = mu2;
         balls = new ArrayList<Ball>();
         gadgets = new ArrayList<Gadget>();
-        
-        this.corners = new ArrayList<CircularBumper>(Arrays.asList(topLeft,topRight,bottomRight,bottomLeft));
-        
+                
         this.neighborLeftString = wallLeft.toString();
         this.neighborTopString = wallTop.toString();
         this.neighborRightString = wallRight.toString();
         this.neighborBottomString = wallBottom.toString();
-        
-        
-        
+
         checkRep();
         
     }
@@ -140,7 +126,6 @@ public class Board {
      * @param timeStep difference in time
      */
     public void updateBallPositionsAndVelocity(double timeStep){
-        //TODO: make this compatible with more than one ball
         for (Ball ball : balls) {
             ball.updateBallPosition(timeStep);
             ball.updateBallVelocityAfterTimestep(gravity, mu, mu2, timeStep);
