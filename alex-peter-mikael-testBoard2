@@ -1,10 +1,10 @@
- board name=Alex gravity=10.0 friction1=0.020 friction2=0.020\n 
+ board name=Alex gravity=10.0 friction1=0.020 friction2=0.020 
              # Board with name Alex
 
-               # define a ball\n
-               ball name=Ball x=0.5 y=0.5 xVelocity=2.5 yVelocity=2.5\n
+               # define a ball
+               ball name=Ball x=0.5 y=0.5 xVelocity=2.5 yVelocity=2.5
 
-     # define a series of square bumpers\n 
+     # define a series of square bumpers 
      squareBumper name=Square1 x=2 y=2
      squareBumper name=Square2 x=3 y=3
      squareBumper name=Square3 x=3 y=2
