@@ -155,7 +155,10 @@ public class PingballServer {
      */
     private String handleRequest(String input) {
         String help = "Invalid input, please use  'h NAME_left NAME_right' or 'v NAME_top NAME_bottom' to join boards\n";
-        String regex = "(h\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])|(v\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])";
+        String joined = "Boards joined";
+        String noBoard = "Please use boards that are currently connected to the server";
+        String regex = "((h|v) -?[a-zA-Z0-9_] -?[a-zA-Z0-9_])";
+//        String regex = "(h\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])|(v\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])";
 //        if ( ! input.matches(regex)) {
 //            System.out.println("invalid!");
 //            // invalid input
@@ -163,6 +166,9 @@ public class PingballServer {
 //        }
         String[] tokens = input.split(" ");
         
+        if (!world.containsBoard(tokens[1]) || !world.containsBoard(tokens[2])){
+            return noBoard;
+        }
         if (tokens[0].equals("h")) {
             world.joinHorizontal(tokens[1], tokens[2]);
             return null;

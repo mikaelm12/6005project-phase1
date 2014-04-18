@@ -97,4 +97,9 @@ public class World implements WorldInterface {
         }
     }
 
+    @Override
+    public boolean containsBoard(String board) {
+        return boards.containsKey(board);
+    }
+
 }

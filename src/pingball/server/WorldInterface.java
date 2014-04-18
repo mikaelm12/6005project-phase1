@@ -45,5 +45,12 @@ public interface WorldInterface {
      * @param ball to be transfered from board to board
      * @param wall through which the ball is exiting
      */
-    void transferBall(Board from, Ball ball, OuterWall wall);
+    public void transferBall(Board from, Ball ball, OuterWall wall);
+    
+    /**
+     * Checks if the world contains a given board
+     * @param board to be checked
+     * @return boolean indicating the existence of the board
+     */
+    public boolean containsBoard(String board);
 }
