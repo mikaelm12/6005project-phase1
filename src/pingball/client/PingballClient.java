@@ -13,7 +13,10 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import BoardExpr.BoardFactory;
+import pingball.datatypes.Ball;
 import pingball.datatypes.Board;
+import pingball.datatypes.Gadget;
+import pingball.datatypes.OuterWall;
 
 /**
  * Client of a Pingball Game
@@ -44,7 +47,8 @@ public class PingballClient {
         int port = 10987; //default port
         String hostName = null;
 //        File file = null;
-        File file = new File ("/Users/PeterGithaiga/Documents/6.005/projectPhase1/pingball-phase1/sampleBoard1");        
+//        File file = new File ("/Users/PeterGithaiga/Documents/6.005/projectPhase1/pingball-phase1/sampleBoard1"); 
+        File file = new File ("/Users/AlexR/Desktop/6.005/pingball-phase1/sampleBoard1");
         Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
         try {
             while ( ! arguments.isEmpty()) {
@@ -156,6 +160,69 @@ public class PingballClient {
         //PLAY!
         
         System.out.println("hello world");
+        
+        long start = System.currentTimeMillis();
+        long previous = start;
+        while(true){
+            long current = System.currentTimeMillis();
+            previous = current;
+            
+            
+            if ((current-start) % 50 == 0){
+                
+                for (Ball ball : board.getBalls()) {
+                    double timeToClosestWallCollision = Double.POSITIVE_INFINITY;
+                    OuterWall wallToCollide = null;
+                    if(ball.ballOutOfBounds(0.05)){
+                        
+                        
+                        for(OuterWall wall: board.getOuterWalls()){
+                            double timeUntilWallCollision = wall.timeUntilCollision(ball);
+                            if(timeUntilWallCollision < timeToClosestWallCollision){
+                                timeToClosestWallCollision = timeUntilWallCollision;
+                                wallToCollide = wall;
+                            } 
+                        }
+                        System.out.println("timeTowall: " + timeToClosestWallCollision);
+                        System.out.println("xvel: " + ball.getVelocity().x() + "  yvel: " + ball.getVelocity().y());
+                        
+                        
+                        
+                    }
+                    double timeToClosestCollision = Double.POSITIVE_INFINITY;
+                    Gadget gadgetToReflect = null;
+                    
+                    for (Gadget gadget : board.getGadgets()) {
+                        double timeUntilGadgetCollision = gadget.timeUntilCollision(ball);
+                        //System.out.println(gadget.timeUntilCollision(ball));
+                        if(timeUntilGadgetCollision < timeToClosestCollision){
+                            timeToClosestCollision = timeUntilGadgetCollision;
+                            gadgetToReflect = gadget;
+                        }
+                    }
+                    
+                    if(timeToClosestWallCollision < timeToClosestCollision){
+                        if(wallToCollide != null && timeToClosestWallCollision < 0.05){
+                            
+                            
+                            System.out.println("reflecting off wall");
+                            wallToCollide.reflectOffGadget(ball);   
+                        }
+                    }
+                    else if(gadgetToReflect != null && timeToClosestCollision < 0.05){
+                        gadgetToReflect.reflectOffGadget(ball);
+                    }
+                    System.out.println("will be outofbounds: " + ball.ballOutOfBounds(0.05));
+                    ball.updateBallPosition(0.05);
+                    ball.updateBallVelocityAfterTimestep(board.getGravity(), board.getMu(), board.getMu2(), 0.05);
+                    
+                }
+                //assume no successive collisions
+                
+                System.out.println(board.toString());
+            }
+            
+        }
 //        long start = System.currentTimeMillis();
 //        long previous = start;
 //        Ball ball = board.balls.get(0);
