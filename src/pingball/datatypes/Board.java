@@ -341,13 +341,17 @@ public class Board {
                     boardString[yPos+1][xPos+1] = Character.toString(gadgetString.charAt(3));
                 }
                 else{
+                    Absorber abs = (Absorber) gadget;
                     if(gadgetString.length() <= 20){
-                        for (int i = 0; i < gadgetString.length(); i++) {
-                            boardString[yPos][xPos+i] = Character.toString(gadgetString.charAt(i));
+                        for (int i = 0; i < gadgetString.length()/abs.getHeight(); i++) {
+                            for (int j = 0; j < gadgetString.length()/abs.getWidth(); j++) {
+                                boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((abs.getWidth()*i)+j));
+                            }
+                            
                         }
                     }else{
-                        Absorber abs = (Absorber) gadget;
-                        for (int i = 0; i < (gadgetString.length()/abs.getHeight()); i++) {
+                        
+                        for (int i = 0; i < (gadgetString.length()/20); i++) {
                             for (int j = 0; j <abs.getWidth() ; j++) {
                                 boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((20*i)+j));
                             }
