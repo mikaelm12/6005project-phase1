@@ -144,8 +144,8 @@ public class PingballClientThread extends Thread {
                                 if (wallToCollide.isSolid()){
                                 wallToCollide.reflectOffGadget(ball);   
                                 } else {
-                                        world.transferBall(board, ballToCollide, wallToCollide);
-                                        board.removeBall(ballToCollide);
+                                        world.transferBall(board, ball, wallToCollide);
+                                        board.removeBall(ball); 
                                     }
                                 }
                             }
