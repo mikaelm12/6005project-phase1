@@ -84,6 +84,7 @@ public class PingballServer {
             Socket ClientSocket = serverSocket.accept();
             System.out.println("new client!");
             new PingballClientThread(ClientSocket, world).start();
+            System.out.println(world);
         } 
     }
     
@@ -162,6 +163,7 @@ public class PingballServer {
 //            return help;
 //        }
         String[] tokens = input.split(" ");
+        
         if (tokens[0].equals("h")) {
             world.joinHorizontal(tokens[1], tokens[2]);
             return null;
@@ -169,6 +171,8 @@ public class PingballServer {
             world.joinVertical(tokens[1], tokens[2]);
             return null;
         // Should never get here
+        }else if (tokens[0].equals("world")){
+            return world.toString();
         }
         throw new UnsupportedOperationException();
     }

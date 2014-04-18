@@ -49,6 +49,7 @@ public class PingballClientThread extends Thread {
         board = BoardFactory.parse(fileBoard);
         //out.println(board.toString());
         world.addBoard(board);
+        System.out.println(this.world);
     }
 
     /**

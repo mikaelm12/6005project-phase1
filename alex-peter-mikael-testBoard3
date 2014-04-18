@@ -26,6 +26,6 @@ ball name=Ball x=19.5 y=19.5 xVelocity=2.5 yVelocity=2.5
  squareBumper name=Square5 x=6 y=5
  squareBumper name=Square6 x=6 y=7
  squareBumper name=Square7 x=6 y=8
- squareBumper name=Square7 x=6 y=9;
+ squareBumper name=Square7 x=6 y=9
               
               #ignore me
