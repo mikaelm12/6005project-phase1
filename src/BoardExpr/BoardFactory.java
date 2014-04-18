@@ -22,8 +22,9 @@ public class BoardFactory {
     
     
     /**
-     * @param input string representing a conjunctive boolean expression
-     * @return Expression corresponding to the input
+     * @param input a file representing the users board that
+     *          they want to play.
+     * @return A board corresponding to the input file
      */
     public static Board parse(String input) {
         // Create a stream of tokens using the lexer.
@@ -45,18 +46,16 @@ public class BoardFactory {
 //        System.err.println(tree.toStringTree(parser));
 
         // debugging option #2: show the tree in a window
-        ((RuleContext)tree).inspect(parser);
+        //((RuleContext)tree).inspect(parser);
 
-        // debugging option #3: walk the tree with a listener
-//        new ParseTreeWalker().walk(new PrintEverythingListener(), tree);
         
-        // Finally, construct an Expression value by walking over the parse tree.
+        // Finally, construct Board by walking over the parse tree.
         ParseTreeWalker walker = new ParseTreeWalker();
         BoardFileListener listener = new BoardFileListener();
         walker.walk(listener, tree);
         
-        // return the Expression value that the listener created
-        return listener.getBoard(); //not boilerplate
+        // return the Board that the listener created
+        return listener.getBoard(); 
     }
     
     

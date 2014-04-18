@@ -38,13 +38,12 @@ public class World implements WorldInterface {
     @Override
     public synchronized void addBoard(Board board) {
         boards.put(board.getName(), board);
-        
-
     }
 
     @Override
     public synchronized void removeBoard(Board board) {
         String name = board.getName();
+        //if this board was someone's neighbor, remove that connection
         if (boards.get(name).getNeighborLeft() != null){
             boards.get(name).getNeighborLeft().unNeighbor(board);
         }
@@ -75,40 +74,28 @@ public class World implements WorldInterface {
 
     }
 
-    /**
-     * Transfers a ball from the left or right extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
+    
+    @Override
     public synchronized void transferBallHorizontal(Board to, Ball ball){
-        if (ball.getPosition()[0] > 10){
+        if (ball.getPosition()[0] > 10){//if ball leaves the right wall of one board, it enters through the left of the other
             Ball newBall = new Ball(ball.getName(),0, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
-        } else {
+        } else {//if ball leaves the left wall of one board, it enters through the right of the other
             Ball newBall = new Ball(ball.getName(),20, ball.getPosition()[1], ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
         }
     }
     
-    /**
-     * Transfers a ball from the top or bottom extreme of this board to the
-     *  opposite extreme of the other one, keeping same vertical location
-     * Ball keeps original velocity vector
-     * @param to board where the ball will appear
-     * @param ball to be transfered from board to board
-     */
+    
+    @Override
     public synchronized void transferBallVertical(Board to, Ball ball){
-        if (ball.getPosition()[1] > 10){
+        if (ball.getPosition()[1] > 10){ //if ball leaves the top wall of one board, it enters through the bottom of the other
             Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
-        } else {
+        } else {//if ball leaves the bottom wall of one board, it enters through the top of the other
             Ball newBall = new Ball(ball.getName(),ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
             to.addBall(newBall);
         }
-        
-        
     }
 
 }

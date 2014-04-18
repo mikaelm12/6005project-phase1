@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import BoardExpr.BoardFactory;
-import BoardExpr.BoardFileListener;
-import physics.Geometry;
-import physics.Vect;
 import pingball.datatypes.Board;
-import pingball.datatypes.OuterWall;
 
-
+/**
+ * Thread to handle a single client's game
+ * @author AlexR
+ *
+ */
 public class PingballClientThread extends Thread {
     private final Socket socket;
     private final Board board;
@@ -23,6 +22,7 @@ public class PingballClientThread extends Thread {
     /**
      * Initializes a user
      * @param socket to be used by this thread
+     * @param world where this client's game is stored
      * @throws IOException 
      */
     public PingballClientThread(Socket socket, World world) throws IOException {
@@ -30,8 +30,8 @@ public class PingballClientThread extends Thread {
         String kill = "END OF FILE!!";
         this.socket = socket;
         this.world = world;
+        //Receive and recreate the file of this user to create the corresponding board
         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
-        out.println("Initiated a thread\n");
         String fileBoard = "";
         BufferedReader in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         String line;
@@ -40,30 +40,15 @@ public class PingballClientThread extends Thread {
                 break;
             }
             fileBoard+= line + "\n";
-            out.println("reading file --> "+ line);
         }
-//        for (String line = in.readLine(); line != null; line = in.readLine()) {
-//            fileBoard += line;
-//            out.println("reading file --> "+ line);
-//            }
-//        in.close();
-//        try {
-//            for (String line = in.readLine(); line != null; line = in.readLine()) {
-//                fileBoard += line;
-//                out.println("reading file --> "+ line);
-//            }
-//            out.println("caca");
-//        }
-//        finally {
-//            in.close();
-//        }
-        out.println("creating board");
-        out.println(fileBoard);
         board = BoardFactory.parse(fileBoard);
         out.println(board.toString());
         world.addBoard(board);
     }
 
+    /**
+     * Run this specific thread
+     */
     public void run() {
         try {
             handleConnection(socket);
@@ -71,6 +56,7 @@ public class PingballClientThread extends Thread {
             e.printStackTrace(); // but don't terminate serve()
         } finally {
             try {
+                world.removeBoard(board);
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -78,6 +64,12 @@ public class PingballClientThread extends Thread {
         }
     }
     
+    /**
+     * Handle a single client connection. Returns when client disconnects.
+     * 
+     * @param socket socket where the client is connected
+     * @throws IOException if connection has an error or terminates unexpectedly
+     */
     public void handleConnection (Socket socket) throws IOException{
         /*Game is played here. Output to the client is the string representation of the board
         * sent every so often. 

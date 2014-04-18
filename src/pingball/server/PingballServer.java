@@ -16,6 +16,25 @@ import pingball.datatypes.Board;
 import warmup.Ball;
 
 
+/**
+ * Creates and manages a world of Pingball boards for multiple users
+ * @author AlexR
+ * Thread safety argument:
+ *    + The threads in the system are:
+ *       - Main thread that creates the world and accepts new connections
+ *       - Helper thread that constantly listens for input from the console (admin) to join boards
+ *       - One thread per connected user, handling only that user
+ *       
+ *    + The serverSocket Object is confined to the main thread
+ *    + The Socket object for a client is confined to that client's thread;
+ *      the main thread loses its reference to the object right after starting
+ *      the client thread.
+ *      
+ *    + All accesses to the game's world happen within World methods,
+ *      which are all guarded by World's lock
+ *    + All other variables are confined to each individual thread
+ *
+ */
 public class PingballServer {
     private final ServerSocket serverSocket;
     private final World world;
@@ -24,6 +43,7 @@ public class PingballServer {
      * Make a Pingball server that listens for connections on port.
      * 
      * @param port port number, requires 0 <= port <= 65535
+     * @param world where the game will be handled
      * @throws IOException 
      */
     public PingballServer(int port, World world) throws IOException{
@@ -40,12 +60,10 @@ public class PingballServer {
      */
     public void serve() throws IOException {
         System.out.println("Server is running now");
-        Thread t = new Thread (new Runnable(){
-
+        Thread consoleInput = new Thread (new Runnable(){
             @Override
             public void run() {
               //Constantly wait for user input to join boards
-                System.out.println("running now");
                 BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
                 try {
                     for (String line = fromUser.readLine(); line != null; line = fromUser.readLine()) {
@@ -59,7 +77,7 @@ public class PingballServer {
                 
             }
         });
-        t.start();
+        consoleInput.start();
             
         while (true) {
             // block until a client connects
@@ -67,22 +85,24 @@ public class PingballServer {
             System.out.println("new client!");
             new PingballClientThread(ClientSocket, world).start();
         } 
-           
-            
-//               int yc = 10;
-         
-//        Vect vel = new Vect(3.0, 4.0);
-//            Board board = new Board("Name");
-//            Ball ball = new Ball(xc, yc, .25, vel);
-//            board.addBall(ball);
-//            System.out.println("hello");
-//            System.out.println(board.toString());
-            
     }
     
+    
+    /**
+     * Start a PingballServer using the given arguments.
+     * 
+     * Usage: PingballServer [--port PORT]
+     * 
+     * 
+     * PORT is an optional integer in the range 0 to 65535 inclusive, 
+     * specifying the port where the server should listen for incoming connections. 
+     * The default port is 10987. E.g. "PingballServer --port 1234"
+     * starts the server listening on port 1234.
+     * 
+     */
     public static void main(String[] args) throws IOException {
-        int port = 10987;
-        
+        int port = 10987; //default port
+        // Read the input argument port
         Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
         try {
             while ( ! arguments.isEmpty()) {
@@ -113,15 +133,26 @@ public class PingballServer {
         
     }
         
-       
-            
-
+    /**
+     * Start a MinesweeperServer running on the specified port
+     * @param port The network port on which the server should listen.
+     * @throws IOException
+     */
     public static void runPingballServer(int port) throws IOException{
         World worl = new World();
         PingballServer server = new PingballServer(port, worl);
         server.serve();
     }
     
+    /**
+     * Handler for user input (only the server admin), performing requested operations 
+     * and returning an output message in case of invalid input
+     * 
+     * Possible commands are h Name_Left Name_Right to join NAME_left's right wall with NAME_right's left wall.
+     * and v Name_top Name_bottom to join NAME_top's bottom wall with NAME_bottom's top wall.
+     * @param input message from client
+     * @return message to client
+     */
     private String handleRequest(String input) {
         String help = "Invalid input, please use  'h NAME_left NAME_right' or 'v NAME_top NAME_bottom' to join boards\n";
         String regex = "(h [a-zA-Z]+)|(v [a-zA-Z]+)";
@@ -129,7 +160,6 @@ public class PingballServer {
             // invalid input
             return help;
         }
-        
         String[] tokens = input.split(" ");
         if (tokens[0].equals("h")) {
             world.joinHorizontal(tokens[1], tokens[2]);
