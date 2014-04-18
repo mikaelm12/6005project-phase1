@@ -280,27 +280,14 @@ public class Board {
      * @param board to be removed from neighbors
      */
     public void unNeighbor (Board board){
-        if (neighborBottom.getName().equals(board.getName())){neighborBottom = null;}
-        else if (neighborTop.getName().equals(board.getName())){neighborTop = null;}
-        else if (neighborLeft.getName().equals(board.getName())){neighborLeft = null;}
-        else if (neighborRight.getName().equals(board.getName())){neighborRight = null;}
-        // extra version
-        if (neighborBottom == board){
-            neighborBottom = null;
-            neighborBottomString = wallBottom.toString();
-        } //TODO: define equals????
-        else if (neighborTop == board){
-            neighborTop = null;
-            neighborTopString = wallTop.toString();
-        }
-        else if (neighborLeft == board){
-            neighborLeft = null;
-            neighborLeftString = wallLeft.toString();
-        }
-        else if (neighborRight == board){
-            neighborRight = null;
-            neighborRightString = wallRight.toString();
-        }
+        if (neighborBottom.getName().equals(board.getName())){neighborBottom = null;
+                neighborBottomString = wallBottom.toString();}
+        else if (neighborTop.getName().equals(board.getName())){neighborTop = null;
+        neighborTopString = wallTop.toString();}
+        else if (neighborLeft.getName().equals(board.getName())){neighborLeft = null;
+        neighborLeftString = wallLeft.toString();}
+        else if (neighborRight.getName().equals(board.getName())){neighborRight = null;
+        neighborRightString = wallRight.toString();}
     }
     
     /**

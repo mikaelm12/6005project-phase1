@@ -128,7 +128,13 @@ public class PingballClient {
         
     }
     
+    /**
+     * Runs the Pingball Client in single machine mode
+     * @param file of the board to be created and run
+     * @throws IOException
+     */
     public static void runSingleMachine (File file) throws IOException{
+        //Turn file into a string
         String fileString = "";
         BufferedReader inputFileStream = null;
         try {
@@ -142,6 +148,7 @@ public class PingballClient {
                inputFileStream.close();
            }
        }
+        // Create the board
         Board board  =  BoardFactory.parse(fileString);
         System.out.println(board.toString());
         
