@@ -6,57 +6,103 @@ import org.junit.Test;
 
 
 /**
-
+ * 
+ * @author PeterGithaiga
+ * Testing strategy for Gadgets:
+ * 1. Test Action
+ * flipper:
+ *  -test that flipper rotate forward when fired when in the initial state
+ *  -test flipper rotate backward after being fired while in the final state
+ *  -test flipper rotate properly in different orientation
+ *  
+ * absorber:
+ *  -test absorber stores 1 ball in board if no gadget is triggering
+ *  -test absorber stores >1 ball in board if no gadget triggering
+ *  -test absorber shoots stored balls when fired
+ *  -test absorber shoots ball correctly with height >1
+ *  
+ * 2. Test timeUntilRe
+ * 
+ *
  */
 
 public class PingBallDatatypesTest {
     
-    @Test public void testFlippersAction(){
+    @Test public void testLeftFlippersAction(){
         LeftFlipper leftFlipper = new LeftFlipper("leftFlipper",2,2,0);
-        RightFlipper rightFlipper = new RightFlipper("rightFlipper",5,5,0); 
+
         SquareBumper square = new SquareBumper("square",3,1);
         square.addGadgetToFire(leftFlipper);
-        square.addGadgetToFire(rightFlipper);
         
         Ball ball1 = new Ball("ball1",3.2,1.2,-1.0,0);
         square.reflectOffGadget(ball1);
         
         assertTrue(leftFlipper.getState().equals("final"));
-        assertTrue(rightFlipper.getState().equals("final"));
+        
         
         square.reflectOffGadget(ball1);
         
         assertTrue(leftFlipper.getState().equals("initial"));
-        assertTrue(rightFlipper.getState().equals("initial"));
-        
     }
     
-    @Test public void TestFlippersActionDifferentOrientation(){
+    @Test public void testRightFlipperAction(){
+        RightFlipper rightFlipper = new RightFlipper("rightFlipper",5,5,0);
+        SquareBumper square = new SquareBumper("square",3,1);
+        square.addGadgetToFire(rightFlipper);
+        Ball ball1 = new Ball("ball1",3.2,1.2,-1.0,0);
+        
+        square.reflectOffGadget(ball1);
+        assertTrue(rightFlipper.getState().equals("final"));
+        
+        square.reflectOffGadget(ball1);
+        assertTrue(rightFlipper.getState().equals("initial"));
+    }
+    
+    @Test public void testLeftFlippersActionDifferentOrientation(){
         LeftFlipper leftFlipper = new LeftFlipper("leftFlipper",2,2,90);
-        RightFlipper rightFlipper = new RightFlipper("rightFlipper",5,5,90); 
+        
         SquareBumper square = new SquareBumper("square",3,1);
         square.addGadgetToFire(leftFlipper);
-        square.addGadgetToFire(rightFlipper);
+        
         
         assertTrue(leftFlipper.toString().equals("- - "));
-        assertTrue(rightFlipper.toString().equals(" - -"));
+        
         
         Ball ball1 = new Ball("ball1",3.2,1.2,-5.0,0);
         square.reflectOffGadget(ball1);
         
         assertTrue(leftFlipper.getState().equals("final"));
-        assertTrue(rightFlipper.getState().equals("final"));
+        
         
         assertTrue(leftFlipper.toString().equals("  ||"));
-        assertTrue(rightFlipper.toString().equals("  ||"));
+        
         
         square.reflectOffGadget(ball1);
         
         assertTrue(leftFlipper.getState().equals("initial"));
-        assertTrue(rightFlipper.getState().equals("initial"));
+        
         
         assertTrue(leftFlipper.toString().equals("- - "));
+        
+    }
+    
+    @Test public void testRightFlipperActionDifferentOrientation(){
+        RightFlipper rightFlipper = new RightFlipper("rightFlipper",5,5,90);
+        SquareBumper square = new SquareBumper("square",3,1);
+        square.addGadgetToFire(rightFlipper);
         assertTrue(rightFlipper.toString().equals(" - -"));
+        
+        Ball ball1 = new Ball("ball1",3.2,1.2,-5.0,0);
+        square.reflectOffGadget(ball1);
+        
+        assertTrue(rightFlipper.getState().equals("final"));
+        assertTrue(rightFlipper.toString().equals("  ||"));
+        
+        square.reflectOffGadget(ball1);
+        
+        assertTrue(rightFlipper.getState().equals("initial"));
+        assertTrue(rightFlipper.toString().equals(" - -"));
+        
     }
     
     @Test public void testTimeUntilCollision(){
@@ -130,12 +176,9 @@ public class PingBallDatatypesTest {
         Ball tester = new Ball("tester",4,4,0,-1);
         Ball tester2 = new Ball("tester",4,4,0,-1);
         System.out.println(test.timeUntilCollision(tester));
-        System.out.println(testR.timeUntilCollision(tester));
         test.reflectOffGadget(tester);
         testR.reflectOffGadget(tester2);
-        System.out.println(tester2.getVelocity());
-        System.out.println(tester.getVelocity());
-        //System.out.println(tester.getVelocity());
+
         
         
     }
