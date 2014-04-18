@@ -27,6 +27,9 @@ public class BoardFactory {
      * @return A board corresponding to the input file
      */
     public static Board parse(String input) {
+        
+        //Mainly reused code from Recitation 13!
+        
         // Create a stream of tokens using the lexer.
         CharStream stream;
         stream = new ANTLRInputStream(input);
