@@ -170,7 +170,7 @@ public class PingballServer {
             return noBoard;
         }
         if (tokens[0].equals("h")) {
-            world.joinHorizontal(tokens[1], tokens[2]);
+            world.joinHorizontal(tokens[1], tokens[2]); 
             return null;
         } else if (tokens[0].equals("v")) {
             world.joinVertical(tokens[1], tokens[2]);
