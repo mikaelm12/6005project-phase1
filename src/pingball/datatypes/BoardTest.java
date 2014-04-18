@@ -5,8 +5,16 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Test some super complicated stuff.
- * @category no_didit
+ * Test Strategy
+ * 
+ * Test some of the basic features of the board
+ * -Adding a ball
+ * -Removing a ball
+ * -Adding a gadget
+ * -removing a gadget
+ * -testing board to string with various gadget
+ *
+ * 
  */
 
 
@@ -243,9 +251,9 @@ public class BoardTest {
         ".                    .\n"+
         ".                    .\n"+
         ".                    .\n"+
-        ".   #####            .\n"+
-        ".   #####            .\n"+
-        ".   #####            .\n"+
+        ".   ==               .\n"+
+        ".   ==               .\n"+
+        ".                    .\n"+
         ".                    .\n"+
         ".                    .\n"+
         ".                    .\n"+

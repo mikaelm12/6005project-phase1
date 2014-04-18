@@ -349,7 +349,7 @@ public class Board {
                         Absorber abs = (Absorber) gadget;
                         for (int i = 0; i < (gadgetString.length()/abs.getHeight()); i++) {
                             for (int j = 0; j <abs.getWidth() ; j++) {
-                                boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((20*i)+j));
+                                boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((abs.getWidth()*i)+j));
                             }
                         }
                     }
