@@ -96,5 +96,10 @@ public class World implements WorldInterface {
             neighbor.addBall(newBall);
         }
     }
+    
+    @Override
+    public String toString(){
+        return boards.entrySet().toString();
+    }
 
 }
