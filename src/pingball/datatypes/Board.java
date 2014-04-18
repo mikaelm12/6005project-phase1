@@ -360,7 +360,6 @@ public class Board {
             }      
         }
         for (Ball ball : balls) {
-            System.out.println(Arrays.toString(ball.getPosition()));
             int xPos = (int) Math.floor(ball.getPosition()[0]);
             int yPos = (int) Math.floor(ball.getPosition()[1]);
             

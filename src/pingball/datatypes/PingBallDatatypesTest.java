@@ -133,7 +133,17 @@ public class PingBallDatatypesTest {
         wallLeft.reflectOffGadget(ball9);
         assertTrue(ball9.getVelocity().x() == 1.0);
         assertTrue(ball9.getVelocity().y() == 0);
-        String hello = "hello";
+        RightFlipper testR = new RightFlipper("testR",2,1,0);
+        CircularBumper test = new CircularBumper("test",4,3,0);
+        Ball tester = new Ball("tester",4,4,0,-1);
+        Ball tester2 = new Ball("tester",4,4,0,-1);
+        System.out.println(test.timeUntilCollision(tester));
+        System.out.println(testR.timeUntilCollision(tester));
+        test.reflectOffGadget(tester);
+        testR.reflectOffGadget(tester2);
+        System.out.println(tester2.getVelocity());
+        System.out.println(tester.getVelocity());
+        //System.out.println(tester.getVelocity());
         
         
     }
