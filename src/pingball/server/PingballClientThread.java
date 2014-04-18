@@ -87,6 +87,8 @@ public class PingballClientThread extends Thread {
         while(true){
             long current = System.currentTimeMillis();
             previous = current;
+            boolean transferball = false;
+            Ball ballToTransfer = null;
             
             if ((current-start) % 50 == 0){
                 int counter = 1;
@@ -126,15 +128,17 @@ public class PingballClientThread extends Thread {
                             timeToBallCollide = timeToThatCollide;
                             ballToCollide = that;
                         }
-                    }
+                    } 
                     if(timeToClosestWallCollision <= timeToClosestCollision){
                         if(timeToClosestWallCollision <= timeToBallCollide){
                             if(wallToCollide != null && timeToClosestWallCollision < 0.11){
                                 if (wallToCollide.isSolid()){
                                 wallToCollide.reflectOffGadget(ball);   
                                 } else {
+                                    System.out.println("transfered");
                                         world.transferBall(board, ball, wallToCollide);
-                                        board.removeBall(ball); 
+                                        ballToTransfer = ball;
+                                        transferball = true;
                                     }
                                 }
                             }
@@ -158,6 +162,13 @@ public class PingballClientThread extends Thread {
                     counter++;
                 }
                 //assume no successive collisions
+                if (transferball){ board.removeBall(ballToTransfer);}
+                if (board.getIncomingBalls().size() != 0) {
+                    for (Ball ball : board.getIncomingBalls()){
+                        board.addBall(ball);
+                    }
+                    board.getIncomingBalls().clear();
+                }
                 out.println(board.toString());
             }
             

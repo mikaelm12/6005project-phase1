@@ -35,6 +35,7 @@ public class Board {
     private String neighborTopString;
     private String neighborBottomString;
     private String neighborRightString;
+    private List<Ball> incomingBalls = new ArrayList<Ball>();
     
     
     //Rep invariant:
@@ -124,6 +125,14 @@ public class Board {
      */
     public void addBall(Ball ball){
         balls.add(ball);
+    }
+    
+    public void addIncomingBall(Ball ball){
+        incomingBalls.add(ball);
+    }
+    
+    public List<Ball> getIncomingBalls(){
+        return incomingBalls;
     }
     
     /**

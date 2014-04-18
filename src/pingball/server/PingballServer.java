@@ -158,7 +158,7 @@ public class PingballServer {
         String joined = "Boards joined";
         String noBoard = "Please use boards that are currently connected to the server";
         String regex = "((h|v) -?[a-zA-Z0-9_] -?[a-zA-Z0-9_])";
-//        String regex = "(h\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])|(v\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])";
+//        String resgex = "(h\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])|(v\\s[a-zA-Z0-9_]\\s[a-zA-Z0-9_])";
 //        if ( ! input.matches(regex)) {
 //            System.out.println("invalid!");
 //            // invalid input
