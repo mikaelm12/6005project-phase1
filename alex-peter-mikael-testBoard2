@@ -26,4 +26,4 @@
      absorber name=Abs x=0 y=19 width=20 height=1 
               
      fire trigger=FlipL2 action=Square8 
-     fire trigger=Square8 action=Abs 
+     fire trigger=Abs action=Abs 

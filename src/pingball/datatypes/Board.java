@@ -140,7 +140,7 @@ public class Board {
      * @param timeStep difference in time
      */
     public void updateBallPositionsAndVelocity(double timeStep){
-        //TODO: make this compatible with more than one ball
+        
         for (Ball ball : balls) {
             ball.updateBallPosition(timeStep);
             ball.updateBallVelocityAfterTimestep(gravity, mu, mu2, timeStep);
