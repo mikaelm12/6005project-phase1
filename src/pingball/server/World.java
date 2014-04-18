@@ -84,7 +84,7 @@ public class World implements WorldInterface {
             neighbor.addBall(newBall);
         } else if (wall == from.getOuterWalls()[0]){
             Board neighbor = from.getNeighborTop();
-            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
+            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
             neighbor.addBall(newBall);
         } else if (wall == from.getOuterWalls()[0]){
             Board neighbor = from.getNeighborRight();
@@ -92,7 +92,7 @@ public class World implements WorldInterface {
             neighbor.addBall(newBall);
         } else {
             Board neighbor = from.getNeighborBottom();
-            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 20, ball.getVelocity().x(),ball.getVelocity().y());
+            Ball newBall = new Ball(ball.getName(), ball.getPosition()[0], 0, ball.getVelocity().x(),ball.getVelocity().y());
             neighbor.addBall(newBall);
         }
     }

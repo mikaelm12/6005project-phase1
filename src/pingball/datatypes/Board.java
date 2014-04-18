@@ -205,6 +205,7 @@ public class Board {
     */
     public void setNeighborLeft(Board board){
         neighborLeft = board;
+        wallLeft.setWallSolidity(false);
         String neighborName = neighborLeft.getName();
         if(neighborName.length() >= 20){
             neighborLeftString = neighborName.substring(0, 20); 
@@ -225,6 +226,7 @@ public class Board {
      */
     public void setNeighborRight(Board board){
         neighborRight = board;
+        wallRight.setWallSolidity(false);
         String neighborName = neighborRight.getName();
         if(neighborName.length() >= 20){
             neighborRightString = neighborName.substring(0, 20);
@@ -244,6 +246,7 @@ public class Board {
      */
     public void setNeighborTop(Board board){
         neighborTop = board;
+        wallTop.setWallSolidity(false);
         String neighborName = neighborTop.getName();
         if(neighborName.length() >= 20){
             neighborTopString = neighborName.substring(0, 20);
@@ -263,6 +266,7 @@ public class Board {
      */
     public void setNeighborBottom(Board board){
         neighborBottom = board;
+        wallBottom.setWallSolidity(false);
         String neighborName = neighborBottom.getName();
         if(neighborName.length() >= 20){
             neighborBottomString = neighborName.substring(0, 20);
@@ -281,14 +285,22 @@ public class Board {
      * @param board to be removed from neighbors
      */
     public void unNeighbor (Board board){
-        if (neighborBottom.getName().equals(board.getName())){neighborBottom = null;
-                neighborBottomString = wallBottom.toString();}
-        else if (neighborTop.getName().equals(board.getName())){neighborTop = null;
-        neighborTopString = wallTop.toString();}
-        else if (neighborLeft.getName().equals(board.getName())){neighborLeft = null;
-        neighborLeftString = wallLeft.toString();}
-        else if (neighborRight.getName().equals(board.getName())){neighborRight = null;
-        neighborRightString = wallRight.toString();}
+        if (neighborBottom.getName().equals(board.getName())){
+            neighborBottom = null;
+            neighborBottomString = wallBottom.toString();
+            wallBottom.setWallSolidity(true);}
+        else if (neighborTop.getName().equals(board.getName())){
+            neighborTop = null;
+            neighborTopString = wallTop.toString();
+            wallTop.setWallSolidity(true);}
+        else if (neighborLeft.getName().equals(board.getName())){
+            neighborLeft = null;
+            neighborLeftString = wallLeft.toString();
+            wallLeft.setWallSolidity(true);}
+        else if (neighborRight.getName().equals(board.getName())){
+            neighborRight = null;
+            neighborRightString = wallRight.toString();
+            wallRight.setWallSolidity(true);}
     }
     
     /**
