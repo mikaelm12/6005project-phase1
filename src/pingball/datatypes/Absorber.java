@@ -69,6 +69,22 @@ public class Absorber implements Gadget{
     }
     
     /**
+     * 
+     * @return width of absorber
+     */
+    public int getWidth(){
+        return width;
+    }
+    
+    /**
+     * 
+     * @return height of absorber
+     */
+    public int getHeight(){
+        return height;
+    }
+    
+    /**
      * fires the actions of gadgets in gadgetsToFire
      */
     private void trigger(){

@@ -345,8 +345,9 @@ public class Board {
                             boardString[yPos][xPos+i] = Character.toString(gadgetString.charAt(i));
                         }
                     }else{
-                        for (int i = 0; i < (gadgetString.length()/20); i++) {
-                            for (int j = 0; j < 20; j++) {
+                        Absorber abs = (Absorber) gadget;
+                        for (int i = 0; i < (gadgetString.length()/abs.getHeight()); i++) {
+                            for (int j = 0; j <abs.getWidth() ; j++) {
                                 boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((20*i)+j));
                             }
                         }
@@ -357,7 +358,7 @@ public class Board {
             int xPos = (int) Math.floor(ball.getPosition()[0]);
             int yPos = (int) Math.floor(ball.getPosition()[1]);
             if (yPos >= 0 && yPos <= 19 && xPos>= 0 && xPos <= 19){
-            boardString[yPos][xPos] = ball.toString();
+                boardString[yPos][xPos] = ball.toString();
             }
         }
         for (int i = 0; i < height; i++) {
