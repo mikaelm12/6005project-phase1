@@ -20,7 +20,7 @@ public class Main {
         TriangularBumper triangleBumper = new TriangularBumper("triangleBumper",19,1,270);
         LeftFlipper flipperL = new LeftFlipper("flipperL",6,7,0);
         RightFlipper flipperR = new RightFlipper("flipperR",10,7,0);
-        Absorber absorber = new Absorber("abs",0,19,20,1);
+        Absorber absorber = new Absorber("abs",0,15,20,5);
         //square.addGadgetToFire(flipperL);
         //flipperL.addGadgetToFire(flipperR);
         flipperL.addGadgetToFire(flipperL);
@@ -37,12 +37,10 @@ public class Main {
         board.setNeighborTop(neighbor);
         
         long start = System.currentTimeMillis();
-        long previous = start;
+
         while(true){
             long current = System.currentTimeMillis();
-            previous = current;
-            
-            
+
             if ((current-start) % 50 == 0){
                 int counter = 1;
                 
@@ -61,18 +59,13 @@ public class Main {
                                 wallToCollide = wall;
                             } 
                         }
-                        System.out.println("timeTowall: " + timeToClosestWallCollision);
-                        System.out.println("xvel: " + ball.getVelocity().x() + "  yvel: " + ball.getVelocity().y());
-                        
-                        
-                        
+                      
                     }
                     double timeToClosestGadgetCollision = Double.POSITIVE_INFINITY;
                     Gadget gadgetToReflect = null;
                     
                     for (Gadget gadget : board.getGadgets()) {
                         double timeUntilGadgetCollision = gadget.timeUntilCollision(ball);
-                        //System.out.println(gadget.timeUntilCollision(ball));
                         if(timeUntilGadgetCollision < timeToClosestGadgetCollision){
                             timeToClosestGadgetCollision = timeUntilGadgetCollision;
                             gadgetToReflect = gadget;
@@ -83,9 +76,7 @@ public class Main {
                         double timeToThatCollide = Geometry.timeUntilBallBallCollision(ball.getCircle(), 
                                                                                 ball.getVelocity(), that.getCircle(), 
                                                                                 that.getVelocity());
-                        System.out.println("time to ball: " + timeToThatCollide);
                         if(timeToThatCollide < timeToBallCollide){
-                            System.out.println("in here");
                             timeToBallCollide = timeToThatCollide;
                             ballToCollide = that;
                         }
@@ -104,30 +95,22 @@ public class Main {
                     else if(timeToClosestGadgetCollision < timeToBallCollide && 
                             gadgetToReflect != null && timeToClosestGadgetCollision < 0.11){
                         gadgetToReflect.reflectOffGadget(ball);
-                        System.out.println("reflecting off: " + gadgetToReflect.getName());
                     }
                     else{
-                        System.out.println("other ball collide: " + (ballToCollide != null));
                         
                         if(ballToCollide != null && timeToBallCollide < 0.11){// 2 timesteps ahead
                             Geometry.VectPair ballVelocities = Geometry.reflectBalls(ball.getCircle().getCenter(),
                                     1, ball.getVelocity(), ballToCollide.getCircle().getCenter(), 
                                     1, ballToCollide.getVelocity());
-                            System.out.println("reflecting against other ball");
                             ball.setVelocity(ballVelocities.v1);
                             ballToCollide.setVelocity(ballVelocities.v2);
                         }
                     }
-                    System.out.println("time: " + timeToClosestGadgetCollision);
-                    System.out.println("vel: " + ball.getVelocity());
-                    System.out.println("pos: " + Arrays.toString(ball.getPosition()));
-                    System.out.println("will be outofbounds: " + ball.ballOutOfBounds(0.05));
                     ball.updateBallPosition(0.05);
                     ball.updateBallVelocityAfterTimestep(board.getGravity(), board.getMu(), board.getMu2(), 0.05);
                     counter++;
                     
                 }
-                //assume no successive collisions
                 
                 System.out.println(board.toString());
             }

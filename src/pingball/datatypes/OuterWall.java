@@ -1,6 +1,7 @@
 package pingball.datatypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import physics.Geometry;
@@ -15,11 +16,16 @@ public class OuterWall implements Gadget{
     private boolean solid;
     private final String name;
     private List<Gadget> gadgetsToFire;
+    private CircularBumper top;
+    private CircularBumper bottom;
+    private List<CircularBumper> corners;
     
     //Rep invariant:
     //name.length>0
     //wall located on boundaries of board
+    //gadgetsToFire.size == 0
     //Abstraction function:
+    //represents wall of board. CircularBumpers top and bottom represents corners of the board
     
     public OuterWall(String name, int x0 , int y0, int x1, int y1, boolean solid){
         this.wall = new LineSegment(x0, y0, x1, y1);
@@ -28,17 +34,14 @@ public class OuterWall implements Gadget{
         this.name = name;
         this.gadgetsToFire = new ArrayList<Gadget>();
         
+        this.top = new CircularBumper("top",x0,y0,0);
+        this.bottom = new CircularBumper("bottom",x1,y1,0);
+        
+        this.corners = new ArrayList<CircularBumper>(Arrays.asList(top,bottom));
+        
         checkRep();
     }
     
-    /**
-     * fires the actions of gadgets in gadgetsToFire
-     */
-    private void trigger(){
-        for (Gadget gadget : gadgetsToFire) {
-            gadget.action();
-        }
-    }
     
     /**
      * no action i.e does not respond to any trigger
@@ -63,7 +66,16 @@ public class OuterWall implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        return Geometry.timeUntilWallCollision(wall, ball.getCircle(), ball.getVelocity());
+        double closestTimeToCollision = Geometry.timeUntilWallCollision(wall, ball.getCircle(), ball.getVelocity());
+        for (CircularBumper corner : corners) {
+            double timeToCorner = Geometry.timeUntilCircleCollision(corner.getCircle(), 
+                                                                    ball.getCircle(), ball.getVelocity());
+            //if time nearest corner< time to wall, update closest time
+            if(timeToCorner < closestTimeToCollision){
+                closestTimeToCollision = timeToCorner;
+            }
+        }
+        return closestTimeToCollision;
     }
     
     /**
@@ -74,9 +86,31 @@ public class OuterWall implements Gadget{
     public void reflectOffGadget(Ball ball){
         //reflect only if solid
         if(solid){
-            Vect newVelocityVector = Geometry.reflectWall(wall, ball.getVelocity(), coR);
+            double closestTimeToCollision = Geometry.timeUntilWallCollision(wall, ball.getCircle(), ball.getVelocity());
+            CircularBumper closestCorner = null;
+            for (CircularBumper corner : corners) {
+                
+                double timeToCorner = Geometry.timeUntilCircleCollision(corner.getCircle(), 
+                                                                        ball.getCircle(), ball.getVelocity());
+                //if corner closer than nearest edge, update
+                if(timeToCorner < closestTimeToCollision){
+                    closestTimeToCollision = timeToCorner;
+                    closestCorner = corner;
+                }
+            }
+            Vect newVelocityVector;
+            //reflect against corner if corner!=null, else reflect against line
+            if(closestCorner != null){
+                newVelocityVector = Geometry.reflectCircle(closestCorner.getCircle().getCenter(), ball.getCircle().getCenter(),
+                        ball.getVelocity());
+            }else{
+                newVelocityVector = Geometry.reflectWall(wall, ball.getVelocity(), coR);
+            }
             ball.setVelocity(newVelocityVector);
-        }    
+            
+            checkRep();
+        }  
+        
     }
     
     /**
@@ -93,6 +127,7 @@ public class OuterWall implements Gadget{
      */
     public void addGadgetToFire(Gadget gadget){
         gadgetsToFire.add(gadget);
+        checkRep();
     }
     
     /**
@@ -151,6 +186,7 @@ public class OuterWall implements Gadget{
         assertTrue(wall.p1().y() == 0 || wall.p1().y() == 20);
         assertTrue(wall.p2().x() == 0 || wall.p2().x() == 20);
         assertTrue(wall.p2().y() == 0 || wall.p2().y() == 20);
+        assertTrue(gadgetsToFire.size() == 0);
     }
 
 

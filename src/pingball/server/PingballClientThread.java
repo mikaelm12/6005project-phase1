@@ -47,7 +47,6 @@ public class PingballClientThread extends Thread {
             fileBoard+= line + "\n";
         }
         board = BoardFactory.parse(fileBoard);
-        //out.println(board.toString());
         world.addBoard(board);
     }
 
@@ -83,10 +82,8 @@ public class PingballClientThread extends Thread {
         //PLAY!!
         
         long start = System.currentTimeMillis();
-        long previous = start;
         while(true){
             long current = System.currentTimeMillis();
-            previous = current;
             boolean transferball = false;
             Ball ballToTransfer = null;
             
@@ -134,8 +131,7 @@ public class PingballClientThread extends Thread {
                             if(wallToCollide != null && timeToClosestWallCollision < 0.11){
                                 if (wallToCollide.isSolid()){
                                 wallToCollide.reflectOffGadget(ball);   
-                                } else {
-                                    System.out.println("transfered");
+                                } else { //world not solid if connected to a neighbor
                                         world.transferBall(board, ball, wallToCollide);
                                         ballToTransfer = ball;
                                         transferball = true;
@@ -161,7 +157,9 @@ public class PingballClientThread extends Thread {
                     ball.updateBallVelocityAfterTimestep(board.getGravity(), board.getMu(), board.getMu2(), 0.05);
                     counter++;
                 }
-                //assume no successive collisions
+                // To avoid modifying the list of balls in the middle of an iteration
+                // wait until the iteration is over to add incoming balls and delete outgoing balls
+                // if any of those exist
                 if (transferball){ board.removeBall(ballToTransfer);}
                 if (board.getIncomingBalls().size() != 0) {
                     for (Ball ball : board.getIncomingBalls()){
