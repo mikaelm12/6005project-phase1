@@ -126,7 +126,6 @@ public class Board {
      * @param timeStep difference in time
      */
     public void updateBallPositionsAndVelocity(double timeStep){
-
         for (Ball ball : balls) {
             ball.updateBallPosition(timeStep);
             ball.updateBallVelocityAfterTimestep(gravity, mu, mu2, timeStep);
@@ -341,14 +340,17 @@ public class Board {
                     boardString[yPos+1][xPos+1] = Character.toString(gadgetString.charAt(3));
                 }
                 else{
+                    Absorber abs = (Absorber) gadget;
                     if(gadgetString.length() <= 20){
-                        for (int i = 0; i < gadgetString.length(); i++) {
-                            boardString[yPos][xPos+i] = Character.toString(gadgetString.charAt(i));
+                        for (int i = 0; i < gadgetString.length()/abs.getHeight(); i++) {
+                            for (int j = 0; j < gadgetString.length()/abs.getWidth(); j++) {
+                                boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((abs.getWidth()*i)+j));
+                            }
+                            
                         }
                     }else{
-                        Absorber abs = (Absorber) gadget;
-                        for (int i = 0; i < (gadgetString.length()/abs.getHeight()); i++) {
-                            for (int j = 0; j <abs.getWidth() ; j++) {
+                        for (int i = 0; i < (gadgetString.length()/20); i++) {
+                            for (int j = 0; j < 20; j++) {
                                 boardString[yPos+i][xPos+j] = Character.toString(gadgetString.charAt((20*i)+j));
                             }
                         }
