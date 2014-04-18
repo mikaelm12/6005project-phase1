@@ -59,7 +59,6 @@ public class PingballServer {
      *                     (IOExceptions from individual clients do *not* terminate serve())
      */
     public void serve() throws IOException {
-        System.out.println("Server is running now");
         Thread consoleInput = new Thread (new Runnable(){
             @Override
             public void run() {
@@ -82,7 +81,6 @@ public class PingballServer {
         while (true) {
             // block until a client connects
             Socket ClientSocket = serverSocket.accept();
-            System.out.println("new client!");
             new PingballClientThread(ClientSocket, world).start();
             System.out.println(world);
         } 
@@ -176,8 +174,6 @@ public class PingballServer {
             world.joinVertical(tokens[1], tokens[2]);
             return null;
         // Should never get here
-        }else if (tokens[0].equals("world")){
-            return world.toString();
         }
         throw new UnsupportedOperationException();
     }
