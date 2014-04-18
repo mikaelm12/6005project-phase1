@@ -84,7 +84,9 @@ public class Absorber implements Gadget{
     public void action() {
         //remove the first ball
         if(balls.size() > 1){
-            balls.get(0).setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            Ball that = balls.get(0);
+            that.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            that.setPosition(that.getPosition()[0],top.p2().y()-0.25);//set position to top of absorber
             balls.remove(0);
         }
         

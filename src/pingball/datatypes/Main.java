@@ -20,7 +20,7 @@ public class Main {
         TriangularBumper triangleBumper = new TriangularBumper("triangleBumper",19,1,270);
         LeftFlipper flipperL = new LeftFlipper("flipperL",6,7,0);
         RightFlipper flipperR = new RightFlipper("flipperR",10,7,0);
-        Absorber absorber = new Absorber("abs",0,19,20,1);
+        Absorber absorber = new Absorber("abs",0,15,20,5);
         //square.addGadgetToFire(flipperL);
         //flipperL.addGadgetToFire(flipperR);
         flipperL.addGadgetToFire(flipperL);
