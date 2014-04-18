@@ -55,9 +55,8 @@ public class BoardTest {
     @Test public void addGadget(){
         Board board3 = new Board("testBoard1", 20.0, 0.025, 0.025);
         SquareBumper sqb = new SquareBumper("square", 3, 5);
-        System.out.println(board3.getGadgets());
         board3.addGadget(sqb);
-//        assertEquals(1,board3.getGadgets().size());
+        assertEquals(1,board3.getGadgets().size());
         
         
     }
@@ -69,9 +68,201 @@ public class BoardTest {
         board4.addGadget(sqb);
         board4.addGadget(lf);
         board4.addGadget(circ);
-       // assertEquals(3,board4.getGadgets().size());
+        assertEquals(3,board4.getGadgets().size());
         
         
     }
+    
+    @Test public void toStringTest(){
+        Board board3 = new Board("testBoard1", 20.0, 0.025, 0.025);
+        String board = board3.toString();
+        System.out.println(board);
+        String compare = "......................\n"+
+        ".                    .\n"+ 
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        "......................";
+        assertEquals(board, compare);
+        
+        
+    }
+    @Test public void toStringplusGadgetTest(){
+        Board board3 = new Board("testBoard1", 20.0, 0.025, 0.025);
+        SquareBumper sqb = new SquareBumper("square", 3, 5);
+        board3.addGadget(sqb);
+        String board = board3.toString();
+        System.out.println(board);
+        String compare = "......................\n"+
+        ".                    .\n"+ 
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".   #                .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        "......................";
+        assertEquals(board, compare);
+        
+        
+    }
+    @Test public void toStringplusCircleGadgetTest(){
+        Board board3 = new Board("testBoard1", 20.0, 0.025, 0.025);
+        CircularBumper circ = new CircularBumper("ciclre", 3, 5);
+        board3.addGadget(circ);
+        String board = board3.toString();
+        System.out.println(board);
+        String compare = "......................\n"+
+        ".                    .\n"+ 
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".   O                .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        "......................";
+        assertEquals(board, compare);
+        
+        
+    }
+    @Test public void toStringplusTriangularGadgetTest(){
+        Board board3 = new Board("testBoard1", 20.0, 0.025, 0.025);
+        TriangularBumper circ = new TriangularBumper("triangular", 3, 5, 270);
+        board3.addGadget(circ);
+        String board = board3.toString();
+        System.out.println(board);
+        String compare = "......................\n"+
+        ".                    .\n"+ 
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".   \\                .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        "......................";
+        assertEquals(board, compare);
+        
+        
+    }
+    @Test public void toStringplusTriangular180GadgetTest(){
+        Board board3 = new Board("testBoard1", 20.0, 0.025, 0.025);
+        TriangularBumper circ = new TriangularBumper("triangular", 3, 5, 180);
+        board3.addGadget(circ);
+        String board = board3.toString();
+        System.out.println(board);
+        String compare = "......................\n"+
+        ".                    .\n"+ 
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".   /                .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        "......................";
+        assertEquals(board, compare);
+        
+        
+    }
+    @Test public void toStringAbsorber(){
+        Board board3 = new Board("testBoard1", 20.0, 0.025, 0.025);
+        Absorber circ = new Absorber("abs", 3, 5, 2,2);
+        board3.addGadget(circ);
+        String board = board3.toString();
+        System.out.println(board);
+        String compare = "......................\n"+
+        ".                    .\n"+ 
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".   #####            .\n"+
+        ".   #####            .\n"+
+        ".   #####            .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        ".                    .\n"+
+        "......................";
+        assertEquals(board, compare);
+        
+        
+    }
+    
     
 }

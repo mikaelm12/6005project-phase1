@@ -1,6 +1,7 @@
 package pingball.datatypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import physics.Geometry;
@@ -8,6 +9,12 @@ import physics.LineSegment;
 import physics.Vect;
 import static org.junit.Assert.*;
 
+/**
+ * 
+ * @author PeterGithaiga
+ * The absorber will only shoot out stored balls one at a time when triggered.
+ * 
+ */
 public class Absorber implements Gadget{
     
     private final int width;
@@ -20,12 +27,16 @@ public class Absorber implements Gadget{
     private final String name;
     private List<Gadget> gadgetsToFire;
     private final LineSegment[] edges = new LineSegment[4];
-    private String state = "empty";
     private List<Ball> balls;
-    //public Ball ball;
+    private final CircularBumper topLeft;
+    private final CircularBumper topRight;
+    private final CircularBumper bottomRight;
+    private final CircularBumper bottomLeft;
+    private List<CircularBumper> corners;
     
     //Rep invariant:
     //width>0, height>0, name!=null && name.length>0
+    //absorber within board
     //Abstraction Function:
     //represents an absorber with width, width, and height, height
     
@@ -44,8 +55,33 @@ public class Absorber implements Gadget{
         edges[1] = top;
         edges[2] = right;
         edges[3] = bottom;
+        
+        //create 4 corners using circularBumpers of radius 0
+        topLeft = new CircularBumper("topLeft",x,y,0);
+        topRight = new CircularBumper("topRight",x+width,y,0);
+        bottomRight = new CircularBumper("bottomRight",x+width,y+height,0);
+        bottomLeft = new CircularBumper("topLeft",x,y+height,0);
+        
+        //create list of 4 corners of the absorber
+        this.corners = new ArrayList<CircularBumper>(Arrays.asList(topLeft,topRight,bottomRight,bottomLeft));
 
         checkRep();
+    }
+    
+    /**
+     * 
+     * @return width of absorber
+     */
+    public int getWidth(){
+        return width;
+    }
+    
+    /**
+     * 
+     * @return height of absorber
+     */
+    public int getHeight(){
+        return height;
     }
     
     /**
@@ -62,10 +98,14 @@ public class Absorber implements Gadget{
      */
     @Override
     public void action() {
+        //remove the first ball
         if(balls.size() > 1){
-            balls.get(0).setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            Ball that = balls.get(0);
+            that.setVelocity(new Vect(0,-50));//set to ball velocity to 50L/sec straight upwards
+            that.setPosition(that.getPosition()[0],top.p2().y()-0.25);//set position to top of absorber
             balls.remove(0);
         }
+        
         checkRep();
     }
     
@@ -77,13 +117,6 @@ public class Absorber implements Gadget{
         return new Double(coR).doubleValue();
     }
     
-    /**
-     * 
-     * @return current state of absorber
-     */
-    public String getState(){
-        return state;
-    }
     
     /**
      * compute time until collision
@@ -92,14 +125,27 @@ public class Absorber implements Gadget{
      */
     @Override
     public double timeUntilCollision(Ball ball) {
-        double timeToClosestCollision = Double.POSITIVE_INFINITY;
+        double closestTimeToCollision = Double.POSITIVE_INFINITY; //default value
+        
+        //check for closest time to collision among edges
         for (LineSegment edge : edges) {
-            double timeToEdgeCollision = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
-            if(timeToEdgeCollision < timeToClosestCollision){
-                timeToClosestCollision = timeToEdgeCollision;
+            double timeToEdge = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
+            if(timeToEdge < closestTimeToCollision){
+                closestTimeToCollision = timeToEdge;
             }
         }
-        return timeToClosestCollision;
+        //check for closest time to collision among corners
+        for (CircularBumper corner : corners) {
+            double timeToCorner = Geometry.timeUntilCircleCollision(corner.getCircle(), 
+                                                                    ball.getCircle(), ball.getVelocity());
+            //if time nearest corner< time to edge, update closest time
+            if(timeToCorner < closestTimeToCollision){
+                closestTimeToCollision = timeToCorner;
+            }
+        }
+        
+        checkRep();
+        return closestTimeToCollision;
     }
     
     /**
@@ -107,11 +153,10 @@ public class Absorber implements Gadget{
      * @param ball to be reflected
      */
     @Override
-    public synchronized void  reflectOffGadget(Ball ball){
+    public void  reflectOffGadget(Ball ball){
         ball.setVelocity(new Vect(0,0)); //stop ball
         //set ball center position .25L away from bottom and right wall
         ball.setPosition(bottom.p2().x()-0.25, bottom.p2().y()-0.25);
-        state = "full";
         balls.add(ball);
         this.trigger();
     }
@@ -165,6 +210,10 @@ public class Absorber implements Gadget{
     private void checkRep(){
         assertTrue(name.length() > 0);
         assertTrue(width > 0 && height > 0);
+        for (LineSegment edge : edges) {
+            assertTrue(edge.p1().x() >=0 && edge.p1().y() >= 0);
+            assertTrue(edge.p1().x() <=20 && edge.p1().y() <=20);
+        }
     }
 
 

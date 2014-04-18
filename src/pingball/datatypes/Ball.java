@@ -2,7 +2,6 @@ package pingball.datatypes;
 
 import static org.junit.Assert.*;
 import physics.Circle;
-import physics.LineSegment;
 import physics.Vect;
 
 public class Ball {
@@ -13,7 +12,8 @@ public class Ball {
     private final String name;
     
     //Rep invariant:
-    // 0<=ball position <=20
+    // circle != null
+    //velocityVector != null
     //Abstraction Function:
     //represents a ball on a board
 
@@ -98,6 +98,7 @@ public class Ball {
      * @param timeStep period of time 
      */
     public void updateBallPosition(double timeStep){
+        //calculate the position of the ball and update it
         if(!ballOutOfBounds(timeStep)){
             double xPos = circle.getCenter().x() + velocityVector.x()*timeStep;
             double yPos = circle.getCenter().y()+ velocityVector.y()*timeStep;
@@ -113,7 +114,7 @@ public class Ball {
      * @return true if ball will be out of bounds after timeStep, false otherwise
      */
     public boolean ballOutOfBounds(double timeStep){
-        
+        //calculate position of the ball and return if the ball will be out of bounds
         double xPos = circle.getCenter().x() + velocityVector.x()*timeStep;
         double yPos = circle.getCenter().y()+ velocityVector.y()*timeStep;
         
@@ -130,8 +131,8 @@ public class Ball {
     }
     
     private void checkRep(){
-//        assertTrue(this.getPosition()[0] >=0 && this.getPosition()[0] <20);
-//        assertTrue(this.getPosition()[1] >=0 && this.getPosition()[1] <20);
+        assertTrue(circle != null);
+        assertTrue(velocityVector != null);
     }
     
 

@@ -39,6 +39,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     
     
     @Override
+    //Creates new Board object after all other fields have been exited
     public void exitBoard(BoardContext ctx) {
         double gravity;
         double friction1;
@@ -93,6 +94,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
 
     
     @Override
+    //Creates a new ball after exiting all the ball fields
     public void exitBall(BallContext ctx) {
         
         double  x = Double.parseDouble(ctx.x().FLOAT().getText());
@@ -111,6 +113,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     }
     
     @Override
+    //Creates a new circle/square/triangle bumper after exiting all the bumper fields
     public void exitBumper(BumperContext ctx) {
         
         int x = Integer.parseInt(ctx.x().INTEGER().getText());
@@ -163,7 +166,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     
     
     @Override
-
+       //Creates a new left flipper
     public void exitFlipperleft(FlipperleftContext ctx) {
         
         String name = ctx.id().NAME().getText();
@@ -198,6 +201,7 @@ public class BoardFileListener extends BoardGrammarBaseListener {
     }
     
     @Override
+    //Creates a new absorber
     public void exitAbsorber(AbsorberContext ctx) {
         
         
@@ -213,9 +217,19 @@ public class BoardFileListener extends BoardGrammarBaseListener {
         super.exitAbsorber(ctx);
     }
     
+    /**
+     * Returns the gadgets found and creates from the input board
+     * that was just read.
+     * @return -A list of gadgets that are on the current board
+     */
     public List<Gadget> getGadgets(){
         return gadgets;
     }
+   
+    /**
+     * 
+     * @return
+     */
     public Board getBoard(){
         return board;
     }

@@ -7,7 +7,6 @@ import java.util.List;
 
 import physics.Circle;
 import physics.Geometry;
-import physics.LineSegment;
 import physics.Vect;
 
 
@@ -22,7 +21,7 @@ public class CircularBumper implements Gadget{
     
     //Rep invariant:
     //name!=null && name.length>0
-    //bumper is within board
+    //circle != null
     //Abstraction Function:
     //circle represents circularBumper
     
@@ -31,12 +30,13 @@ public class CircularBumper implements Gadget{
         this.origin = new Vect(x,y);
         this.radius = 0.5;
         this.coR = 1.0;
-        this.circle = new Circle(x+0.5,y+0.5,radius);
+        this.circle = new Circle(x+radius,y+radius,radius);
         this.gadgetsToFire = new ArrayList<Gadget>();
         
         checkRep();
     }
     
+    //create constructor that allows user to set radius
     public CircularBumper(String name,int x, int y, double radius){
         this.name = name;
         this.origin = new Vect(x,y);
@@ -91,6 +91,7 @@ public class CircularBumper implements Gadget{
     public void reflectOffGadget(Ball ball){
         Vect newVelocityVector = Geometry.reflectCircle(circle.getCenter(), ball.getCircle().getCenter(), 
                                                         ball.getVelocity(), coR);
+        //set ball velocity and trigger connected gadgets
         ball.setVelocity(newVelocityVector);
         this.trigger();
     }
@@ -147,8 +148,7 @@ public class CircularBumper implements Gadget{
      */
     private void checkRep(){
         assertTrue(name.length() > 0);
-//        assertTrue(this.circle.getCenter().x() >= 0.5 && this.circle.getCenter().y() >= 0.5);
-//        assertTrue(this.circle.getCenter().x() <= 19.5 && this.circle.getCenter().y() <= 19.5);
+        assertTrue(circle != null);
     }
 
 
