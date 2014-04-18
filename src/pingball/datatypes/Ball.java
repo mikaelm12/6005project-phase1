@@ -130,8 +130,8 @@ public class Ball {
     }
     
     private void checkRep(){
-        assertTrue(this.getPosition()[0] >=0 && this.getPosition()[0] <20);
-        assertTrue(this.getPosition()[1] >=0 && this.getPosition()[1] <20);
+//        assertTrue(this.getPosition()[0] >=0 && this.getPosition()[0] <20);
+//        assertTrue(this.getPosition()[1] >=0 && this.getPosition()[1] <20);
     }
     
 
