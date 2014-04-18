@@ -49,8 +49,9 @@ public class PingballClient {
         String hostName = null;
 //        File file = null;
 //        File file = new File ("/Users/PeterGithaiga/Documents/6.005/projectPhase1/pingball-phase1/sampleBoard1"); 
+        File file = new File ("/Users/AlexR/Desktop/6.005/pingball-phase1/alex-peter-mikael-testBoard2");
        // File file = new File ("/Users/AlexR/Desktop/6.005/pingball-phase1/sampleBoard1");
-        File file = new File("/Users/mikemikael3/Dropbox/School/Semester 4/6.005/pingball-phase1/alex-peter-mikael-testBoard1");
+//        File file = new File("/Users/mikemikael3/Dropbox/School/Semester 4/6.005/pingball-phase1/alex-peter-mikael-testBoard1");
         Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
         try {
             while ( ! arguments.isEmpty()) {
@@ -79,7 +80,7 @@ public class PingballClient {
             }
         } catch (IllegalArgumentException iae) {
             System.err.println(iae.getMessage());
-            System.err.println("usage: MinesweeperServer [--host HOST] [--port PORT]  FILE");
+            System.err.println("usage: PingballClient [--host HOST] [--port PORT]  FILE");
             return;
         }
         // if HOST was provided then run the server and connect
