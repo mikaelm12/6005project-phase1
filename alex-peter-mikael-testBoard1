@@ -7,14 +7,15 @@ board name= Mikael gravity=20.0 friction1=0.020 friction2=0.020
         # square bumper 
      squareBumper name=Square0 x=2 y=2
      
-     leftFlipper name=FlipL2 x=16 y=9 orientation=0
+     leftFlipper name=FlipL2 x=8 y=9 orientation=0
      
      circleBumper name=Circle10 x=10 y=3 
      circleBumper name=Circle11 x=11 y=4  
      circleBumper name=Circle12 x=12 y=5
      
-     triangleBumper name=Tri12 x=5 y=5 orientation=0
+     triangleBumper name=Tri12 x=19 y=3 orientation=270
      
      absorber name=Abs x=0 y=19 width=20 height=1 
      
-  	fire trigger=Abs action=Abs 
+  	fire trigger=Abs action=Abs
+  	fire trigger=FlipL2 action=FlipL2  
