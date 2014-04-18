@@ -9,12 +9,12 @@ public class Main {
      */
     public static void main(String[] args){
         
-        Board board = new Board("board",1,0.025,0.025);
+        Board board = new Board("board",25,0.025,0.025);
         SquareBumper square = new SquareBumper("square",0,2);
         CircularBumper circleBumper = new CircularBumper("circleBumper",4,3);
         TriangularBumper triangleBumper = new TriangularBumper("triangleBumper",1,1,270);
         LeftFlipper flipperL = new LeftFlipper("flipperL",6,7,0);
-        RightFlipper flipperR = new RightFlipper("flipperR",18,7,0);
+        RightFlipper flipperR = new RightFlipper("flipperR",10,7,0);
         Absorber absorber = new Absorber("abs",0,19,20,1);
         square.addGadgetToFire(flipperL);
         //flipperL.addGadgetToFire(flipperR);
@@ -26,6 +26,8 @@ public class Main {
         Ball ball2 = new Ball("ball",5,5,4,2);
         board.addBall(ball1);
         board.addBall(ball2);
+        Board neighbor = new Board("neighbor",25,0.025,0.025);
+        board.setNeighborBottom(neighbor);
         
         long start = System.currentTimeMillis();
         long previous = start;
