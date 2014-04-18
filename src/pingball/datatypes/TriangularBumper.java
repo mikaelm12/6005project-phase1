@@ -21,6 +21,10 @@ public class TriangularBumper implements Gadget{
     private List<Gadget> gadgetsToFire;
     private final LineSegment[] edges = new LineSegment[3];
     private final Vect origin;
+    private final CircularBumper cornerA;
+    private final CircularBumper cornerB;
+    private final CircularBumper cornerC;
+    private List<CircularBumper> corners;
     
     //Rep invariant:
     //orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270
@@ -41,21 +45,33 @@ public class TriangularBumper implements Gadget{
             this.sideA = new LineSegment(x,y,x+1,y);
             this.sideB = new LineSegment(x,y,x,y+1);
             this.hypotenuse = new LineSegment(x,y+1,x+1,y);
+            this.cornerA = new CircularBumper("cornerA",x,y,0);
+            this.cornerB = new CircularBumper("cornerB",x+1,y,0);
+            this.cornerC = new CircularBumper("cornerC",x,y+1,0);
         }
         else if(orientation == 90){
             this.sideA = new LineSegment(x,y,x,y+1);
             this.sideB = new LineSegment(x,y+1,x+1,y+1);
             this.hypotenuse = new LineSegment(x,y,x+1,y+1);
+            this.cornerA = new CircularBumper("cornerA",x,y,0);
+            this.cornerB = new CircularBumper("cornerB",x,y+1,0);
+            this.cornerC = new CircularBumper("cornerC",x+1,y+1,0);
         }
         else if(orientation == 180){
             this.sideA = new LineSegment(x+1,y,x+1,y+1);
             this.sideB = new LineSegment(x,y+1,x+1,y+1);
             this.hypotenuse = new LineSegment(x,y+1,x+1,y);
+            this.cornerA = new CircularBumper("cornerA",x+1,y,0);
+            this.cornerB = new CircularBumper("cornerB",x+1,y+1,0);
+            this.cornerC = new CircularBumper("cornerC",x,y+1,0);
         }
         else{ //orientation = 270
             this.sideA = new LineSegment(x,y,x+1,y);
             this.sideB = new LineSegment(x+1,y,x+1,y+1);
             this.hypotenuse = new LineSegment(x,y,x+1,y+1);
+            this.cornerA = new CircularBumper("cornerA",x,y,0);
+            this.cornerB = new CircularBumper("cornerB",x+1,y,0);
+            this.cornerC = new CircularBumper("cornerC",x+1,y+1,0);
         }
         
         edges[0] = sideA;

@@ -98,11 +98,11 @@ public class Ball {
      * @param timeStep period of time 
      */
     public void updateBallPosition(double timeStep){
-        double xPos = circle.getCenter().x() + velocityVector.x()*timeStep;
-        double yPos = circle.getCenter().y()+ velocityVector.y()*timeStep;
-        this.setPosition(xPos, yPos);
-
-        
+        if(!ballOutOfBounds(timeStep)){
+            double xPos = circle.getCenter().x() + velocityVector.x()*timeStep;
+            double yPos = circle.getCenter().y()+ velocityVector.y()*timeStep;
+            this.setPosition(xPos, yPos);
+        }
         checkRep();
     }
     

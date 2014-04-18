@@ -21,6 +21,11 @@ public class SquareBumper implements Gadget{
     private final LineSegment[] edges = new LineSegment[4];
     private final String name;
     private List<Gadget> gadgetsToFire; 
+    private final CircularBumper topLeft;
+    private final CircularBumper topRight;
+    private final CircularBumper bottomRight;
+    private final CircularBumper bottomLeft;
+    private List<CircularBumper> corners;
     
     //Rep invariant:
     //name!=null && name.length>0
@@ -38,6 +43,15 @@ public class SquareBumper implements Gadget{
         this.right = new LineSegment(x+1,y,x+1,y+1);
         this.bottom = new LineSegment(x,y+1,x+1,y+1);
         this.left = new LineSegment(x,y,x,y+1);
+        
+        topLeft = new CircularBumper("topLeft",x,y,0);
+        topRight = new CircularBumper("topRight",x+1,y,0);
+        bottomRight = new CircularBumper("bottomRight",x+1,y+1,0);
+        bottomLeft = new CircularBumper("topLeft",x,y+1,0);
+        
+        this.corners = new ArrayList<CircularBumper>(Arrays.asList(topLeft,topRight,bottomRight,bottomLeft));
+        
+        
         this.gadgetsToFire = new ArrayList<Gadget>();
         edges[0] = left;
         edges[1] = left;
@@ -86,6 +100,13 @@ public class SquareBumper implements Gadget{
                 closestTimeToCollision = timeToEdge;
             }
         }
+        for (CircularBumper corner : corners) {
+            double timeToCorner = Geometry.timeUntilCircleCollision(corner.getCircle(), 
+                                                                    ball.getCircle(), ball.getVelocity());
+            if(timeToCorner < closestTimeToCollision){
+                closestTimeToCollision = timeToCorner;
+            }
+        }
         return closestTimeToCollision;
     }
     
@@ -97,6 +118,7 @@ public class SquareBumper implements Gadget{
     @Override
     public void reflectOffGadget(Ball ball){
         LineSegment edgeShortestTimeToCollision = null;
+        CircularBumper closestCorner = null;
         double closestTimeToCollision = Double.POSITIVE_INFINITY; //default value since double has to be initialized
         for (LineSegment edge : edges) {
             double timeToEdge = Geometry.timeUntilWallCollision(edge, ball.getCircle(), ball.getVelocity());
@@ -105,7 +127,23 @@ public class SquareBumper implements Gadget{
                 edgeShortestTimeToCollision = edge;
             }
         }
-        Vect newVelocityVector = Geometry.reflectWall(edgeShortestTimeToCollision, ball.getVelocity(), coR);
+        for (CircularBumper corner : corners) {
+            
+            double timeToCorner = Geometry.timeUntilCircleCollision(corner.getCircle(), 
+                                                                    ball.getCircle(), ball.getVelocity());
+            if(timeToCorner < closestTimeToCollision){
+                closestTimeToCollision = timeToCorner;
+                closestCorner = corner;
+            }
+        }
+        Vect newVelocityVector;
+        if(closestCorner == null){
+            newVelocityVector = Geometry.reflectWall(edgeShortestTimeToCollision, ball.getVelocity(), coR);
+        }
+        else{
+            newVelocityVector = Geometry.reflectCircle(closestCorner.getCircle().getCenter(), ball.getCircle().getCenter(),
+                                                            ball.getVelocity());
+        }
         ball.setVelocity(newVelocityVector);
         this.trigger();
     }

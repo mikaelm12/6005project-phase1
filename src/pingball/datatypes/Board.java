@@ -30,6 +30,7 @@ public class Board {
     private CircularBumper topRight;
     private CircularBumper bottomRight;
     private CircularBumper bottomLeft;
+    private List<CircularBumper> corners;
     private String neighborLeftString;
     private String neighborTopString;
     private String neighborBottomString;
