@@ -282,19 +282,20 @@ public class Board {
      * @param board to be removed from neighbors
      */
     public void unNeighbor (Board board){
-        if (neighborBottom.getName().equals(board.getName())){
+        //check null pointer exceptions
+        if (neighborBottom != null && neighborBottom.getName().equals(board.getName())){
             neighborBottom = null;
             neighborBottomString = wallBottom.toString();
             wallBottom.setWallSolidity(true);}
-        else if (neighborTop.getName().equals(board.getName())){
+        else if (neighborTop != null && neighborTop.getName().equals(board.getName())){
             neighborTop = null;
             neighborTopString = wallTop.toString();
             wallTop.setWallSolidity(true);}
-        else if (neighborLeft.getName().equals(board.getName())){
+        else if (neighborLeft != null && neighborLeft.getName().equals(board.getName())){
             neighborLeft = null;
             neighborLeftString = wallLeft.toString();
             wallLeft.setWallSolidity(true);}
-        else if (neighborRight.getName().equals(board.getName())){
+        else if (neighborRight != null && neighborRight.getName().equals(board.getName())){
             neighborRight = null;
             neighborRightString = wallRight.toString();
             wallRight.setWallSolidity(true);}
