@@ -88,7 +88,6 @@ public class PingballServer {
         } 
     }
     
-    
     /**
      * Start a PingballServer using the given arguments.
      * 
