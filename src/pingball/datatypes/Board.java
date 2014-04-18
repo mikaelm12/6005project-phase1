@@ -371,7 +371,7 @@ public class Board {
         for (Ball ball : balls) {
             int xPos = (int) Math.floor(ball.getPosition()[0]);
             int yPos = (int) Math.floor(ball.getPosition()[1]);
-            if (yPos >= 0 && yPos <= 19 && yPos>= 0 && yPos <= 19){
+            if (yPos >= 0 && yPos <= 19 && xPos>= 0 && xPos <= 19){
             boardString[yPos][xPos] = ball.toString();
             }
         }
