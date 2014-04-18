@@ -1,5 +1,7 @@
 package BoardExpr;
 
+import pingball.datatypes.Board;
+
 
 
 public class Main {
@@ -66,7 +68,14 @@ public class Main {
              " squareBumper name=Square7 x=6 y=9";
         
         
-        BoardFactory.parse(testBoard3);
+        Board board1  = BoardFactory.parse(testBoard1);
+        Board board2 =  BoardFactory.parse(testBoard2);
+        Board board3 = BoardFactory.parse(testBoard3);
+        
+        board1.setNeighborBottom(board2);
+        board1.setNeighborRight(board3);
+        board1.setNeighborTop(board1);
+        System.out.println(board1);
 
  
 
